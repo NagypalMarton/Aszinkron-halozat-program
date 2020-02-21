@@ -9,8 +9,9 @@ using namespace std;
 
 	int main(int argc, char* argv[])
 	{
-		unsigned int lavdb, negdb, oszlop = 4;
+		unsigned int lavdb=0, negdb, oszlop = 4;
 		char igen = 'y', valasz;
+		unsigned int** lav = new unsigned int* [lavdb];
 
 		setlocale(LC_ALL, "HUN");
 		cout << "Aszinkron sorrendi hálózat\n" << "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -31,13 +32,6 @@ using namespace std;
 			
 			cout << endl;
 			lavdb = pow(2, negdb); //hatványozás
-			int **lav = new int*[lavdb]; //dinamikus  tömb létrehozás SOR LÉTREHOZÁSA
-
-			//lav tömb kiterjesztése több dimenzióssá tétele
-			for (int i = 0; i <= lavdb - 1; i++)
-			{
-				lav[i] = new int[oszlop];//OSZLOPot hozza létre
-			}
 		}
 		else
 		{
@@ -50,21 +44,22 @@ using namespace std;
 					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
 				}
 			} while (lavdb < 1 || lavdb>4);
-			
 			cout << endl;
-			int **lav = new int*[lavdb]; //dinamikus  tömb létrehozás SOR LÉTREHOZÁSA
+		}
 
-			//lav tömb kiterjesztése több dimenzióssá tétele
+		//lav tömb kiterjesztése több dimenzióssá tétele
 			for (int i = 0; i <= lavdb - 1; i++)
 			{
-				lav[i] = new int[oszlop]; //OSZLOPot hozza létre
+				lav[i] = new unsigned int[oszlop]; //OSZLOPot hozza létre
 			}
-		}
 
 		for (int i = 0; i < lavdb; i++)
 		{
-			cout << i+1 << "\t";
+			for(int j=0; j<oszlop;j++)
+			{ 
+			cout << lav[i][j] << "\t";
 			//cout << "\tKérem a(z) " << i++ << " értékét:\t" << endl;
+			}
 		}
 		cout << endl;
 	system("pause");

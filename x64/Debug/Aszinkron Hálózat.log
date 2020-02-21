@@ -1,0 +1,6 @@
+﻿  aszinkron.cpp
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(34,15): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(51,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(56,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(58,18): warning C4018: '<': signed/unsigned mismatch
+  Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\x64\Debug\Aszinkron Hálózat.exe
