@@ -112,14 +112,14 @@ int main(int argc, char* argv[])
 						lav[i][1] = 0;
 						lav[i][4] = 1;
 						j = j + 1;
-						cout << "\tTeljesül a " << i + 1 << ". sornál!\n";
+						cout << "\n\tTeljesül a " << i + 1 << ". sornál!\n";
 					}
 					if (*neghely == 1 && i == 1 && j == 1 || j == 4)
 					{
 						lav[i][1] = 1;
 						lav[i][4] = 0;
 						j = j + 1;
-						cout << "\tTTeljesül a " << i + 1 << ". sornál!!\n";
+						cout << "\t\nTTeljesül a " << i + 1 << ". sornál!!\n";
 					}
 
 					cout << "\t\t" << xyz[j - 1] << " értéke: ";
