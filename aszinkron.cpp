@@ -1,67 +1,169 @@
-/*lav[sor][oszlop]
-lavdb -> lÈnyeges ·llapotv·ltoz·sok darab sz·ma
-negdb -> neg·ciÛ darabsz·ma
+Ôªø/*
+lav[sor][oszlop] -> tartalma: x. lav sz√°m,x1,x2,z
+lavdb -> l√©nyeges √°llapotv√°ltoz√°sok darab sz√°ma
+negdb -> neg√°ci√≥ darabsz√°ma
 */
 
-#include<iostream>
+#include <iostream>
 #include <math.h>
 using namespace std;
 
-	int main(int argc, char* argv[])
+struct teljesallapotsor
+{
+	char sorbetu;
+	int sorszam[3];
+};
+
+int main(int argc, char* argv[])
+{
+	unsigned int lavdb = 0, negdb, oszlop = 6, neghely[1], abcd = 8;
+	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+	char xyz[] = { 'x', 'y', 'z', 'x', 'y', 'z' };
+	unsigned int** lav = new unsigned int* [lavdb];
+	teljesallapotsor tas[8];
+
+	setlocale(LC_ALL, "HUN");
+	cout << "Aszinkron sorrendi h√°l√≥zat\n"
+		<< "(Create by Nagyp√°l M√°rton [Neptun k√≥d: B3081T])\n\n";
+
+	cout << "\tLesz-e neg√°ci√≥ a L√âNYEGES √°llapotv√°ltoz√°sban? (y/n) \t";
+	cin >> valasz;
+	if (valasz == igen)
 	{
-		unsigned int lavdb=0, negdb, oszlop = 4;
-		char igen = 'y', valasz;
-		unsigned int** lav = new unsigned int* [lavdb];
-
-		setlocale(LC_ALL, "HUN");
-		cout << "Aszinkron sorrendi h·lÛzat\n" << "(Create by Nagyp·l M·rton [Neptun kÛd: B3081T])\n\n";
-
-		cout << "\tLesz-e neg·ciÛ a L…NYEGES ·llapotv·ltoz·sban? (y/n) \t";
-		cin >> valasz;
-		if (valasz == igen)
+		do
 		{
-			do
+			cout << "\tH√°ny darab lesz benne? (max 3, min 1 lehet)\t\t";
+			cin >> negdb;
+			if (negdb < 1 || negdb > 3)
 			{
-				cout << "\tH·ny darab lesz benne? (max 3, min 1 lehet)\t\t";
-				cin >> negdb;
-				if (negdb < 1 || negdb>3)
-				{
-					cout << "\n\t\tNem megfelelı sz·mot Ìrt·l be! Õrj be ˙jat!\n\n";
-				}
-			} while (negdb<1 || negdb>3);
-			
-			cout << endl;
-			lavdb = pow(2, negdb); //hatv·nyoz·s
-		}
-		else
-		{
-			do
-			{
-				cout << "\tH·ny L…NYEGES ·llapotv·ltoz·s lesz? (1 Ès 4 lehet)\t";
-				cin >> lavdb;
-				if (lavdb<1 || lavdb>4)
-				{
-					cout << "\n\t\tNem megfelelı sz·mot Ìrt·l be! Õrj be ˙jat!\n\n";
-				}
-			} while (lavdb < 1 || lavdb>4);
-			cout << endl;
-		}
-
-		//lav tˆmb kiterjesztÈse tˆbb dimenziÛss· tÈtele
-			for (int i = 0; i <= lavdb - 1; i++)
-			{
-				lav[i] = new unsigned int[oszlop]; //OSZLOPot hozza lÈtre
+				cout << "\n\t\tNem megfelel√µ sz√°mot √≠rt√°l be! √çrj be √∫jat!\n\n";
 			}
+		} while (negdb < 1 || negdb > 3);
 
+		cout << endl;
+		lavdb = pow(2, negdb); //hatv√°nyoz√°s
+	}
+	else
+	{
+		do
+		{
+			cout << "\tH√°ny L√âNYEGES √°llapotv√°ltoz√°s lesz? (1 √©s 8 lehet)\t";
+			cin >> lavdb;
+			if (lavdb < 1 || lavdb > 8)
+			{
+				cout << "\n\t\tNem megfelel√µ sz√°mot √≠rt√°l be! √çrj be √∫jat!\n\n";
+			}
+		} while (lavdb < 1 || lavdb > 8);
+		cout << endl;
+	}
+
+	//lav t√∂mb kiterjeszt√©se t√∂bb dimenzi√≥ss√° t√©tele
+	for (int i = 0; i <= lavdb - 1; i++)
+	{
+		lav[i] = new unsigned int[oszlop]; //OSZLOPot hozza l√©tre
+	}
+	cout << "\tNeg√°ci√≥ sz√°ma: " << negdb << "\tSorok sz√°ma: " << lavdb << "\n\n";
+
+	if (negdb > 0)
+	{
+		switch (negdb)
+		{
+		case 1:
+			cout << "\n\tX1(-> 1-gyes), X2 (-> 2-es) vagy a Z (-> 3-as) lesz? ";
+			cin >> neghely[0];
+			break;
+		case 2:
+			cout << "\n\tX1(-> 1-gyes), X2 (-> 2-es) vagy a Z (-> 3-as) lesz? ";
+			for (int a = 0; a < 2; a++)
+			{
+				if (a == 1)
+				{
+					cout << "\tM√°sik sz√°m: ";
+					cin >> neghely[a];
+				}
+				else
+				{
+					cin >> neghely[a];
+				}
+			}
+			break;
+		}
+	}
+	if (negdb != 3)
+	{
 		for (int i = 0; i < lavdb; i++)
 		{
-			for(int j=0; j<oszlop;j++)
-			{ 
-			cout << lav[i][j] << "\t";
-			//cout << "\tKÈrem a(z) " << i++ << " ÈrtÈkÈt:\t" << endl;
+			for (int j = 1; j < oszlop + 1; j++)
+			{
+				lav[i][0] = i + 1; //l√°v sorsz√°ma
+				if (j == 1)
+				{
+					cout << "\tBemeneti √©rt√©kek a(z) " << i + 1 << ". elemnek:\n";
+				}
+				else if (j == 4)
+				{
+					cout << "\tKimeneti √©rt√©kek a(z) " << i + 1 << ". elemnek:\n";
+				}
+				do
+				{
+					//Ha egy  neg√°ci√≥ van
+					if (*neghely == 1 && i == 0 && j == 1 || j == 4)
+					{
+						lav[i][1] = 0;
+						lav[i][4] = 1;
+						j = j + 1;
+						cout << "\tTeljes√ºl a " << i + 1 << ". sorn√°l!\n";
+					}
+					if (*neghely == 1 && i == 1 && j == 1 || j == 4)
+					{
+						lav[i][1] = 1;
+						lav[i][4] = 0;
+						j = j + 1;
+						cout << "\tTTeljes√ºl a " << i + 1 << ". sorn√°l!!\n";
+					}
+
+					cout << "\t\t" << xyz[j - 1] << " √©rt√©ke: ";
+					cin >> lav[i][j];
+					if (lav[i][j] < 0 || lav[i][j] > 1)
+					{
+						cout << "\n\tNem megfelel≈ë √©rt√©ket adt√°l meg! Adj meg m√°sikat!\n\n";
+					}
+				} while (lav[i][j] < 0 || lav[i][j] > 1);
+				if (j % 3 == 0)
+				{
+					cout << "\n";
+				}
 			}
 		}
-		cout << endl;
+	}
+	//IDE AZ KELL LEPROGRAMOZNI, AMIKOR 3 NEG√ÅL√ÅS VAN
+	system("cls");
+	cout << "Aszinkron sorrendi h√°l√≥zat\n"
+		<< "(Create by Nagyp√°l M√°rton [Neptun k√≥d: B3081T])\n\n";
+	cout << "\tL√©nyeges √°llapot v√°ltoz√°sok:\n\t(√ârtelmez√©s = x1, x2, z)\n\n";
+	for (int i = 0; i < lavdb; i++)
+	{
+		for (int j = 1; j <= oszlop; j++)
+		{
+			if (j == 1 && i == 0)
+			{
+				cout << "\t";
+			}
+			cout << lav[i][j];
+			if (j == 3)
+			{
+				cout << " -> ";
+			}
+			if (j != 6)
+			{
+				cout << " ";
+			}
+		}
+		cout << endl
+			<< "\t";
+	}
+	cout << endl
+		<< endl;
 	system("pause");
 	return 0;
 }

@@ -1,6 +1,11 @@
 ﻿  aszinkron.cpp
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(34,15): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(51,22): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(56,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(58,18): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(39,13): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(44,14): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(54,13): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(61,20): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(94,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(96,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(144,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(146,21): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(23,19): warning C4101: 'tas': unreferenced local variable
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\x64\Debug\Aszinkron Hálózat.exe
