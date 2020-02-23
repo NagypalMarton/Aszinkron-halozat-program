@@ -14,6 +14,34 @@ struct teljesallapotsor
 	int sorszam[3];
 };
 
+void negacio(unsigned int neghely[], unsigned int** lav)
+{
+	switch (neghely[0])
+	{
+	case 1:
+		lav[0][0] = 2;
+		lav[0][1] = 0;
+		lav[0][4] = 1;
+		lav[1][1] = 1;
+		lav[1][4] = 0;
+		break;
+	case 2: 
+		lav[0][0] = 2;
+		lav[0][2] = 0;
+		lav[0][5] = 1;
+		lav[1][2] = 1;
+		lav[1][5] = 0;
+		break;
+	case 3:
+		lav[0][0] = 2;
+		lav[0][3] = 0;
+		lav[0][6] = 1;
+		lav[1][3] = 1;
+		lav[1][6] = 0;
+		break;
+	}
+}
+
 int main(int argc, char* argv[])
 {
 	unsigned int lavdb = 0, negdb, oszlop = 6, neghely[1], abcd = 8;
@@ -64,38 +92,60 @@ int main(int argc, char* argv[])
 	}
 	cout << "\tNegáció száma: " << negdb << "\tSorok száma: " << lavdb << "\n\n";
 
-	if (negdb > 0)
+	if (negdb > 0 && negdb <4)
 	{
 		switch (negdb)
 		{
 		case 1:
 			cout << "\n\tX1(-> 1-gyes), X2 (-> 2-es) vagy a Z (-> 3-as) lesz? ";
 			cin >> neghely[0];
+			negacio(neghely,lav);
 			break;
 		case 2:
 			cout << "\n\tX1(-> 1-gyes), X2 (-> 2-es) vagy a Z (-> 3-as) lesz? ";
 			for (int a = 0; a < 2; a++)
 			{
-				if (a == 1)
+				do
 				{
-					cout << "\tMásik szám: ";
-					cin >> neghely[a];
-				}
-				else
-				{
-					cin >> neghely[a];
-				}
+					if (a == 1)
+					{
+						cout << "\tMásik szám: ";
+						cin >> neghely[a];
+					}
+					else
+					{
+						cin >> neghely[a];
+					}
+					if (neghely[a] < 0 || neghely[a]>3)
+					{
+						cout << "\n\n\tNem értelmezhető! Írj be újra!\n";
+					}
+				} while (neghely[a]<0 || neghely[a]>3);
 			}
+			break;
+		case 3:
 			break;
 		}
 	}
+	for (int i = 0; i < lavdb; i++)
+	{
+		for (int j = 1; j < oszlop + 1; j++)
+		{
+			cout << lav[i][j];
+			if (j==oszlop)
+			{
+				cout << endl;
+			}
+		}
+	}
+	system("pause");
 	if (negdb != 3)
 	{
 		for (int i = 0; i < lavdb; i++)
 		{
 			for (int j = 1; j < oszlop + 1; j++)
 			{
-				lav[i][0] = i + 1; //láv sorszáma
+				//lav[i][0] = i + 1; //láv sorszáma
 				if (j == 1)
 				{
 					cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
@@ -104,24 +154,12 @@ int main(int argc, char* argv[])
 				{
 					cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
+				if (negdb==1 && j==0)
+				{
+					cout << "Kész!\n";
+				}
 				do
 				{
-					//Ha egy  negáció van
-					if (*neghely == 1 && i == 0 && j == 1 || j == 4)
-					{
-						lav[i][1] = 0;
-						lav[i][4] = 1;
-						j = j + 1;
-						cout << "\n\tTeljesül a " << i + 1 << ". sornál!\n";
-					}
-					if (*neghely == 1 && i == 1 && j == 1 || j == 4)
-					{
-						lav[i][1] = 1;
-						lav[i][4] = 0;
-						j = j + 1;
-						cout << "\t\nTTeljesül a " << i + 1 << ". sornál!!\n";
-					}
-
 					cout << "\t\t" << xyz[j - 1] << " értéke: ";
 					cin >> lav[i][j];
 					if (lav[i][j] < 0 || lav[i][j] > 1)
@@ -136,7 +174,6 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	//IDE AZ KELL LEPROGRAMOZNI, AMIKOR 3 NEGÁLÁS VAN
 	system("cls");
 	cout << "Aszinkron sorrendi hálózat\n"
 		<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
