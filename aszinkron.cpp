@@ -49,12 +49,12 @@ void negacio(unsigned int* neghely, unsigned int** lav)
 			break;
 		}
 	}
-	if (neghely[1] > 0 && neghely[1] < 4)
+	if (neghely[1] > 0 && neghely[1] < 4 && neghely[0]!=0)
 	{
 		switch (neghely[1])
 		{
 		case 1:
-			lav[2][0] = 2;
+			lav[2][0] = 3;
 			lav[2][1] = 0;
 			lav[2][4] = 1;
 			lav[3][0] = 2;
@@ -63,7 +63,7 @@ void negacio(unsigned int* neghely, unsigned int** lav)
 			cout << "Meggy!!\n";
 			break;
 		case 2:
-			lav[2][0] = 2;
+			lav[2][0] = 3;
 			lav[2][2] = 0;
 			lav[2][5] = 1;
 			lav[3][0] = 2;
@@ -72,7 +72,7 @@ void negacio(unsigned int* neghely, unsigned int** lav)
 			cout << "Meggy!!\n";
 			break;
 		case 3:
-			lav[2][0] = 2;
+			lav[2][0] = 3;
 			lav[2][3] = 0;
 			lav[2][6] = 1;
 			lav[3][0] = 2;
@@ -86,9 +86,8 @@ void negacio(unsigned int* neghely, unsigned int** lav)
 
 int main(int argc, char* argv[])
 {
-	unsigned int lavdb = 0, negdb, oszlop = 6, neghely[1] = { 0 }, abcd = 8;
-	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
-	char xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z', };
+	unsigned int lavdb = 0, negdb=0, oszlop = 6, neghely[1] = { 0 }, abcd = 8;
+	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z', };
 	unsigned int** lav = new unsigned int* [lavdb];
 	teljesallapotsor tas[8] = {};
 
@@ -142,7 +141,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	cout << "\tNegáció száma: " << negdb << "\tSorok száma: " << lavdb << "\n\n";
+//	cout << "\tNegáció száma: " << negdb << "\tSorok száma: " << lavdb << "\n\n";
 
 	if (negdb > 0 && negdb < 4)
 	{
@@ -204,9 +203,17 @@ int main(int argc, char* argv[])
 				do
 				{
 					cout << "\t\t" << xyz[j - 1];
-					if (j != 3 && j != 6)
+					if (j<3 && j!=6)
 					{
 						cout << j;
+					}
+					if (j==4)
+					{
+						cout << j - 3;
+					}
+					else if (j == 5)
+					{
+						cout << j - 3;
 					}
 					cout << " értéke: ";
 					cin >> lav[i][j];
@@ -225,14 +232,14 @@ int main(int argc, char* argv[])
 	system("cls");
 	cout << "Aszinkron sorrendi hálózat\n"
 		<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
-	cout << "\tLényeges állapot változások:\n\t(Értelmezés = x1, x2, z)\n\n";
+	cout << "\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 	for (unsigned int i = 0; i < lavdb; i++)
 	{
 		for (unsigned int j = 1; j <= oszlop; j++)
 		{
 			if (j == 1 && i == 0)
 			{
-				cout << "\t";
+				cout<< "\t"<<i+1<<") ";
 			}
 			cout << lav[i][j];
 			if (j == 3)
