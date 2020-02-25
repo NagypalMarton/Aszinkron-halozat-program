@@ -14,7 +14,7 @@ struct teljesallapotsor
 	int sorszam[3];
 };
 
-void negacio(unsigned int* neghely, unsigned int** lav)
+void negacio(unsigned short* neghely, unsigned short** lav)
 {
 	if (neghely[0] != 0 && neghely[0] < 4)
 	{
@@ -70,10 +70,10 @@ void negacio(unsigned int* neghely, unsigned int** lav)
 
 int main(int argc, char* argv[])
 {
-	unsigned int lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = { 0 }, abcd = 8;
-	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z', };
-	unsigned int** lav = new unsigned int* [lavdb];
-	teljesallapotsor tas[8] = {};
+	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = { 0 }, abcd = 8;
+	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z'};
+	unsigned short** lav = new unsigned short* [lavdb];
+	teljesallapotsor tas[12] = {};
 
 	setlocale(LC_ALL, "HUN");
 	do
@@ -114,15 +114,15 @@ int main(int argc, char* argv[])
 		}
 
 		//lav tömb kiterjesztése több dimenzióssá tétele
-		for (unsigned int i = 0; i <= lavdb - 1; i++)
+		for (unsigned short i = 0; i <= lavdb - 1; i++)
 		{
-			lav[i] = new unsigned int[oszlop]; //OSZLOPot hozza létre
+			lav[i] = new unsigned short[oszlop]; //OSZLOPot hozza létre
 		}
 
 		//2essel feltöltés
 		for (unsigned int i = 0; i < lavdb; i++)
 		{
-			for (unsigned int j = 1; j < oszlop + 1; j++)
+			for (unsigned short j = 1; j < oszlop + 1; j++)
 			{
 				lav[i][j] = 2;
 			}
@@ -158,9 +158,9 @@ int main(int argc, char* argv[])
 
 		cout << "\tBekérés előtt:\n\n";
 		oszlop = 6;
-		for (unsigned int i = 0; i < lavdb; i++)
+		for (unsigned short i = 0; i < lavdb; i++)
 		{
-			for (unsigned int j = 1; j <= oszlop; j++)
+			for (unsigned short j = 1; j <= oszlop; j++)
 			{
 				if (j == 1)
 				{
@@ -183,9 +183,9 @@ int main(int argc, char* argv[])
 
 		if (negdb < 3)
 		{
-			for (unsigned int i = 0; i < lavdb; i++)
+			for (unsigned short i = 0; i < lavdb; i++)
 			{
-				for (unsigned int j = 1; j < oszlop + 1; j++)
+				for (unsigned short j = 1; j < oszlop + 1; j++)
 				{
 					if (j == 1)
 					{
@@ -232,9 +232,9 @@ int main(int argc, char* argv[])
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
 		cout << "\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
-		for (unsigned int i = 0; i < lavdb; i++)
+		for (unsigned short i = 0; i < lavdb; i++)
 		{
-			for (unsigned int j = 1; j <= oszlop; j++)
+			for (unsigned short j = 1; j <= oszlop; j++)
 			{
 				if (j == 1)
 				{
@@ -253,6 +253,7 @@ int main(int argc, char* argv[])
 			cout << endl;
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
+		
 		cout << endl << endl;
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
