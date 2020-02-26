@@ -64,10 +64,10 @@ void negacio(unsigned short* neghely, unsigned short** lav)
 
 int main(int argc, char* argv[])
 {
-	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = { 0 };
+	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
 	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb];
-
+	
 	setlocale(LC_ALL, "HUN");
 	do
 	{
@@ -81,13 +81,13 @@ int main(int argc, char* argv[])
 		{
 			do
 			{
-				cout << "\tHány darab lesz benne? (max 3, min 1 lehet)\t\t";
+				cout << "\tHány darab lesz benne? (maximum 2 lehet)\t\t";
 				cin >> negdb;
-				if (negdb < 1 || negdb > 3)
+				if (negdb < 1 || negdb > 2)
 				{
 					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
 				}
-			} while (negdb < 1 || negdb > 3);
+			} while (negdb < 1 || negdb > 2);
 
 			cout << endl;
 			lavdb = pow(2, negdb); //hatványozás
@@ -121,19 +121,19 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (negdb > 0 && negdb < 4)
+		if (negdb > 0 && negdb < 3 && valasz == igen)
 		{
 			switch (negdb)
 			{
 			case 1:
-				cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3) ";
+				cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
 				cin >> neghely[0];
 				negacio(neghely, lav);
 				break;
 			case 2:
 				do
 				{
-					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3) ";
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
 					cin >> neghely[0] >> neghely[1];
 					if (neghely[0] && neghely[1] > 3 || neghely[0] && neghely[1] < 0)
 					{
@@ -142,13 +142,10 @@ int main(int argc, char* argv[])
 				} while (neghely[0] && neghely[1] > 3 || neghely[0] && neghely[1] < 0);
 				negacio(neghely, lav);
 				break;
-			case 3:
-				cout << "\n\n\tIDE KERÜL A 3AS NEGÁCIÓ!\n\n";
-				break;
 			}
 		}
 
-		cout << "\n\tBekérés előtt:\n\n";
+		cout << "\t\tBekérés előtt:\n\n";
 		oszlop = 6;
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
@@ -172,8 +169,6 @@ int main(int argc, char* argv[])
 		}
 		cout << endl;
 
-		if (negdb < 3)
-		{
 			for (unsigned short i = 0; i < lavdb; i++)
 			{
 				for (unsigned short j = 1; j < oszlop + 1; j++)
@@ -222,7 +217,6 @@ int main(int argc, char* argv[])
 					}
 				}
 			}
-		}
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -249,16 +243,40 @@ int main(int argc, char* argv[])
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		teljesallapotsor tas[12] = {};
+		
 		tas[0].sorbetu = 'a';
-
 		cout << "\t" << tas[0].sorbetu << ") ";
-		for (int i = 0; i < 3; i++)
+		
+		for (short i = 0; i < 3; i++)
 		{
 			tas[0].sorszam[i] = 0;
 			cout << tas[0].sorszam[i] << " ";
+			if (i == 2)
+			{
+				cout << "\n";
+			}
+		}
+		for (short i = 1; i < 13; i++)
+		{
+			for (short k = 0; k < lavdb; k++)
+			{
+				if (lav[k][1] == tas[i].sorszam[1] && lav[k][2] == tas[i].sorszam[2] && lav[k][3] == tas[i].sorszam[3])
+				{
+					//Keresést ide kell beletenni, hogy ha már van ilyen be- és kimeneti állapot, akkor kapja meg ugyanazt a betűt!
+					for (short j = 4; j < 7; j++)
+					{
+						tas[i].sorszam[j-3] = lav[k][j];
+						cout << tas[i].sorszam[i-1] << " ";
+						if (k == lavdb-1)
+						{
+							cout << "\n";
+						}
+					}					
+				}
+			}
 		}
 
-		cout << endl << endl;
+		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
 	} while (valasz == igen);
