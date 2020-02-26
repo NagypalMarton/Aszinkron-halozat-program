@@ -1,10 +1,4 @@
-﻿/*
-lav[sor][oszlop] -> tartalma: x. lav szám,x1,x2,z
-lavdb -> lényeges állapotváltozások darab száma
-negdb -> negáció darabszáma
-*/
-
-#include <iostream>
+﻿#include <iostream>
 #include <math.h>
 using namespace std;
 
@@ -70,10 +64,9 @@ void negacio(unsigned short* neghely, unsigned short** lav)
 
 int main(int argc, char* argv[])
 {
-	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = { 0 }, abcd = 8;
-	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z'};
+	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = { 0 };
+	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb];
-	teljesallapotsor tas[12] = {};
 
 	setlocale(LC_ALL, "HUN");
 	do
@@ -128,20 +121,19 @@ int main(int argc, char* argv[])
 			}
 		}
 
-//		cout << "\tNegáció száma: " << negdb << "\tSorok száma: " << lavdb << "\n\n";
-
 		if (negdb > 0 && negdb < 4)
 		{
 			switch (negdb)
 			{
 			case 1:
-				cout << "\n\tMelyik helyen lesz negáció? X1 ( 1 ) vagy  X2 ( 2 ) vagy  Z ( 3) ";
+				cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3) ";
 				cin >> neghely[0];
 				negacio(neghely, lav);
 				break;
 			case 2:
-				do {
-					cout << "\n\tMelyik helyen lesz negáció? X1 ( 1 ) vagy  X2 ( 2 ) vagy  Z ( 3) ";
+				do
+				{
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3) ";
 					cin >> neghely[0] >> neghely[1];
 					if (neghely[0] && neghely[1] > 3 || neghely[0] && neghely[1] < 0)
 					{
@@ -156,7 +148,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		cout << "\tBekérés előtt:\n\n";
+		cout << "\n\tBekérés előtt:\n\n";
 		oszlop = 6;
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
@@ -178,8 +170,7 @@ int main(int argc, char* argv[])
 			}
 			cout << endl;
 		}
-		cout << endl
-			<< endl;
+		cout << endl;
 
 		if (negdb < 3)
 		{
@@ -195,9 +186,13 @@ int main(int argc, char* argv[])
 					{
 						cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 					}
-					if (lav[i][j] != 2)// ha 2es, akkor írhat be adatot
+					if (lav[i][j] != 2) //ha 2es, akkor írhat be adatot
 					{
 						j = j + 1;
+						if (j == 4)
+						{
+							cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+						}
 					}
 					do
 					{
@@ -253,7 +248,16 @@ int main(int argc, char* argv[])
 			cout << endl;
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
-		
+		teljesallapotsor tas[12] = {};
+		tas[0].sorbetu = 'a';
+
+		cout << "\t" << tas[0].sorbetu << ") ";
+		for (int i = 0; i < 3; i++)
+		{
+			tas[0].sorszam[i] = 0;
+			cout << tas[0].sorszam[i] << " ";
+		}
+
 		cout << endl << endl;
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
