@@ -145,29 +145,32 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		cout << "\tBekérés előtt:\n\n";
-		oszlop = 6;
-		for (unsigned short i = 0; i < lavdb; i++)
+		if (lav[0][1]!=2 && lav[0][2] != 2 && lav[0][3] != 2)
 		{
-			for (unsigned short j = 1; j <= oszlop; j++)
+			cout << "\tBekérés előtt:\n\n";
+			oszlop = 6;
+			for (unsigned short i = 0; i < lavdb; i++)
 			{
-				if (j == 1)
+				for (unsigned short j = 1; j <= oszlop; j++)
 				{
-					cout << "\t\t" << i + 1 << ") ";
+					if (j == 1)
+					{
+						cout << "\t\t" << i + 1 << ") ";
+					}
+					cout << lav[i][j];
+					if (j == 3)
+					{
+						cout << " -> ";
+					}
+					if (j != 6)
+					{
+						cout << " ";
+					}
 				}
-				cout << lav[i][j];
-				if (j == 3)
-				{
-					cout << " -> ";
-				}
-				if (j != 6)
-				{
-					cout << " ";
-				}
+				cout << endl;
 			}
 			cout << endl;
 		}
-		cout << endl;
 
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
@@ -260,17 +263,13 @@ int main(int argc, char* argv[])
 		{
 			for (short k = 0; k < lavdb; k++)
 			{
-				if (lav[k][1] == tas[i].sorszam[1] && lav[k][2] == tas[i].sorszam[2] && lav[k][3] == tas[i].sorszam[3])
+				if (lav[k][1] == tas[i].sorszam[0] && lav[k][2] == tas[i].sorszam[1] && lav[k][3] == tas[i].sorszam[2])
 				{
 					//Keresést ide kell beletenni, hogy ha már van ilyen be- és kimeneti állapot, akkor kapja meg ugyanazt a betűt!
 					for (short j = 4; j < 7; j++)
 					{
 						tas[i].sorszam[j - 3] = lav[k][j];
 					}
-				}
-				else
-				{
-					cout << "\n\tNem hasonlítható össze!";
 				}
 			} //Itt fejeződik be a láv-ok összehasonlítása
 			/*if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 0)
@@ -309,6 +308,10 @@ int main(int argc, char* argv[])
 				{
 					cout << " ";
 				}
+			}
+			if (tas[i-1].sorszam[0] && tas[i-1].sorszam[1] && tas[i -1].sorszam[2] == tas[i].sorszam[0] && tas[i].sorszam[1] && tas[i].sorszam[2])
+			{
+				break;
 			}
 		}
 		cout << "\n\n";
