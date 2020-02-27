@@ -268,8 +268,12 @@ int main(int argc, char* argv[])
 						tas[i].sorszam[j - 3] = lav[k][j];
 					}
 				}
+				else
+				{
+					cout << "\n\tNem hasonlítható össze!";
+				}
 			} //Itt fejeződik be a láv-ok összehasonlítása
-			if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 0)
+			/*if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 0)
 			{
 				tas[i].sorszam[1] = 1;
 				cout << "\n0 - 0\n";
@@ -288,7 +292,7 @@ int main(int argc, char* argv[])
 			{
 				tas[i].sorszam[0] = 0;
 				cout << "\n1 - 1\n";
-			}
+			}*/
 		}
 
 		for (short i = 0; i < 13; i++)
