@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
 	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb];
-	
+
 	setlocale(LC_ALL, "HUN");
 	do
 	{
@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		cout << "\t\tBekérés előtt:\n\n";
+		cout << "\tBekérés előtt:\n\n";
 		oszlop = 6;
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
 			{
 				if (j == 1)
 				{
-					cout << "\t" << i + 1 << ") ";
+					cout << "\t\t" << i + 1 << ") ";
 				}
 				cout << lav[i][j];
 				if (j == 3)
@@ -169,54 +169,54 @@ int main(int argc, char* argv[])
 		}
 		cout << endl;
 
-			for (unsigned short i = 0; i < lavdb; i++)
+		for (unsigned short i = 0; i < lavdb; i++)
+		{
+			for (unsigned short j = 1; j < oszlop + 1; j++)
 			{
-				for (unsigned short j = 1; j < oszlop + 1; j++)
+				if (j == 1)
 				{
-					if (j == 1)
-					{
-						cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-					}
-					else if (j == 4)
+					cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+				}
+				else if (j == 4)
+				{
+					cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+				}
+				if (lav[i][j] != 2) //ha 2es, akkor írhat be adatot
+				{
+					j = j + 1;
+					if (j == 4)
 					{
 						cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 					}
-					if (lav[i][j] != 2) //ha 2es, akkor írhat be adatot
+				}
+				do
+				{
+					cout << "\t\t" << xyz[j - 1];
+					if (j < 3 && j != 6)
 					{
-						j = j + 1;
-						if (j == 4)
-						{
-							cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-						}
+						cout << j;
 					}
-					do
+					if (j == 4)
 					{
-						cout << "\t\t" << xyz[j - 1];
-						if (j < 3 && j != 6)
-						{
-							cout << j;
-						}
-						if (j == 4)
-						{
-							cout << j - 3;
-						}
-						else if (j == 5)
-						{
-							cout << j - 3;
-						}
-						cout << " értéke: ";
-						cin >> lav[i][j];
-						if (lav[i][j] < 0 || lav[i][j] > 1)
-						{
-							cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
-						}
-					} while (lav[i][j] < 0 || lav[i][j] > 1);
-					if (j % 3 == 0)
-					{
-						cout << "\n";
+						cout << j - 3;
 					}
+					else if (j == 5)
+					{
+						cout << j - 3;
+					}
+					cout << " értéke: ";
+					cin >> lav[i][j];
+					if (lav[i][j] < 0 || lav[i][j] > 1)
+					{
+						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
+					}
+				} while (lav[i][j] < 0 || lav[i][j] > 1);
+				if (j % 3 == 0)
+				{
+					cout << "\n";
 				}
 			}
+		}
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -243,10 +243,10 @@ int main(int argc, char* argv[])
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		teljesallapotsor tas[12] = {};
-		
+
 		tas[0].sorbetu = 'a';
 		cout << "\t" << tas[0].sorbetu << ") ";
-		
+
 		for (short i = 0; i < 3; i++)
 		{
 			tas[0].sorszam[i] = 0;
@@ -265,17 +265,48 @@ int main(int argc, char* argv[])
 					//Keresést ide kell beletenni, hogy ha már van ilyen be- és kimeneti állapot, akkor kapja meg ugyanazt a betűt!
 					for (short j = 4; j < 7; j++)
 					{
-						tas[i].sorszam[j-3] = lav[k][j];
-						cout << tas[i].sorszam[i-1] << " ";
-						if (k == lavdb-1)
-						{
-							cout << "\n";
-						}
-					}					
+						tas[i].sorszam[j - 3] = lav[k][j];
+					}
 				}
+			} //Itt fejeződik be a láv-ok összehasonlítása
+			if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 0)
+			{
+				tas[i].sorszam[1] = 1;
+				cout << "\n0 - 0\n";
+			}
+			else if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 1)
+			{
+				tas[i].sorszam[0] = 1;
+				cout << "\n0 - 1\n";
+			}
+			else if (tas[i].sorszam[0] == 1 && tas[i].sorszam[1] == 0)
+			{
+				tas[i].sorszam[0] = 0;
+				cout << "\n1 - 0\n";
+			}
+			else if (tas[i].sorszam[0] == 1 && tas[i].sorszam[1] == 1)
+			{
+				tas[i].sorszam[0] = 0;
+				cout << "\n1 - 1\n";
 			}
 		}
 
+		for (short i = 0; i < 13; i++)
+		{
+			cout << "\t";
+			for (short j = 1; j < 4; j++)
+			{
+				cout << tas[i].sorszam[j];
+				if (j == 3)
+				{
+					cout << "\n";
+				}
+				else
+				{
+					cout << " ";
+				}
+			}
+		}
 		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
