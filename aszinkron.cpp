@@ -5,7 +5,7 @@ using namespace std;
 struct teljesallapotsor
 {
 	char sorbetu;
-	int sorszam[3];
+	int sorszam[4];
 };
 
 void negacio(unsigned short* neghely, unsigned short** lav)
@@ -145,13 +145,13 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (lav[0][1]!=2 && lav[0][2] != 2 && lav[0][3] != 2)
+		if (lav[0][1] != 2 || lav[0][2] != 2 || lav[0][3] != 2)
 		{
 			cout << "\tBekérés előtt:\n\n";
 			oszlop = 6;
 			for (unsigned short i = 0; i < lavdb; i++)
 			{
-				for (unsigned short j = 1; j <= oszlop; j++)
+				for (unsigned short j = 1; j < oszlop + 1; j++)
 				{
 					if (j == 1)
 					{
@@ -184,7 +184,7 @@ int main(int argc, char* argv[])
 				{
 					cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
-				if (lav[i][j] != 2) //ha 2es, akkor írhat be adatot
+				if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
 				{
 					j = j + 1;
 					if (j == 4)
@@ -230,7 +230,7 @@ int main(int argc, char* argv[])
 			{
 				if (j == 1)
 				{
-					cout << "\t" << i + 1 << ") ";
+					cout << "\t\t" << i + 1 << ") ";
 				}
 				cout << lav[i][j];
 				if (j == 3)
@@ -250,51 +250,48 @@ int main(int argc, char* argv[])
 		tas[0].sorbetu = 'a';
 		cout << "\t" << tas[0].sorbetu << ") ";
 
-		for (short i = 0; i < 3; i++)
+		for (short i = 1; i < 4; i++)
 		{
+			tas[0].sorszam[0] = 2;
 			tas[0].sorszam[i] = 0;
 			cout << tas[0].sorszam[i] << " ";
-			if (i == 2)
+			if (i == 3)
 			{
 				cout << "\n";
 			}
 		}
-		for (short i = 1; i < 13; i++)
+
+		for (unsigned short i = 0; i < 12; i++)
 		{
-			for (short k = 0; k < lavdb; k++)
+			//Lényeges állapotváltozásokkal összehasonlítani
+			for (unsigned short j = 0; j < lavdb; j++)
 			{
-				if (lav[k][1] == tas[i].sorszam[0] && lav[k][2] == tas[i].sorszam[1] && lav[k][3] == tas[i].sorszam[2])
+				if (tas[i].sorszam[1] == lav[j][1] && tas[i].sorszam[2] == lav[j][2] && tas[i].sorszam[3] == lav[j][3])
 				{
-					//Keresést ide kell beletenni, hogy ha már van ilyen be- és kimeneti állapot, akkor kapja meg ugyanazt a betűt!
-					for (short j = 4; j < 7; j++)
+					tas[i + 1].sorszam[1] = lav[j][4];
+					tas[i + 1].sorszam[2] = lav[j][5];
+					tas[i + 1].sorszam[3] = lav[j][6];
+					tas[i + 1].sorszam[0] = 0;
+				}
+			} //LÁV vége
+			  //Ha 2 LÁV között 2 bit külömbség van, akkor a LÁVnak megfelelően legyen megváltoztatva a X1 vagy az X2
+			if (lavdb > 1)
+			{
+				for (unsigned short j = 0; j < lavdb - 1; j++)
+				{
+					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
 					{
-						tas[i].sorszam[j - 3] = lav[k][j];
+						tas[i + 1].sorszam[1] = 1;
+					}
+					else if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
+					{
+						tas[i + 1].sorszam[2] = 1;
 					}
 				}
-			} //Itt fejeződik be a láv-ok összehasonlítása
-			/*if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 0)
-			{
-				tas[i].sorszam[1] = 1;
-				cout << "\n0 - 0\n";
 			}
-			else if (tas[i].sorszam[0] == 0 && tas[i].sorszam[1] == 1)
-			{
-				tas[i].sorszam[0] = 1;
-				cout << "\n0 - 1\n";
-			}
-			else if (tas[i].sorszam[0] == 1 && tas[i].sorszam[1] == 0)
-			{
-				tas[i].sorszam[0] = 0;
-				cout << "\n1 - 0\n";
-			}
-			else if (tas[i].sorszam[0] == 1 && tas[i].sorszam[1] == 1)
-			{
-				tas[i].sorszam[0] = 0;
-				cout << "\n1 - 1\n";
-			}*/
 		}
 
-		for (short i = 0; i < 13; i++)
+		for (short i = 1; i < 12; i++)
 		{
 			cout << "\t";
 			for (short j = 1; j < 4; j++)
@@ -308,10 +305,6 @@ int main(int argc, char* argv[])
 				{
 					cout << " ";
 				}
-			}
-			if (tas[i-1].sorszam[0] && tas[i-1].sorszam[1] && tas[i -1].sorszam[2] == tas[i].sorszam[0] && tas[i].sorszam[1] && tas[i].sorszam[2])
-			{
-				break;
 			}
 		}
 		cout << "\n\n";
