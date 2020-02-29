@@ -169,7 +169,6 @@ int main(int argc, char* argv[])
 				}
 				cout << endl;
 			}
-			cout << endl;
 		}
 
 		for (unsigned short i = 0; i < lavdb; i++)
@@ -178,7 +177,7 @@ int main(int argc, char* argv[])
 			{
 				if (j == 1)
 				{
-					cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+					cout << "\n\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
 				else if (j == 4)
 				{
@@ -207,8 +206,11 @@ int main(int argc, char* argv[])
 					{
 						cout << j - 3;
 					}
-					cout << " értéke: ";
-					cin >> lav[i][j];
+					if (lav[i][j] == 2)
+					{
+						cout << " értéke: ";
+						cin >> lav[i][j];
+					}
 					if (lav[i][j] < 0 || lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
@@ -245,8 +247,25 @@ int main(int argc, char* argv[])
 			cout << endl;
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
-		teljesallapotsor tas[12] = {};
+		teljesallapotsor tas[12] = { 2 };
 
+		for (short i = 1; i < 12; i++)
+		{
+			cout << "\tMűveletek előtt:\n" << "\t";
+			for (short j = 1; j < 4; j++)
+			{
+				cout << tas[i].sorszam[j];
+				if (j == 3)
+				{
+					cout << "\n";
+				}
+				else
+				{
+					cout << " ";
+				}
+			}
+		}
+		cout << "\n\n";
 		tas[0].sorbetu = 'a';
 		cout << "\t" << tas[0].sorbetu << ") ";
 
@@ -275,20 +294,20 @@ int main(int argc, char* argv[])
 				}
 			} //LÁV vége
 			  //Ha 2 LÁV között 2 bit külömbség van, akkor a LÁVnak megfelelően legyen megváltoztatva a X1 vagy az X2
-			if (lavdb > 1)
-			{
-				for (unsigned short j = 0; j < lavdb - 1; j++)
-				{
-					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
-					{
-						tas[i + 1].sorszam[1] = 1;
-					}
-					else if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
-					{
-						tas[i + 1].sorszam[2] = 1;
-					}
-				}
-			}
+		//	if (lavdb > 1)
+//			{
+//				for (unsigned short j = 0; j < lavdb - 1; j++)
+//				{
+//					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
+//					{
+//						tas[i + 1].sorszam[1] = 1;
+//					}
+//					else if (lav[j][4] == lav[j + 1][1] && lav[j][6] == lav[j + 1][3])
+//					{
+//						tas[i + 1].sorszam[2] = 1;
+//					}
+//				}
+//			}
 		}
 
 		for (short i = 1; i < 12; i++)
