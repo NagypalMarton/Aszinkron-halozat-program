@@ -65,7 +65,7 @@ void negacio(unsigned short* neghely, unsigned short** lav)
 int main(int argc, char* argv[])
 {
 	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
-	char igen = 'y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
+	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb];
 
 	setlocale(LC_ALL, "HUN");
@@ -75,9 +75,9 @@ int main(int argc, char* argv[])
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
 
-		cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n) \t";
+		cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
 		cin >> valasz;
-		if (valasz == igen)
+		if (valasz == igen || valasz == IGEN)
 		{
 			do
 			{
@@ -91,6 +91,16 @@ int main(int argc, char* argv[])
 
 			cout << endl;
 			lavdb = pow(2, negdb); //hatványozás
+			char v1;
+			cout << "\t A(z) " << lavdb << " db lényeges állapotsor változáson felül, lesznek-e még sorok? (y/n)\t";
+			cin >> v1;
+			if (v1 == igen || v1 == IGEN)
+			{
+				short plus;
+				cout << "\n\tHány LÉNYEGES állapotváltozás lesz pluszban?\t";
+				cin >> plus;
+				lavdb += plus;
+			}
 		}
 		else
 		{
@@ -121,7 +131,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (negdb > 0 && negdb < 3 && valasz == igen)
+		if (negdb > 0 && negdb < 3 && valasz == igen || valasz == IGEN)
 		{
 			switch (negdb)
 			{
@@ -246,26 +256,18 @@ int main(int argc, char* argv[])
 			}
 			cout << endl;
 		}
-		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
-		teljesallapotsor tas[12] = { 2 };
-
-		for (short i = 1; i < 12; i++)
+		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
+		teljesallapotsor tas[24] = {};
+		unsigned short tasdb = 1, tasdbb = 24;
+		//2essel való felttés
+		for (short i = 1; i < tasdbb; i++)
 		{
-			cout << "\tMűveletek előtt:\n" << "\t";
 			for (short j = 1; j < 4; j++)
 			{
-				cout << tas[i].sorszam[j];
-				if (j == 3)
-				{
-					cout << "\n";
-				}
-				else
-				{
-					cout << " ";
-				}
+				tas[i].sorszam[j] = 2;
 			}
 		}
-		cout << "\n\n";
+		cout << "\n";
 		tas[0].sorbetu = 'a';
 		cout << "\t" << tas[0].sorbetu << ") ";
 
@@ -280,7 +282,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		for (unsigned short i = 0; i < 12; i++)
+		for (unsigned short i = 0; i < tasdbb; i++)
 		{
 			//Lényeges állapotváltozásokkal összehasonlítani
 			for (unsigned short j = 0; j < lavdb; j++)
@@ -290,27 +292,97 @@ int main(int argc, char* argv[])
 					tas[i + 1].sorszam[1] = lav[j][4];
 					tas[i + 1].sorszam[2] = lav[j][5];
 					tas[i + 1].sorszam[3] = lav[j][6];
-					tas[i + 1].sorszam[0] = 0;
+					tas[i + 1].sorszam[0] = 2;
+					tasdb++;
 				}
 			} //LÁV vége
-			  //Ha 2 LÁV között 2 bit külömbség van, akkor a LÁVnak megfelelően legyen megváltoztatva a X1 vagy az X2
-		//	if (lavdb > 1)
-//			{
-//				for (unsigned short j = 0; j < lavdb - 1; j++)
-//				{
-//					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3])
-//					{
-//						tas[i + 1].sorszam[1] = 1;
-//					}
-//					else if (lav[j][4] == lav[j + 1][1] && lav[j][6] == lav[j + 1][3])
-//					{
-//						tas[i + 1].sorszam[2] = 1;
-//					}
-//				}
-//			}
+			  //Ha 000 és nincs több LÁV, akkor breakeljen és ne csináljon feleslegesen tovább
+			if (tas[i].sorszam[3] == 0 && i > 0)
+			{
+				if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0)
+				{
+					tas[i].sorbetu = 'a';
+					for (short k = 1; k < 4; k++)
+					{
+						tas[i].sorszam[0] = 2;
+						tas[i].sorszam[k] = 0;
+					}
+					tasdb++;
+					break;	break;	break;
+				}
+			}
+			//Ha 2 LÁV között 2 bit külömbség van, akkor a LÁVnak megfelelően legyen megváltoztatva a X1 vagy az X2
+			if (tas[i + 1].sorszam[0] != 2 && lavdb > 1)
+			{//Mi van, ha csak 1 van és mi van, ha nem soha nem kell használni??
+				for (unsigned short j = 0; j < lavdb - 1; j++)
+				{
+					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3]) //ha 5-6 megegyezik a következő LÁV 2-3 számokkal
+					{
+						if (lav[j][5] == 1 && tas[i].sorszam[0] != 3)
+						{
+							tas[i + 1].sorszam[0] = 3;
+							tas[i + 1].sorszam[1] = 1;
+							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][5] == 1 && tas[i].sorszam[0] == 3)
+						{
+							tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+							tas[i + 1].sorszam[2] = 1;
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][5] == 0 && tas[i].sorszam[0] != 3)
+						{
+							tas[i + 1].sorszam[0] = 3;
+							tas[i + 1].sorszam[1] = 0;
+							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][5] == 0 && tas[i].sorszam[0] == 3)
+						{
+							tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+							tas[i + 1].sorszam[2] = 0;
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+					}
+					else if (lav[j][4] == lav[j + 1][1] && lav[j][6] == lav[j + 1][3]) //ha 4-6 megegyezik a következő LÁV 1-3 számokkal
+					{
+						if (lav[j][4] == 1 && tas[i].sorszam[0] != 3)
+						{
+							tas[i + 1].sorszam[0] = 3;
+							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+							tas[i + 1].sorszam[2] = 1;
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][4] == 1 && tas[i].sorszam[0] == 3)
+						{
+							tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+							tas[i + 1].sorszam[1] = 1;
+							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][4] == 0 && tas[i].sorszam[0] != 3)
+						{
+							tas[i + 1].sorszam[0] = 3;
+							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+							tas[i + 1].sorszam[2] = 0;
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+						else if (lav[j][4] == 0 && tas[i].sorszam[0] == 3)
+						{
+							tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+							tas[i + 1].sorszam[1] = 0;
+							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+							tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+						}
+					}
+				}
+			}
 		}
 
-		for (short i = 1; i < 12; i++)
+		for (short i = 1; i < tasdb; i++) //TAS kiírattatása
 		{
 			cout << "\t";
 			for (short j = 1; j < 4; j++)
@@ -324,12 +396,17 @@ int main(int argc, char* argv[])
 				{
 					cout << " ";
 				}
+				if (tas[i + 1].sorszam[j] == 2)
+				{
+					break;
+					break;
+				}
 			}
 		}
 		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
-	} while (valasz == igen);
+	} while (valasz == igen || valasz == IGEN);
 	system("pause");
 	return 0;
 }
