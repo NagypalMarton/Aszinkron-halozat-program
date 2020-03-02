@@ -1,5 +1,30 @@
 ﻿  aszinkron.cpp
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(143,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(148,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(168,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-  Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(119,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(124,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(144,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(397,2): error C2059: syntax error: 'for'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(397,20): error C2065: 'i': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(397,24): error C2065: 'tasdb': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(397,31): error C2065: 'i': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(397,34): error C2059: syntax error: ')'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(399,15): error C2059: syntax error: ';'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(402,12): error C2065: 'tas': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(402,16): error C2065: 'i': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(411,8): error C2065: 'tas': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(411,12): error C2065: 'i': undeclared identifier
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(418,7): error C2143: syntax error: missing ';' before '<<'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(418,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(419,7): error C2143: syntax error: missing ';' before '<<'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(419,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(419,2): error C2086: 'int cout': redefinition
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(418): message : see declaration of 'cout'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(420,6): error C2143: syntax error: missing ';' before '>>'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(420,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(421,1): error C2059: syntax error: '}'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(421,1): error C2143: syntax error: missing ';' before '}'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(422,15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(422,1): error C2365: 'system': redefinition; previous definition was 'function'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(1218): message : see declaration of 'system'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(423,1): error C2059: syntax error: 'return'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(424,1): error C2059: syntax error: '}'
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(424,1): error C2143: syntax error: missing ';' before '}'

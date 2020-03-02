@@ -67,51 +67,27 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 	switch (tassorszam)
 	{
 	case 1:
-		tas[i + 1].sorszam[0] = 3;
+		//tas[i + 1].sorszam[0] = 3;
 		tas[i + 1].sorszam[1] = 1;
 		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
 		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
 		break;
 	case 2:
-		tas[i + 1].sorszam[0] = 3;
+		//tas[i + 1].sorszam[0] = 3;
 		tas[i + 1].sorszam[1] = 0;
 		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
 		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
 		break;
 	case 3:
-		tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+		//tas[i + 1].sorszam[0] = 3;
 		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
 		tas[i + 1].sorszam[2] = 1;
 		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
 		break;
 	case 4:
-		tas[i + 1].sorszam[0] = tas[i].sorszam[0];
+		//tas[i + 1].sorszam[0] = 3;
 		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
 		tas[i + 1].sorszam[2] = 0;
-		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-		break;
-	case 5:
-		tas[i + 1].sorszam[0] = 3;
-		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-		tas[i + 1].sorszam[2] = 1;
-		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-		break;
-	case 6:
-		tas[i + 1].sorszam[0] = 3;
-		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-		tas[i + 1].sorszam[2] = 0;
-		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-		break;
-	case 7:
-		tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-		tas[i + 1].sorszam[1] = 1;
-		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-		break;
-	case 8:
-		tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-		tas[i + 1].sorszam[1] = 0;
-		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
 		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
 		break;
 	}
@@ -313,7 +289,7 @@ int main(int argc, char* argv[])
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
 		teljesallapotsor tas[24] = {};
-		unsigned short tasdb = 1, tasdbb = 24, tassorszam=0;
+		unsigned short tasdb = 1, tasdbb = 24, tassorszam = 0;
 		//2essel való felttés
 		for (short i = 1; i < tasdbb; i++)
 		{
@@ -336,7 +312,6 @@ int main(int argc, char* argv[])
 				cout << "\n";
 			}
 		}
-
 		for (unsigned short i = 0; i < tasdbb; i++)
 		{
 			//Lényeges állapotváltozásokkal összehasonlítani
@@ -347,147 +322,103 @@ int main(int argc, char* argv[])
 					tas[i + 1].sorszam[1] = lav[j][4];
 					tas[i + 1].sorszam[2] = lav[j][5];
 					tas[i + 1].sorszam[3] = lav[j][6];
-					tas[i + 1].sorszam[0] = 2;
+					//tas[i + 1].sorszam[0] = 2;
 					tasdb++;
 				}
 			} //LÁV vége
-			  //Ha 000 és nincs több LÁV, akkor breakeljen és ne csináljon feleslegesen tovább
+
 			if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0 && tas[i].sorszam[3] == 0 && i > 0)
 			{
 				tas[i].sorbetu = 'a';
-					for (short k = 1; k < 4; k++)
-					{
-						tas[i].sorszam[0] = 2;
-						tas[i].sorszam[k] = 0;
-					}
-					tasdb++;
-					break;	break;
-			}
-			//Ha 2 LÁV között 2 bit külömbség van, akkor a LÁVnak megfelelően legyen megváltoztatva a X1 vagy az X2
-			if (tas[i + 1].sorszam[0] != 2 && lavdb > 1)
-			{
-				for (unsigned short j = 0; j < lavdb - 1; j++)
+				for (short k = 1; k < 4; k++)
 				{
-					if (lav[j][5] == lav[j + 1][2] && lav[j][6] == lav[j + 1][3]) //ha 5-6 megegyezik a következő LÁV 2-3 számokkal
-					{
-						if (lav[j][5] == 1 && tas[i].sorszam[0] != 3)
-						{
-							//1
-							tassorszam = 1;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = 3;
-							tas[i + 1].sorszam[1] = 1;
-							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][5] == 1 && tas[i].sorszam[0] == 3)
-						{
-							//3
-							tassorszam = 3;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-							tas[i + 1].sorszam[2] = 1;
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][5] == 0 && tas[i].sorszam[0] != 3)
-						{
-							//2
-							tassorszam = 2;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = 3;
-							tas[i + 1].sorszam[1] = 0;
-							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][5] == 0 && tas[i].sorszam[0] == 3)
-						{
-							//4
-							tassorszam = 4;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-							tas[i + 1].sorszam[2] = 0;
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-					}
-					else if (lav[j][4] == lav[j + 1][1] && lav[j][6] == lav[j + 1][3]) //ha 4-6 megegyezik a következő LÁV 1-3 számokkal
-					{
-						if (lav[j][4] == 1 && tas[i].sorszam[0] != 3)
-						{
-							//5
-							tassorszam = 5;
-							lepegetes(tas,tassorszam,i);
-							/*tas[i + 1].sorszam[0] = 3;
-							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-							tas[i + 1].sorszam[2] = 1;
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][4] == 1 && tas[i].sorszam[0] == 3)
-						{
-							//7
-							tassorszam = 7;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-							tas[i + 1].sorszam[1] = 1;
-							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][4] == 0 && tas[i].sorszam[0] != 3)
-						{
-							//6
-							tassorszam = 6;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = 3;
-							tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-							tas[i + 1].sorszam[2] = 0;
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-						else if (lav[j][4] == 0 && tas[i].sorszam[0] == 3)
-						{
-							//8
-							tassorszam = 8;
-							lepegetes(tas, tassorszam, i);
-							/*tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-							tas[i + 1].sorszam[1] = 0;
-							tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-							tas[i + 1].sorszam[3] = tas[i].sorszam[3];*/
-						}
-					}
+					tas[i].sorszam[0] = 2;
+					tas[i].sorszam[k] = 0;
 				}
+				tasdb++;
+				break;
+				break;
 			}
-			else if (tas[i + 1].sorszam[0] != 2 && lavdb == 1) //Csak csak van
+			if (lav[i][3] == 0)
 			{
-				
-			}
-		}
+				if (tas[i].sorszam[1] == 1 && lav[i][1] == 1 && tas[i].sorszam[2] != lav[i][2])
+				{
+					if (tas[i].sorszam[2] == 1)
+					{
 
-		//TAS kiírattatása
-		for (short i = 1; i < tasdb; i++)
-		{
-			cout << "\t";
-			for (short j = 1; j < 4; j++)
-			{
-				cout << tas[i].sorszam[j];
-				if (j == 3)
-				{
-					cout << "\n";
+					}
+					else
+					{
+
+					}
 				}
-				else
+				else if (tas[i].sorszam[1] == 0 && lav[i][1] == 0 && tas[i].sorszam[2] != lav[i][2])
 				{
-					cout << " ";
+					if (tas[i].sorszam[2] == 1)
+					{
+
+					}
+					else
+					{
+
+					}
 				}
-				if (tas[i + 1].sorszam[j] == 2)
+				else if (tas[i].sorszam[2] == 0 && lav[i][2] == 0 && tas[i].sorszam[1] != lav[i][1])
 				{
-					break;
-					break;
+					if (tas[i].sorszam[2] == 1)
+					{
+
+					}
+					else
+					{
+
+					}
+				}
+				else if (tas[i].sorszam[2] == 1 && lav[i][2] == 1 && tas[i].sorszam[1] != lav[i][1])
+				{
+					if (tas[i].sorszam[2] == 1)
+					{
+
+					}
+					else
+					{
+
+					}
 				}
 			}
+			else
+			{
+
+			}
 		}
-		cout << "\n\n";
-		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
-		cin >> valasz;
-	} while (valasz == igen || valasz == IGEN);
-	system("pause");
-	return 0;
+	}
+
+	//TAS kiírattatása
+	for (short i = 1; i < tasdb; i++)
+	{
+		cout << "\t";
+		for (short j = 1; j < 4; j++)
+		{
+			cout << tas[i].sorszam[j];
+			if (j == 3)
+			{
+				cout << "\n";
+			}
+			else
+			{
+				cout << " ";
+			}
+			if (tas[i + 1].sorszam[j] == 2)
+			{
+				break;
+				break;
+			}
+		}
+	}
+	cout << "\n\n";
+	cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
+	cin >> valasz;
+} while (valasz == igen || valasz == IGEN);
+system("pause");
+return 0;
 }
