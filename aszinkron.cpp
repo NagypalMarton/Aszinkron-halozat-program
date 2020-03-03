@@ -338,15 +338,12 @@ int main(int argc, char* argv[])
 					tassorszam = 4;
 					lepegetes(tas, tassorszam, i);
 				}
-				else
-				{
-					cout << "\t.Jaj!\n";
-				}
-				//cout << "\t"<< i+1<< ".\t";
+				cout << "\t"<< i+1<< " ";
 				tasdb++;
 			}
+			cout << endl;
 			i++;
-		} while (tas[i].sorszam[1] != 0 || tas[i].sorszam[2] != 0 && tas[i].sorszam[3] != 0);
+		} while (tas[i].sorszam[1] != 0 && tas[i].sorszam[2] != 0 && tas[i].sorszam[3] != 0);
 
 		//TAS kiírattatása
 		for (short i = 1; i < tasdb; i++)
@@ -363,11 +360,11 @@ int main(int argc, char* argv[])
 				{
 					cout << " ";
 				}
-				//if (tas[i + 1].sorszam[j] == 2)
-//				{
-//					break;
-//					break;
-//				}
+				/*if (tas[i + 1].sorszam[j] == 2)
+				{
+					break;
+					break;
+				}*/
 			}
 		}
 		cout << "\n\n";
