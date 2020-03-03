@@ -25,14 +25,12 @@ void negacio(unsigned short* neghely, unsigned short** lav)
 			lav[0][5] = 1;
 			lav[1][2] = 1;
 			lav[1][5] = 0;
-
 			break;
 		case 3:
 			lav[0][3] = 0;
 			lav[0][6] = 1;
 			lav[1][3] = 1;
 			lav[1][6] = 0;
-
 			break;
 		}
 	}
@@ -122,28 +120,18 @@ int main(int argc, char* argv[])
 
 			cout << endl;
 			lavdb = pow(2, negdb); //hatványozás
-			char v1;
-			cout << "\t A(z) " << lavdb << " db lényeges állapotsor változáson felül, lesznek-e még sorok? (y/n)\t";
-			cin >> v1;
-			if (v1 == igen || v1 == IGEN)
-			{
-				short plus;
-				cout << "\n\tHány LÉNYEGES állapotváltozás lesz pluszban?\t";
-				cin >> plus;
-				lavdb += plus;
-			}
 		}
 		else
 		{
 			do
 			{
-				cout << "\tHány LÉNYEGES állapotváltozás lesz? (1 és 8 lehet)\t";
+				cout << "\tHány LÉNYEGES állapotváltozás lesz? (1 és 4 lehet)\t";
 				cin >> lavdb;
-				if (lavdb < 1 || lavdb > 8)
+				if (lavdb < 1 || lavdb > 4)
 				{
 					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
 				}
-			} while (lavdb < 1 || lavdb > 8);
+			} while (lavdb < 1 || lavdb > 4);
 			cout << endl;
 		}
 
@@ -312,7 +300,9 @@ int main(int argc, char* argv[])
 				cout << "\n";
 			}
 		}
-		for (unsigned short i = 0; i < tasdbb; i++)
+		//for (unsigned short i = 0; i < tasdbb; i++)
+		short i = 0;
+		do
 		{
 			//Lényeges állapotváltozásokkal összehasonlítani
 			for (unsigned short j = 0; j < lavdb; j++)
@@ -322,103 +312,68 @@ int main(int argc, char* argv[])
 					tas[i + 1].sorszam[1] = lav[j][4];
 					tas[i + 1].sorszam[2] = lav[j][5];
 					tas[i + 1].sorszam[3] = lav[j][6];
-					//tas[i + 1].sorszam[0] = 2;
+					tas[i + 1].sorszam[0] = 2;
 					tasdb++;
 				}
 			} //LÁV vége
-
-			if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0 && tas[i].sorszam[3] == 0 && i > 0)
+			if (tas[i + 1].sorszam[0] != 2)
 			{
-				tas[i].sorbetu = 'a';
-				for (short k = 1; k < 4; k++)
+				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
-					tas[i].sorszam[0] = 2;
-					tas[i].sorszam[k] = 0;
+					tassorszam = 2;
+					lepegetes(tas, tassorszam, i);
 				}
+				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
+				{
+					tassorszam = 1;
+					lepegetes(tas, tassorszam, i);
+				}
+				else if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 0) // 1 0
+				{
+					tassorszam = 3;
+					lepegetes(tas, tassorszam, i);
+				}
+				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 1) // 0 1
+				{
+					tassorszam = 4;
+					lepegetes(tas, tassorszam, i);
+				}
+				else
+				{
+					cout << "\t.Jaj!\n";
+				}
+				//cout << "\t"<< i+1<< ".\t";
 				tasdb++;
-				break;
-				break;
 			}
-			if (lav[i][3] == 0)
-			{
-				if (tas[i].sorszam[1] == 1 && lav[i][1] == 1 && tas[i].sorszam[2] != lav[i][2])
-				{
-					if (tas[i].sorszam[2] == 1)
-					{
+			i++;
+		} while (tas[i].sorszam[1] != 0 || tas[i].sorszam[2] != 0 && tas[i].sorszam[3] != 0);
 
-					}
-					else
-					{
-
-					}
-				}
-				else if (tas[i].sorszam[1] == 0 && lav[i][1] == 0 && tas[i].sorszam[2] != lav[i][2])
-				{
-					if (tas[i].sorszam[2] == 1)
-					{
-
-					}
-					else
-					{
-
-					}
-				}
-				else if (tas[i].sorszam[2] == 0 && lav[i][2] == 0 && tas[i].sorszam[1] != lav[i][1])
-				{
-					if (tas[i].sorszam[2] == 1)
-					{
-
-					}
-					else
-					{
-
-					}
-				}
-				else if (tas[i].sorszam[2] == 1 && lav[i][2] == 1 && tas[i].sorszam[1] != lav[i][1])
-				{
-					if (tas[i].sorszam[2] == 1)
-					{
-
-					}
-					else
-					{
-
-					}
-				}
-			}
-			else
-			{
-
-			}
-		}
-	}
-
-	//TAS kiírattatása
-	for (short i = 1; i < tasdb; i++)
-	{
-		cout << "\t";
-		for (short j = 1; j < 4; j++)
+		//TAS kiírattatása
+		for (short i = 1; i < tasdb; i++)
 		{
-			cout << tas[i].sorszam[j];
-			if (j == 3)
+			cout << "\t";
+			for (short j = 1; j < 4; j++)
 			{
-				cout << "\n";
-			}
-			else
-			{
-				cout << " ";
-			}
-			if (tas[i + 1].sorszam[j] == 2)
-			{
-				break;
-				break;
+				cout << tas[i].sorszam[j];
+				if (j == 3)
+				{
+					cout << "\n";
+				}
+				else
+				{
+					cout << " ";
+				}
+				//if (tas[i + 1].sorszam[j] == 2)
+//				{
+//					break;
+//					break;
+//				}
 			}
 		}
-	}
-	cout << "\n\n";
-	cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
-	cin >> valasz;
-} while (valasz == igen || valasz == IGEN);
-system("pause");
-return 0;
+		cout << "\n\n";
+		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
+		cin >> valasz;
+	} while (valasz == igen || valasz == IGEN);
+	system("pause");
+	return 0;
 }
