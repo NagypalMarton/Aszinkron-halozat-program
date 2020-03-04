@@ -322,13 +322,18 @@ int main(int argc, char* argv[])
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if(tas[i].sorszam[1] != lav[k][1])
+					if(tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3]== lav[k][3])
 					{
 						tassorszam = 4;
 					}
-					else if(tas[i].sorszam[2] != lav[k][2])
+					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 2;
+					}
+					else
+					{
+						cout << "\tS\n";
+						//tassorszam = 2;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -338,13 +343,18 @@ int main(int argc, char* argv[])
 				{
 					tas[i + 1].sorbetu = abc[abcd];
 					tassorszam = 1;
-					if (tas[i].sorszam[1] != lav[k][1])
+					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 3;
 					}
-					else if(tas[i].sorszam[2] != lav[k][2])
+					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 1;
+					}
+					else
+					{
+						cout << "\tS\n";
+						//tassorszam = 3;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -353,13 +363,18 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 0) // 1 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1])
+					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 3;
 					}
-					else
+					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 2;
+					}
+					else
+					{
+						cout << "\tS\n";
+						//tassorszam = 2;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -368,13 +383,18 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 1) // 0 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1])
+					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 1;
 					}
-					else
+					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 4;
+					}
+					else
+					{
+						cout << "\tS\n";
+					//	tassorszam = 4;
 					}
 					tassorszam = 4;
 					lepegetes(tas, tassorszam, i);
