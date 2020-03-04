@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include <ctime>
 #include <math.h>
 using namespace std;
 
@@ -248,6 +247,7 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
+		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -275,7 +275,6 @@ int main(int argc, char* argv[])
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
 		teljesallapotsor tas[24] = {};
 		unsigned short tasdb = 1, tasdbb = 24, tassorszam = 0, lavd = 0, abcd = 1;
-		srand((unsigned)time(NULL));//véletlenszámhoz
 		
 		for (short i = 1; i < tasdbb; i++) //2essel való feltöltés
 		{
@@ -317,14 +316,20 @@ int main(int argc, char* argv[])
 				lavd = lavd + 1;
 			} //LÁV vége
 
+			short k = 0;
 			if (tas[i + 1].sorszam[0] != 2)
 			{
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = rand() % 2 + 1;
-					cout << "\tTAS sorszam: " << tassorszam << "\n";
-					//tassorszam = 2;
+					if(tas[i].sorszam[1] != lav[k][1])
+					{
+						tassorszam = 4;
+					}
+					else if(tas[i].sorszam[2] != lav[k][2])
+					{
+						tassorszam = 2;
+					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -332,9 +337,15 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = rand() % 2 + 1;
-					cout << "\tTAS sorszam: " << tassorszam << "\n";
-					//tassorszam = 1;
+					tassorszam = 1;
+					if (tas[i].sorszam[1] != lav[k][1])
+					{
+						tassorszam = 3;
+					}
+					else if(tas[i].sorszam[2] != lav[k][2])
+					{
+						tassorszam = 1;
+					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -342,9 +353,14 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 0) // 1 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = rand() % 2 + 3;
-					cout << "\tTAS sorszam: " << tassorszam << "\n";
-					//tassorszam = 3;
+					if (tas[i].sorszam[1] != lav[k][1])
+					{
+						tassorszam = 3;
+					}
+					else
+					{
+						tassorszam = 2;
+					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -352,13 +368,20 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 1) // 0 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = rand() % 2 + 3;
-					cout << "\tTAS sorszam: " << tassorszam<<"\n";
-					//tassorszam = 4;
+					if (tas[i].sorszam[1] != lav[k][1])
+					{
+						tassorszam = 1;
+					}
+					else
+					{
+						tassorszam = 4;
+					}
+					tassorszam = 4;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
 				}
+				k++;
 			}
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{

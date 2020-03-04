@@ -1,47 +1,20 @@
-//1
-tas[i + 1].sorszam[0] = 3;
-tas[i + 1].sorszam[1] = 1;
-tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//2
-tas[i + 1].sorszam[0] = 3;
-tas[i + 1].sorszam[1] = 0;
-tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//3
-tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-tas[i + 1].sorszam[2] = 1;
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//4
-tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-tas[i + 1].sorszam[2] = 0;
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//5
-tas[i + 1].sorszam[0] = 3;
-tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-tas[i + 1].sorszam[2] = 1;
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//6
-tas[i + 1].sorszam[0] = 3;
-tas[i + 1].sorszam[1] = tas[i].sorszam[1];
-tas[i + 1].sorszam[2] = 0;
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//7
-tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-tas[i + 1].sorszam[1] = 1;
-tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
-
-//8
-tas[i + 1].sorszam[0] = tas[i].sorszam[0];
-tas[i + 1].sorszam[1] = 0;
-tas[i + 1].sorszam[2] = tas[i].sorszam[2];
-tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+	case 1:
+		tas[i + 1].sorszam[1] = 1;
+		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+		break;
+	case 2:
+		tas[i + 1].sorszam[1] = 0;
+		tas[i + 1].sorszam[2] = tas[i].sorszam[2];
+		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+		break;
+	case 3:
+		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+		tas[i + 1].sorszam[2] = 1;
+		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+		break;
+	case 4:
+		tas[i + 1].sorszam[1] = tas[i].sorszam[1];
+		tas[i + 1].sorszam[2] = 0;
+		tas[i + 1].sorszam[3] = tas[i].sorszam[3];
+		break;
