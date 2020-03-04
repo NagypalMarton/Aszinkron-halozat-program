@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <ctime>
 #include <math.h>
 using namespace std;
 
@@ -274,8 +275,9 @@ int main(int argc, char* argv[])
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
 		teljesallapotsor tas[24] = {};
 		unsigned short tasdb = 1, tasdbb = 24, tassorszam = 0, lavd = 0, abcd = 1;
-		//2essel való feltöltés
-		for (short i = 1; i < tasdbb; i++)
+		srand((unsigned)time(NULL));//véletlenszámhoz
+		
+		for (short i = 1; i < tasdbb; i++) //2essel való feltöltés
 		{
 			for (short j = 1; j < 4; j++)
 			{
@@ -320,7 +322,9 @@ int main(int argc, char* argv[])
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = 2;
+					tassorszam = rand() % 2 + 1;
+					cout << "\tTAS sorszam: " << tassorszam << "\n";
+					//tassorszam = 2;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -328,7 +332,9 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = 1;
+					tassorszam = rand() % 2 + 1;
+					cout << "\tTAS sorszam: " << tassorszam << "\n";
+					//tassorszam = 1;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -336,7 +342,9 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 0) // 1 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = 3;
+					tassorszam = rand() % 2 + 3;
+					cout << "\tTAS sorszam: " << tassorszam << "\n";
+					//tassorszam = 3;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -344,7 +352,9 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 1) // 0 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = 4;
+					tassorszam = rand() % 2 + 3;
+					cout << "\tTAS sorszam: " << tassorszam<<"\n";
+					//tassorszam = 4;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
