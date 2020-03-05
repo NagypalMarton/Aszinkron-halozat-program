@@ -160,11 +160,11 @@ int main(int argc, char* argv[])
 				{
 					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
 					cin >> neghely[0] >> neghely[1];
-					if (neghely[0] && neghely[1] > 3 || neghely[0] && neghely[1] < 0)
+					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
 					{
 						cout << "\n\tNem megfelelő számokat írtál be!";
 					}
-				} while (neghely[0] && neghely[1] > 3 || neghely[0] && neghely[1] < 0);
+				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
 				negacio(neghely, lav);
 				break;
 			}
@@ -247,7 +247,6 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -275,7 +274,7 @@ int main(int argc, char* argv[])
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
 		teljesallapotsor tas[24] = {};
 		unsigned short tasdb = 1, tasdbb = 24, tassorszam = 0, lavd = 0, abcd = 1;
-		
+
 		for (short i = 1; i < tasdbb; i++) //2essel való feltöltés
 		{
 			for (short j = 1; j < 4; j++)
@@ -285,7 +284,7 @@ int main(int argc, char* argv[])
 		}
 		cout << "\n";
 		tas[0].sorbetu = 'a';
-		cout << "\t" << tas[0].sorbetu << ") ";
+		cout << "\t\t" << tas[0].sorbetu << ") ";
 
 		for (short i = 1; i < 4; i++)
 		{
@@ -322,18 +321,13 @@ int main(int argc, char* argv[])
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if(tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3]== lav[k][3])
-					{
-						tassorszam = 4;
-					}
-					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 2;
 					}
 					else
 					{
-						cout << "\tS\n";
-						//tassorszam = 2;
+						tassorszam = 4;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -342,19 +336,13 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					tassorszam = 1;
 					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
-					{
-						tassorszam = 3;
-					}
-					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 1;
 					}
 					else
 					{
-						cout << "\tS\n";
-						//tassorszam = 3;
+						tassorszam = 3;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -363,18 +351,13 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 0) // 1 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i - 1].sorszam[1] == 0 && tas[i - 1].sorszam[2] == 0)
 					{
 						tassorszam = 3;
 					}
-					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
-					{
-						tassorszam = 2;
-					}
 					else
 					{
-						cout << "\tS\n";
-						//tassorszam = 2;
+						tassorszam = 2;
 					}
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
@@ -383,20 +366,14 @@ int main(int argc, char* argv[])
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 1) // 0 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i - 1].sorszam[1] == 0 && tas[i - 1].sorszam[2] == 0)
 					{
 						tassorszam = 1;
 					}
-					else if(tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
+					else
 					{
 						tassorszam = 4;
 					}
-					else
-					{
-						cout << "\tS\n";
-					//	tassorszam = 4;
-					}
-					tassorszam = 4;
 					lepegetes(tas, tassorszam, i);
 					tasdb++;
 					abcd++;
@@ -425,7 +402,7 @@ int main(int argc, char* argv[])
 		//TAS kiírattatása
 		for (short i = 1; i < tasdb; i++)
 		{
-			cout << "\t" << tas[i].sorbetu << ") ";
+			cout << "\t\t" << tas[i].sorbetu << ") ";
 			for (short j = 1; j < 4; j++)
 			{
 				cout << tas[i].sorszam[j];
@@ -439,7 +416,16 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-
+		cout << "\n\n\tStabil állapot táblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		for (int a = 0; a < 35; a++)
+		{
+			cout << "=";
+		}
+		cout << endl;
+		for (int a = 0; a < 8; a++)
+		{
+			cout << "\t  " << abc[a] << endl << endl;
+		}
 		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
