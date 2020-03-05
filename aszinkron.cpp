@@ -272,8 +272,8 @@ int main(int argc, char* argv[])
 			cout << endl;
 		}
 		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n";
-		teljesallapotsor tas[24] = {};
-		unsigned short tasdb = 1, tasdbb = 24, tassorszam = 0, lavd = 0, abcd = 1;
+		teljesallapotsor tas[12] = {};
+		unsigned short tasdb = 1, tasdbb = 12, tassorszam = 0, lavd = 0, abcd = 1;
 
 		for (short i = 1; i < tasdbb; i++) //2essel való feltöltés
 		{
@@ -416,16 +416,20 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		cout << "\n\n\tStabil állapot táblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
-		for (int a = 0; a < 35; a++)
+
+		short* graycode = new short[4]{ 00, 01, 11, 10 };
+	
+		cout << "\n\n\tStabil állapot táblázat\n\n" << "\ty\\x1x2\t"<< graycode[0] <<"\t"<< graycode[1] <<"\t"<< graycode[2] <<"\t"<< graycode[3] <<"\n\t";
+		for (short a = 0; a < 35; a++)
 		{
 			cout << "=";
 		}
 		cout << endl;
-		for (int a = 0; a < 8; a++)
+		for (short a = 0; a < 8; a++)
 		{
-			cout << "\t  " << abc[a] << endl << endl;
+			cout << "\t  " << abc[a]; //<< endl << endl;
 		}
+		delete[] graycode; //GrayCode törlése
 		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
