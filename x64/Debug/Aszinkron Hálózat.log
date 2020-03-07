@@ -1,5 +1,5 @@
 ﻿  aszinkron.cpp
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(95,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(100,15): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(110,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(116,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(121,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(131,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\x64\Debug\Aszinkron Hálózat.exe

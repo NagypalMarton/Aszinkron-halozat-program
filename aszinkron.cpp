@@ -92,7 +92,7 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 
 int main(int argc, char* argv[])
 {
-	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
+	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {0};
 	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb] {0};
 
@@ -131,7 +131,6 @@ int main(int argc, char* argv[])
 					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
 				}
 			} while (lavdb < 1 || lavdb > 4);
-			cout << endl;
 		}
 
 		//lav tömb kiterjesztése több dimenzióssá tétele
@@ -139,7 +138,7 @@ int main(int argc, char* argv[])
 		{
 			lav[i] = new unsigned short[oszlop] {0}; //OSZLOPot hozza létre
 		}
-
+	
 		//2essel feltöltés
 		for (unsigned int i = 0; i < lavdb; i++)
 		{
@@ -154,20 +153,27 @@ int main(int argc, char* argv[])
 			switch (negdb)
 			{
 			case 1:
-				cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
-				cin >> neghely[0];
+				do
+				{
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
+					cin >> neghely[0];
+					if (neghely[0] > 3 || neghely[0] < 1)
+					{
+						cout << "\n\t\tNem megfelelő számokat írtál be!\n";
+					}
+				} while (neghely[0] > 3 || neghely[0] < 1);
 				negacio(neghely, lav);
 				break;
 			case 2:
 				do
 				{
-					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
 					cin >> neghely[0] >> neghely[1];
-					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
+					if (neghely[0]>3 && neghely[1]> 3 || neghely[0]<1 && neghely[1] < 1)
 					{
 						cout << "\n\tNem megfelelő számokat írtál be!";
 					}
-				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
+				} while (neghely[0]>3 && neghely[1]> 3 || neghely[0]<1 && neghely[1] < 1);
 				negacio(neghely, lav);
 				break;
 			}
@@ -242,8 +248,7 @@ int main(int argc, char* argv[])
 					if (lav[i][j] < 0 || lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
-						system("pause");
-						break; break; break; break;
+						break; break;
 					}
 				} while (lav[i][j] < 0 || lav[i][j] > 1);
 				if (j % 3 == 0)
@@ -252,7 +257,6 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -388,7 +392,7 @@ int main(int argc, char* argv[])
 			}
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{
-				delete[] lav;
+				//delete[] lav;
 				break;
 				break;
 			}
@@ -423,9 +427,7 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-
-		cout << "\n\tÁllapot táblázat\n\n"
-			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		cout << "\n\tÁllapot táblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		for (short a = 0; a < 34; a++)
 		{
 			cout << "=";
@@ -455,8 +457,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				cout << endl
-					<< endl;
+				cout << endl << endl;
 			}
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";

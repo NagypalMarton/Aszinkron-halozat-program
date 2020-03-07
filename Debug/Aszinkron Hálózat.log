@@ -1,9 +1,5 @@
 ﻿  aszinkron.cpp
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(115,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(120,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(130,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(165,9): warning C4804: '>': unsafe use of type 'bool' in operation
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(165,74): warning C4804: '<': unsafe use of type 'bool' in operation
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(169,45): warning C4804: '>': unsafe use of type 'bool' in operation
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(169,78): warning C4804: '<': unsafe use of type 'bool' in operation
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(116,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(121,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(131,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe
