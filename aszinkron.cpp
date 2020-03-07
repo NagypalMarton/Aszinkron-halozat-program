@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 #include <math.h>
+#include <string>
+#include "aszinkron.h"
+
 using namespace std;
 
 struct teljesallapotsor
@@ -91,7 +94,7 @@ int main(int argc, char* argv[])
 {
 	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
 	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
-	unsigned short** lav = new unsigned short* [lavdb];
+	unsigned short** lav = new unsigned short* [lavdb] {0};
 
 	setlocale(LC_ALL, "HUN");
 	do
@@ -134,7 +137,7 @@ int main(int argc, char* argv[])
 		//lav tömb kiterjesztése több dimenzióssá tétele
 		for (unsigned short i = 0; i <= lavdb - 1; i++)
 		{
-			lav[i] = new unsigned short[oszlop]; //OSZLOPot hozza létre
+			lav[i] = new unsigned short[oszlop] {0}; //OSZLOPot hozza létre
 		}
 
 		//2essel feltöltés
@@ -239,6 +242,8 @@ int main(int argc, char* argv[])
 					if (lav[i][j] < 0 || lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
+						system("pause");
+						break; break; break; break;
 					}
 				} while (lav[i][j] < 0 || lav[i][j] > 1);
 				if (j % 3 == 0)
@@ -247,6 +252,7 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
+		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
 			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
@@ -383,7 +389,8 @@ int main(int argc, char* argv[])
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{
 				delete[] lav;
-				break; break;
+				break;
+				break;
 			}
 		}
 
@@ -417,19 +424,42 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		short* graycode = new short[4]{ 00, 01, 11, 10 };
-	
-		cout << "\n\n\tStabil állapot táblázat\n\n" << "\ty\\x1x2\t"<< graycode[0] <<"\t"<< graycode[1] <<"\t"<< graycode[2] <<"\t"<< graycode[3] <<"\n\t";
-		for (short a = 0; a < 35; a++)
+		cout << "\n\tÁllapot táblázat\n\n"
+			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		for (short a = 0; a < 34; a++)
 		{
 			cout << "=";
 		}
 		cout << endl;
 		for (short a = 0; a < 8; a++)
 		{
-			cout << "\t  " << abc[a]; //<< endl << endl;
+			cout << "\t  " << abc[a];
+			if (abc[a] == tas[a].sorbetu)
+			{
+				if (tas[a].sorszam[1] == 0 && tas[a].sorszam[2] == 0) //0 0
+				{
+					cout << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\t" << tas[a].sorszam[3] << "\tXX\t" << tas[a].sorszam[3] << "\n\n";
+				}
+				else if (tas[a].sorszam[1] == 0 && tas[a].sorszam[2] == 1) // 0 1
+				{
+					cout << "\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\t" << tas[a].sorszam[3] << "\tXX\n\n";
+				}
+				else if (tas[a].sorszam[1] == 1 && tas[a].sorszam[2] == 1) // 1 1
+				{
+					cout << "\tXX\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\t" << tas[a].sorszam[3] << "\n\n";
+				}
+				else if (tas[a].sorszam[1] == 1 && tas[a].sorszam[2] == 0) // 1 0
+				{
+					cout << "\t" << tas[a].sorszam[3] << "\t"<< "XX\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\n\n";
+				}
+			}
+			else
+			{
+				cout << endl
+					<< endl;
+			}
 		}
-		delete[] graycode; //GrayCode törlése
+		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		cout << "\n\n";
 		cout << "Akarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
