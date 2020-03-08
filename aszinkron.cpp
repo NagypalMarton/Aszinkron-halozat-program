@@ -90,7 +90,7 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 
 int main(int argc, char* argv[])
 {
-	unsigned short lavdb = 0, negdb = 0, oszlop = 6, neghely[1] = {};
+	unsigned short lavdb = 1, negdb = 0, oszlop = 6, neghely[2] = {};
 	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 	unsigned short** lav = new unsigned short* [lavdb];
 
@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
 		//lav tömb kiterjesztése több dimenzióssá tétele
 		for (unsigned short i = 0; i <= lavdb - 1; i++)
 		{
-			lav[i] = new unsigned short[oszlop]; //OSZLOPot hozza létre
+			lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
 		}
 
 		//2essel feltöltés
@@ -240,7 +240,7 @@ int main(int argc, char* argv[])
 					if (lav[i][j] < 0 || lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
-						break;
+						//break;
 					}
 				} while (lav[i][j] < 0 || lav[i][j] > 1);
 				if (j % 3 == 0)
