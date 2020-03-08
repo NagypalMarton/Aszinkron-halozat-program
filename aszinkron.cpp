@@ -164,36 +164,11 @@ int main(int argc, char* argv[])
 					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
 					{
 						cout << "\n\tNem megfelelő számokat írtál be!";
+						system("pause");
 					}
 				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
 				negacio(neghely, lav);
 				break;
-			}
-		}
-
-		if(lav[0][1] != 2 || lav[0][2] != 2 || lav[0][3] != 2)
-		{
-			cout << "\tBekérés előtt:\n\n";
-			oszlop = 6;
-			for (unsigned short i = 0; i < lavdb; i++)
-			{
-				for (unsigned short j = 1; j < oszlop + 1; j++)
-				{
-					if (j == 1)
-					{
-						cout << "\t\t" << i + 1 << ") ";
-					}
-					cout << lav[i][j];
-					if (j == 3)
-					{
-						cout << " -> ";
-					}
-					if (j != 6)
-					{
-						cout << " ";
-					}
-				}
-				cout << endl;
 			}
 		}
 
@@ -494,7 +469,7 @@ int main(int argc, char* argv[])
 			}
 			if (abc[a] == allapotsor[ab])
 			{
-				cout << "\t" << ab << endl;
+				cout << "yes\n";
 			}
 			else
 			{
