@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
 {
 	unsigned short lavdb = 1, negdb = 0, oszlop = 6, neghely[2] = {};
 	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
+
 	unsigned short** lav = new unsigned short* [lavdb];
 
 	setlocale(LC_ALL, "HUN");
@@ -152,8 +153,15 @@ int main(int argc, char* argv[])
 			switch (negdb)
 			{
 			case 1:
-				cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
-				cin >> neghely[0];
+				do
+				{
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
+					cin >> neghely[0];
+					if (neghely[0] > 3 || neghely[0] < 1)
+					{
+						cout << "\n\tNem megfelelő számot írtál be!\n";
+					}
+				} while (neghely[0] > 3 || neghely[0] < 1);
 				negacio(neghely, lav);
 				break;
 			case 2:
@@ -164,17 +172,37 @@ int main(int argc, char* argv[])
 					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
 					{
 						cout << "\n\tNem megfelelő számokat írtál be!";
-						system("pause");
 					}
 				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
 				negacio(neghely, lav);
 				break;
 			}
 		}
+		cout << "\n\tNegálás után:\n\t(2esek helye lesz feltöltve)\n\n";
+		for (unsigned short i = 0; i < lavdb; i++)
+		{
+			for (unsigned short j = 1; j <= oszlop; j++)
+			{
+				if (j == 1)
+				{
+					cout << "\t\t" << i + 1 << ") ";
+				}
+				cout << lav[i][j];
+				if (j == 3)
+				{
+					cout << " -> ";
+				}
+				if (j != 6)
+				{
+					cout << " ";
+				}
+			}
+			cout << endl;
+		}
 
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
-			for (unsigned short j = 1; j < oszlop + 1; j++)
+			for (unsigned short j = 1; j < 7; j++)
 			{
 				if (j == 1)
 				{
@@ -184,16 +212,16 @@ int main(int argc, char* argv[])
 				{
 					cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
-				if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
-				{
-					j = j + 1;
-					if (j == 4)
-					{
-						cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-					}
-				}
 				do
 				{
+					if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
+					{
+						j = j + 1;
+						if (j == 4)
+						{
+							cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+						}
+					}
 					cout << "\t\t" << xyz[j - 1];
 					if (j < 3 && j != 6)
 					{
@@ -212,10 +240,9 @@ int main(int argc, char* argv[])
 						cout << " értéke: ";
 						cin >> lav[i][j];
 					}
-					if (lav[i][j] < 0 || lav[i][j] > 1)
+					if (lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
-						//break;
 					}
 				} while (lav[i][j] < 0 || lav[i][j] > 1);
 				if (j % 3 == 0)
@@ -364,11 +391,13 @@ int main(int argc, char* argv[])
 				break;
 			}
 		}
+		//hiányzó sorok keresése és betöltése a TASba
+		unsigned short teljestas[8][4] = { {0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0}, {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1} }, tasdab = tasdb;
 
 		//megbetűzés
-		for (short i = 0; i < tasdb - 1; i++)
+		for (short i = 0; i < tasdab - 1; i++)
 		{
-			for (short j = i + 1; j < tasdb; j++)
+			for (short j = i + 1; j < tasdab; j++)
 			{
 				if (tas[i].sorszam[1] == tas[j].sorszam[1] && tas[i].sorszam[2] == tas[j].sorszam[2] && tas[i].sorszam[3] == tas[j].sorszam[3])
 				{
@@ -376,7 +405,6 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-
 		//TAS kiírattatása
 		for (short i = 1; i < tasdb; i++)
 		{
@@ -394,13 +422,10 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-
-		cout << "\n\tÁllapot táblázat\n\n"
-			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
-		string allapotsor, tasszamm, XX = "xx";
+		string allapotsor, tasszamm, allapotsor1;
+		short b = 0;
 		for (short a = 0; a < 8; a++)
 		{
-			short b = 0;
 			if (a != 0)
 			{
 				b = b + 1;
@@ -408,51 +433,69 @@ int main(int argc, char* argv[])
 			if (tas[a].sorszam[1] == 0 && tas[a].sorszam[2] == 0) //0 0
 			{
 				tasszamm = to_string(tas[a].sorszam[3]);
-				allapotsor = tas[a].sorbetu;  //0
+				if (a == 0)
+				{
+					allapotsor = tas[a].sorbetu; //0
+				}
+				else
+				{
+					allapotsor += tas[a].sorbetu; //0
+				}
+				allapotsor += " ";
 				allapotsor += tas[a].sorbetu; //1
 				allapotsor += tasszamm;		  //2
 				allapotsor += tasszamm;		  //3
-				allapotsor += XX;			  //4
+				allapotsor += "XX";			  //4
 				allapotsor += tasszamm;		  //5
-				cout << b << "\tÁllapotsor: " << allapotsor << endl;
+				allapotsor += " ";
 			}
 			else if (tas[a].sorszam[1] == 0 && tas[a].sorszam[2] == 1) // 0 1
 			{
 				tasszamm = to_string(tas[a].sorszam[3]);
 				allapotsor += tas[a].sorbetu; //0
+				allapotsor += " ";
 				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
 				allapotsor += tasszamm;
 				allapotsor += tasszamm;
-				allapotsor += XX;
-				cout << b << "\tÁllapotsor: " << allapotsor << endl;
+				allapotsor += "XX";
+				allapotsor += " ";
 			}
 			else if (tas[a].sorszam[1] == 1 && tas[a].sorszam[2] == 1) // 1 1
 			{
 				tasszamm = to_string(tas[a].sorszam[3]);
 				allapotsor += tas[a].sorbetu; //0
-				allapotsor += XX;
+				allapotsor += " ";
+				allapotsor += "XX";
 				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
 				allapotsor += tasszamm;
 				allapotsor += tasszamm;
-				cout << b << "\tÁllapotsor: " << allapotsor << endl;
+				allapotsor += " ";
 				//cout << "\tXX\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\t" << tas[a].sorszam[3] << "\n\n";
 			}
 			else if (tas[a].sorszam[1] == 1 && tas[a].sorszam[2] == 0) // 1 0
 			{
 				tasszamm = to_string(tas[a].sorszam[3]);
 				allapotsor += tas[a].sorbetu; //0
+				allapotsor += " ";
 				allapotsor += tasszamm;
-				allapotsor += XX;
+				allapotsor += "XX";
 				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
 				allapotsor += tasszamm;
-				cout << b << "\tÁllapotsor: " << allapotsor << endl;
+				allapotsor += " ";
 				//cout << "\t" << tas[a].sorszam[3] << "\t"<< "XX\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\n\n";
 			}
 		}
+		short hossz = allapotsor.length();
+		cout << "Állapotsor:\n\n";
+		cout << allapotsor;
+
 		system("pause");
+
+		cout << "\n\tÁllapot táblázat\n\n"
+			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
 		for (short a = 0; a < 34; a++)
 		{
@@ -462,14 +505,15 @@ int main(int argc, char* argv[])
 		for (short a = 0; a < 8; a++)
 		{
 			cout << "\t  " << abc[a];
-			short ab = a;
+			unsigned short ab = 0;
 			if (a != 0)
 			{
 				ab += 9;
 			}
+
 			if (abc[a] == allapotsor[ab])
 			{
-				cout << "yes\n";
+				cout << "\t" << allapotsor[ab + 1] << allapotsor[ab + 2] << "\t" << allapotsor[ab + 3] << allapotsor[ab + 4] << "\t" << allapotsor[ab + 5] << allapotsor[ab + 6] << "\t" << allapotsor[ab + 7] << allapotsor[ab + 8] << "\n";
 			}
 			else
 			{
