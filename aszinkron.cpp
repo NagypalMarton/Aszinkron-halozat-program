@@ -90,7 +90,8 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 
 int main(int argc, char* argv[])
 {
-	unsigned short lavdb = 1, negdb = 0, oszlop = 6, neghely[2] = {};
+	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
+	double lavdb = 1;
 	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }, xyz[] = { 'X', 'X', 'Z', 'X', 'X', 'Z' };
 
 	unsigned short** lav = new unsigned short* [lavdb];
@@ -112,7 +113,7 @@ int main(int argc, char* argv[])
 				cin >> negdb;
 				if (negdb < 1 || negdb > 2)
 				{
-					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
+					cout << "\n\tNem megfelelõ számot írtál be! Írj be újat!\n";
 				}
 			} while (negdb < 1 || negdb > 2);
 
@@ -243,6 +244,7 @@ int main(int argc, char* argv[])
 					if (lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
+						break;
 					}
 				} while (lav[i][j] < 0 || lav[i][j] > 1);
 				if (j % 3 == 0)
@@ -392,8 +394,26 @@ int main(int argc, char* argv[])
 			}
 		}
 		//hiányzó sorok keresése és betöltése a TASba
-		unsigned short teljestas[8][4] = { {0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0}, {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1} }, tasdab = tasdb;
+		int teljestas[8][4] = { {0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0}, {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1} }, tasdab = tasdb;
+		for (short i = 0; i < tasdb; i++)//Egyezők keresése
+		{
+			for (short j = 0; j < 8; j++)
+			{
+				if (tas[i].sorszam[1] == teljestas[j][1] && tas[i].sorszam[2] == teljestas[j][2] && tas[i].sorszam[3] == teljestas[j][3])
+				{
+					teljestas[j][3] = 2;
+				}
+			}
+		}
 
+		for (short j = 0; j < 8; j++)
+		{
+			/*if (teljestas[j][3] != 2)
+			{*/
+				cout << "\t\t\t\t" << teljestas[j][0] << " " << teljestas[j][1] << " " << teljestas[j][2] << "\t" << teljestas[j][3] << "\n";
+			//}
+		}
+		
 		//megbetűzés
 		for (short i = 0; i < tasdab - 1; i++)
 		{
@@ -488,7 +508,7 @@ int main(int argc, char* argv[])
 				//cout << "\t" << tas[a].sorszam[3] << "\t"<< "XX\t" << tas[a].sorszam[3] << "\t" << tas[a].sorbetu << tas[a].sorszam[3] << "\n\n";
 			}
 		}
-		short hossz = allapotsor.length();
+		bool hossz = allapotsor.length();
 		cout << "Állapotsor:\n\n";
 		cout << allapotsor;
 
