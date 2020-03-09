@@ -405,14 +405,19 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-
-		for (short j = 0; j < 8; j++)
-		{
-			/*if (teljestas[j][3] != 2)
-			{*/
-				cout << "\t\t\t\t" << teljestas[j][0] << " " << teljestas[j][1] << " " << teljestas[j][2] << "\t" << teljestas[j][3] << "\n";
-			//}
-		}
+			short k = 0;
+			for (short i = tasdb; i < 8; i++)
+			{
+				if (teljestas[k][3] != 2)
+				{
+					tas[i].sorszam[1] = teljestas[k][0];
+					tas[i].sorszam[2] = teljestas[k][1];
+					tas[i].sorszam[3] = teljestas[k][2];
+					k = k + 1;
+					tasdab = tasdab + 1;
+					cout << "\t\t\t\t" << k << ". " << tas[i].sorszam[1] << " " << tas[i].sorszam[2] << " " << tas[i].sorszam[3] << "\n";
+				}
+			}
 		
 		//megbetűzés
 		for (short i = 0; i < tasdab - 1; i++)
@@ -425,6 +430,7 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
+	
 		//TAS kiírattatása
 		for (short i = 1; i < tasdb; i++)
 		{
@@ -444,7 +450,7 @@ int main(int argc, char* argv[])
 		}
 		string allapotsor, tasszamm, allapotsor1;
 		short b = 0;
-		for (short a = 0; a < 8; a++)
+		for (short a = 0; a < tasdab; a++)//8
 		{
 			if (a != 0)
 			{
