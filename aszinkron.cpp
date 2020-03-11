@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 		{
 			do
 			{
-				cout << "\tHány darab lesz benne? (maximum 2 lehet)\t\t";
+				cout << "\n\tHány darab lesz benne? (maximum 2 lehet)\t\t";
 				cin >> negdb;
 				if (negdb < 1 || negdb > 2)
 				{
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
 		{
 			do
 			{
-				cout << "\tHány LÉNYEGES állapotváltozás lesz? (1 és 4 lehet)\t";
+				cout << "\n\tHány LÉNYEGES állapotváltozás lesz? (1 és 4 lehet)\t";
 				cin >> lavdb;
 				if (lavdb < 1 || lavdb > 4)
 				{
@@ -156,13 +156,13 @@ int main(int argc, char* argv[])
 			case 1:
 				do
 				{
-					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
+					cout << "\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
 					cin >> neghely[0];
-					if (neghely[0] > 3 || neghely[0] < 1)
+					if (neghely[0] > 3)
 					{
-						cout << "\n\tNem megfelelő számot írtál be!\n";
+						cout << "\n\t\tNem megfelelő számot írtál be!\n\n";
 					}
-				} while (neghely[0] > 3 || neghely[0] < 1);
+				} while (neghely[0] > 3);
 				negacio(neghely, lav);
 				break;
 			case 2:
@@ -244,9 +244,8 @@ int main(int argc, char* argv[])
 					if (lav[i][j] > 1)
 					{
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
-						break;
 					}
-				} while (lav[i][j] < 0 || lav[i][j] > 1);
+				} while (lav[i][j] > 1);
 				if (j % 3 == 0)
 				{
 					cout << "\n";
@@ -516,18 +515,17 @@ int main(int argc, char* argv[])
 
 		short hossz = allapotsor.length(), null = 0, eg = 0;
 		char nulla[] = { '0' }, egy[] = { '1' };
-		//string nulla=to_string(null),egy=to_string(eg);
-
+	
 		//Állapotsor hiányzó celláinak kitöltése
 		//for (short i = 0; i < 8; i++)
 //		{
-		cout << endl << endl;
-		for (short k = 1; k < hossz; k++)
+	//	cout << endl << endl;
+		for (short k = 0; k < tasdab; k++)
 		{
-			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0])
+			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0]))
 			{
-				cout << nulla[0] << "\t" << egy[0] << "\n";
-					cout << allapotsor[k - 1] << " " << allapotsor[k] << " " << allapotsor[k + 1] << "\n";
+				cout <<" k-1: "<< allapotsor[k - 1] << " k: " << allapotsor[k] << " k+1: " << allapotsor[k + 1] << "\t";
+				cout << "\t" << allapotsor[k + 1] << allapotsor[k + 2] << " " << allapotsor[k + 3] << allapotsor[k + 4] << " " << allapotsor[k + 5] << allapotsor[k + 6] << " " << allapotsor[k + 7] << allapotsor[k + 8] << "\n\n";
 			}
 		}
 		//}

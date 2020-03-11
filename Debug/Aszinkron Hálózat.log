@@ -6,5 +6,5 @@ C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(173,9): 
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(173,74): warning C4804: '<': unsafe use of type 'bool' in operation
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(177,45): warning C4804: '>': unsafe use of type 'bool' in operation
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(177,78): warning C4804: '<': unsafe use of type 'bool' in operation
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(517,36): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(516,36): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe
