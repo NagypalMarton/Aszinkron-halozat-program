@@ -449,8 +449,8 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		string allapotsor, tasszamm;//allapotsor1;
-		short b = 0, teljestasoszlop = 7;
+		string allapotsor, tasszamm;
+		short b = 0, teljestasoszlop = 9;
 		for (short a = 0; a < tasdab; a++)
 		{
 			if (a != 0)
@@ -471,15 +471,19 @@ int main(int argc, char* argv[])
 				allapotsor += tas[a].sorbetu; //1
 				allapotsor += tasszamm;		  //2
 				allapotsor += tasszamm;		  //3
-				allapotsor += "XX";			  //4
-				allapotsor += tasszamm;		  //5
+				allapotsor += tasszamm;//4
+				allapotsor += "XX";			  //5
+				allapotsor += tasszamm;		  //6
+				allapotsor += tasszamm;
 			}
 			else if (tas[a].sorszam[1] == 0 && tas[a].sorszam[2] == 1) // 0 1
 			{
 				tasszamm = to_string(tas[a].sorszam[3]);
 				allapotsor += tas[a].sorbetu; //0
 				allapotsor += tasszamm;
+				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
+				allapotsor += tasszamm;
 				allapotsor += tasszamm;
 				allapotsor += tasszamm;
 				allapotsor += "XX";
@@ -490,7 +494,9 @@ int main(int argc, char* argv[])
 				allapotsor += tas[a].sorbetu; //0
 				allapotsor += "XX";
 				allapotsor += tasszamm;
+				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
+				allapotsor += tasszamm;
 				allapotsor += tasszamm;
 				allapotsor += tasszamm;
 			}
@@ -499,27 +505,32 @@ int main(int argc, char* argv[])
 				tasszamm = to_string(tas[a].sorszam[3]);
 				allapotsor += tas[a].sorbetu; //0
 				allapotsor += tasszamm;
+				allapotsor += tasszamm;
 				allapotsor += "XX";
+				allapotsor += tasszamm;
 				allapotsor += tasszamm;
 				allapotsor += tas[a].sorbetu;
 				allapotsor += tasszamm;
 			}
 		}
 
-		//Állapotsor kiegészítése
-		//hhh
+		short hossz = allapotsor.length(), null = 0, eg = 0;
+		char nulla[] = { '0' }, egy[] = { '1' };
+		//string nulla=to_string(null),egy=to_string(eg);
 
-		short hossz = allapotsor.length();
-		cout << hossz << endl;
-		cout << "Állapotsor:\n";
-		for (short k = 0; k < hossz - 1; k++)
+		//Állapotsor hiányzó celláinak kitöltése
+		//for (short i = 0; i < 8; i++)
+//		{
+		cout << endl << endl;
+		for (short k = 1; k < hossz; k++)
 		{
-			if (k % teljestasoszlop == 0)
+			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0])
 			{
-				cout << endl;
+				cout << nulla[0] << "\t" << egy[0] << "\n";
+					cout << allapotsor[k - 1] << " " << allapotsor[k] << " " << allapotsor[k + 1] << "\n";
 			}
-			cout << allapotsor[k];
 		}
+		//}
 
 		cout << "\n\n\tÁllapot táblázat\n\n"
 			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
