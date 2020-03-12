@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	{
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
-			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
+			<< "(Create by Nagypál Márton)\n\n";
 
 		cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
 		cin >> valasz;
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
 				cin >> negdb;
 				if (negdb < 1 || negdb > 2)
 				{
-					cout << "\n\tNem megfelelõ számot írtál be! Írj be újat!\n";
+					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n";
 				}
 			} while (negdb < 1 || negdb > 2);
 
@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 					cin >> neghely[0] >> neghely[1];
 					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
 					{
-						cout << "\n\tNem megfelelő számokat írtál be!";
+						cout << "\n\t\tNem megfelelő számokat írtál be!";
 					}
 				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
 				negacio(neghely, lav);
@@ -254,7 +254,7 @@ int main(int argc, char* argv[])
 		}
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat\n"
-			<< "(Create by Nagypál Márton [Neptun kód: B3081T])\n\n";
+			<< "(Create by Nagypál Márton)\n\n";
 		cout << "\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
@@ -432,7 +432,7 @@ int main(int argc, char* argv[])
 		}
 
 		//TAS kiírattatása
-		for (short i = 1; i < tasdb; i++)
+		for (short i = 1; i < tasdab; i++)//tasdb
 		{
 			cout << "\t\t" << tas[i].sorbetu << ") ";
 			for (short j = 1; j < 4; j++)
@@ -445,6 +445,10 @@ int main(int argc, char* argv[])
 				else
 				{
 					cout << " ";
+				}
+				if (tasdab == tasdb)
+				{
+					cout << endl;
 				}
 			}
 		}
@@ -515,7 +519,7 @@ int main(int argc, char* argv[])
 
 		short hossz = allapotsor.length(), null = 0, eg = 0;
 		char nulla[] = { '0' }, egy[] = { '1' };
-	
+
 		//Állapotsor hiányzó celláinak kitöltése
 		//for (short i = 0; i < 8; i++)
 //		{
@@ -524,7 +528,7 @@ int main(int argc, char* argv[])
 		{
 			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0]))
 			{
-				cout <<" k-1: "<< allapotsor[k - 1] << " k: " << allapotsor[k] << " k+1: " << allapotsor[k + 1] << "\t";
+				cout << " k-1: " << allapotsor[k - 1] << " k: " << allapotsor[k] << " k+1: " << allapotsor[k + 1] << "\t";
 				cout << "\t" << allapotsor[k + 1] << allapotsor[k + 2] << " " << allapotsor[k + 3] << allapotsor[k + 4] << " " << allapotsor[k + 5] << allapotsor[k + 6] << " " << allapotsor[k + 7] << allapotsor[k + 8] << "\n\n";
 			}
 		}
@@ -560,7 +564,7 @@ int main(int argc, char* argv[])
 		{
 			if (a == 0)
 			{
-				cout << "\t\t";
+				cout << "\t\t"
 			}
 			else
 			{
@@ -573,4 +577,4 @@ int main(int argc, char* argv[])
 	} while (valasz == igen || valasz == IGEN);
 	system("pause");
 	return 0;
-}
+} 
