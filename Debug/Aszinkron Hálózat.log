@@ -2,5 +2,5 @@
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(97,46): warning C4244: 'initializing': conversion from 'double' to 'unsigned int', possible loss of data
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(116,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(131,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(528,36): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(529,36): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe

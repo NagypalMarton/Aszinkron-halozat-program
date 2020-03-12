@@ -255,7 +255,8 @@ int main(int argc, char* argv[])
 					}
 					if (lav[i][j] > 1)
 					{
-						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
+						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat! Érték: "<< lav[i][j] <<"\n\n";
+						lav[i][j] = 2;
 					}
 				} while (lav[i][j] > 1);
 			}
