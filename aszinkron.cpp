@@ -170,59 +170,71 @@ int main(int argc, char* argv[])
 				{
 					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
 					cin >> neghely[0] >> neghely[1];
-					if ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1)
+					if (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1)
 					{
-						cout << "\n\t\tNem megfelelő számokat írtál be!";
+						cout << "\n\t\tNem megfelelő számokat vagy számot írtál be!\n";
 					}
-				} while ((neghely[0] && neghely[1]) > 3 || (neghely[0] && neghely[1]) < 1);
+				} while (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1);
 				negacio(neghely, lav);
 				break;
 			}
 		}
-		cout << "\n\tNegálás után:\n\t(2esek helye lesz feltöltve)\n\n";
-		for (unsigned short i = 0; i < lavdb; i++)
+
+		if (valasz == igen || valasz == IGEN)
 		{
-			for (unsigned short j = 1; j <= oszlop; j++)
+			cout << "\n\tNegálás után:\n\t(2esek helye lesz feltöltve)\n\n";
+			for (unsigned short i = 0; i < lavdb; i++)
 			{
-				if (j == 1)
+				for (unsigned short j = 1; j <= oszlop; j++)
 				{
-					cout << "\t\t" << i + 1 << ") ";
+					if (j == 1)
+					{
+						cout << "\t\t" << i + 1 << ") ";
+					}
+					cout << lav[i][j];
+					if (j == 3)
+					{
+						cout << " -> ";
+					}
+					if (j != 6)
+					{
+						cout << " ";
+					}
 				}
-				cout << lav[i][j];
-				if (j == 3)
-				{
-					cout << " -> ";
-				}
-				if (j != 6)
-				{
-					cout << " ";
-				}
+				cout << endl;
 			}
-			cout << endl;
 		}
 
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
+			if (i == 0 && (valasz == igen || valasz == IGEN))
+			{
+				cout << endl << endl;
+			}
+			else if (i > 0)
+			{
+				cout << endl;
+			}
 			for (unsigned short j = 1; j < 7; j++)
 			{
 				if (j == 1)
 				{
-					cout << "\n\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+					cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
 				else if (j == 4)
 				{
 					cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 				}
+				if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
+				{
+					j = j + 1;
+					if (j == 4)
+					{
+						cout << "\n\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+					}
+				}
 				do
 				{
-					if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
-					{
-						j = j + 1;
-						if (j == 4)
-						{
-							cout << "\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-						}
-					}
 					cout << "\t\t" << xyz[j - 1];
 					if (j < 3 && j != 6)
 					{
@@ -246,10 +258,6 @@ int main(int argc, char* argv[])
 						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat!\n\n";
 					}
 				} while (lav[i][j] > 1);
-				if (j % 3 == 0)
-				{
-					cout << "\n";
-				}
 			}
 		}
 		system("cls");
@@ -387,7 +395,7 @@ int main(int argc, char* argv[])
 			}
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{
-				//delete[] lav;
+				delete[] lav;
 				break;
 				break;
 			}
@@ -434,6 +442,10 @@ int main(int argc, char* argv[])
 		//TAS kiírattatása
 		for (short i = 1; i < tasdab; i++)//tasdb
 		{
+			if (i == tasdb)
+			{
+				cout << "\n\tA sorban meg nem jelent állapot változások:\n";
+			}
 			cout << "\t\t" << tas[i].sorbetu << ") ";
 			for (short j = 1; j < 4; j++)
 			{
@@ -445,10 +457,6 @@ int main(int argc, char* argv[])
 				else
 				{
 					cout << " ";
-				}
-				if (tasdab == tasdb)
-				{
-					cout << endl;
 				}
 			}
 		}
@@ -528,7 +536,7 @@ int main(int argc, char* argv[])
 		{
 			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0]))
 			{
-				cout << " k-1: " << allapotsor[k - 1] << " k: " << allapotsor[k] << " k+1: " << allapotsor[k + 1] << "\t";
+				cout << " \n\nk-1: " << allapotsor[k - 1] << " k: " << allapotsor[k] << " k+1: " << allapotsor[k + 1] << "\t";
 				cout << "\t" << allapotsor[k + 1] << allapotsor[k + 2] << " " << allapotsor[k + 3] << allapotsor[k + 4] << " " << allapotsor[k + 5] << allapotsor[k + 6] << " " << allapotsor[k + 7] << allapotsor[k + 8] << "\n\n";
 			}
 		}
@@ -537,7 +545,7 @@ int main(int argc, char* argv[])
 		cout << "\n\n\tÁllapot táblázat\n\n"
 			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
-		for (short a = 0; a < 34; a++)
+		for (short a = 0; a < 35; a++)
 		{
 			cout << "=";
 		}
@@ -564,7 +572,7 @@ int main(int argc, char* argv[])
 		{
 			if (a == 0)
 			{
-				cout << "\t\t"
+				cout << "\t\t";
 			}
 			else
 			{
@@ -577,4 +585,4 @@ int main(int argc, char* argv[])
 	} while (valasz == igen || valasz == IGEN);
 	system("pause");
 	return 0;
-} 
+}
