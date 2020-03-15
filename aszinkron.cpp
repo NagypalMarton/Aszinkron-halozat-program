@@ -544,19 +544,11 @@ int main(int argc, char* argv[])
 			{
 				cout << k << " " << k + 1 << " " << allapotsor[k] << allapotsor[k + 1] << "\n";
 				ac = k;
-				while (ac < hossz && allapotsor[ac] != abc[ac] && (allapotsor[ac] != nulla[0] || allapotsor[ac] != egy[0]))
+				while (ac < hossz && allapotsor[ac] == abc[ac] && (allapotsor[ac] == nulla[0] || allapotsor[ac] == egy[0]))
 				{
-					cout << "\t" << allapotsor[ac] << allapotsor[ac + 1] << endl;
 					ac += 9;
 				}
-				if (allapotsor[ac] == abc[ac] && (allapotsor[ac] == nulla[0] || allapotsor[ac] == egy[0]))
-				{
-					cout << "\t" << allapotsor[ac] << allapotsor[ac + 1] << endl;
-				}
-				else
-				{
-					cout << endl;
-				}
+				cout << "\t" << allapotsor[ac] << " "<< allapotsor[ac + 1] << endl;
 
 				//	allapotsor[k] = allapotsor[k + 9];
 				//				allapotsor[k + 1] = allapotsor[k + 10];
