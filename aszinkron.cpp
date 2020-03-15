@@ -9,10 +9,6 @@ struct teljesallapotsor
 	int sorszam[4];
 };
 
-void kimenet(unsigned short)
-{
-}
-
 void negacio(unsigned short* neghely, unsigned short** lav)
 {
 	if (neghely[0] != 0 && neghely[0] < 4)
@@ -533,29 +529,17 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		short hossz = allapotsor.length(), ab = 0, ac = 0;
-		char nulla[] = { '0' }, egy[] = { '1' };
-		cout << endl;
-
+		short hossz = allapotsor.length(), ab = 0;
+		string nulla="0", egy = "1";
+	
 		//	Állapotsor hiányzó celláinak kitöltése
-		for (short k = 1; k < hossz - 1; k++)
+		for (short k = 1; k < hossz; k++)
 		{
-			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0] || allapotsor[k - 1] == 'X' || allapotsor[k - 1] == abc[ab]) && allapotsor[k] == allapotsor[k + 1])
+			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0] || allapotsor[k - 1] == 'X' || allapotsor[k] == abc[ab]))
 			{
-				cout << k << " " << k + 1 << " " << allapotsor[k] << allapotsor[k + 1] << "\n";
-				ac = k;
-				while (ac < hossz && allapotsor[ac] == abc[ac] && (allapotsor[ac] == nulla[0] || allapotsor[ac] == egy[0]))
-				{
-					ac += 9;
-				}
-				cout << "\t" << allapotsor[ac] << " "<< allapotsor[ac + 1] << endl;
-
-				//	allapotsor[k] = allapotsor[k + 9];
-				//				allapotsor[k + 1] = allapotsor[k + 10];
-			}
-			else
-			{
-				ab++;
+				allapotsor[k] = 1;
+				allapotsor[k + 1] = 1;
+				ab += 9;
 			}
 		}
 
