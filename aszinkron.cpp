@@ -529,17 +529,18 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		short hossz = allapotsor.length(), ab = 0;
-		string nulla="0", egy = "1";
-	
+		short hossz = allapotsor.length();
+		string nulla = "0", egy = "1";
+
 		//	Állapotsor hiányzó celláinak kitöltése
-		for (short k = 1; k < hossz; k++)
+		for (short k = 1; k < hossz - 2; k++)
 		{
-			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && (allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0] || allapotsor[k - 1] == 'X' || allapotsor[k] == abc[ab]))
+
+			if (((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0])) && ((allapotsor[k - 1] == egy[0] || allapotsor[k - 1] == nulla[0] || allapotsor[k - 1] == 'X') || allapotsor[k - 1] == abc[k / 9]  || allapotsor[k + 1] == abc[k / 9] || allapotsor[k + 1] == 'X'))
 			{
-				allapotsor[k] = 1;
-				allapotsor[k + 1] = 1;
-				ab += 9;
+				cout << allapotsor[k - 1] << " " << allapotsor[k] << allapotsor[k + 1] <<" " << allapotsor[k + 2] << endl;
+				//allapotsor[k] = 1;
+				//allapotsor[k + 1] = 1;
 			}
 		}
 
