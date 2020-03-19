@@ -1,0 +1,2 @@
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.pdb
