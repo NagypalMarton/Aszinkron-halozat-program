@@ -533,7 +533,7 @@ int main(int argc, char* argv[])
 		string nulla = "0", egy = "1";
 		cout << endl;
 		//	Állapotsor hiányzó celláinak kitöltése
-		for (short k = 0; k < hossz; k=k+2)
+		for (short k = 0; k < hossz; k = k + 2)
 		{
 			if (allapotsor[k] == abc[k / 9] && k % 9 == 0)
 			{
@@ -543,19 +543,20 @@ int main(int argc, char* argv[])
 			{
 				k += 1;
 			}
-			if ((allapotsor[k] == nulla[0] && allapotsor[k+1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k+1] == egy[0]))
+			if ((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0]))
 			{
-				//allapotsor[k] = '2';
-				//allapotsor[k+1] = '2';
-
 				short kj = k;
-				while (kj< hossz - 9 && (allapotsor[kj] != egy[0] || allapotsor[kj] != nulla[0] || allapotsor[kj] == 'X'))
+				while (kj < hossz - 9 && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X')))
 				{
-					kj+= 9;
+					kj += 9;
 				}
-				cout <<"\t"<< allapotsor[kj] << allapotsor[kj + 1] << " " << kj  << " - " << kj + 1 << endl;
-				//allapotsor[k]=allapotsor[kj];
-				//allapotsor[k+1]=allapotsor[kj+1];
+
+				allapotsor[k] = allapotsor[kj];
+				//kimenetváltozás figyelése
+				if (allapotsor[k + 1] != allapotsor[kj + 1])
+				{
+					allapotsor[k + 1] = 'X';
+				}
 			}
 		}
 
