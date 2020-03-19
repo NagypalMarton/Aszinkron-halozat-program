@@ -545,16 +545,17 @@ int main(int argc, char* argv[])
 			}
 			if ((allapotsor[k] == nulla[0] && allapotsor[k+1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k+1] == egy[0]))
 			{
-				allapotsor[k] = '2';
-				allapotsor[k+1] = '2';
+				//allapotsor[k] = '2';
+				//allapotsor[k+1] = '2';
 
-				/*short kj = k;
-				while (kj< hossz - 9 && (allapotsor[kj+1] == egy[0] || allapotsor[kj+1] == nulla[0] || allapotsor[kj+1] == 'X'))
+				short kj = k;
+				while (kj< hossz - 9 && (allapotsor[kj] != egy[0] || allapotsor[kj] != nulla[0] || allapotsor[kj] == 'X'))
 				{
 					kj+= 9;
 				}
-				allapotsor[k]=allapotsor[kj];
-				allapotsor[k+1]=allapotsor[kj+1];*/
+				cout <<"\t"<< allapotsor[kj] << allapotsor[kj + 1] << " " << kj  << " - " << kj + 1 << endl;
+				//allapotsor[k]=allapotsor[kj];
+				//allapotsor[k+1]=allapotsor[kj+1];
 			}
 		}
 
