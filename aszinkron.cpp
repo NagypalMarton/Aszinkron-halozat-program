@@ -90,22 +90,22 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 
 int main(int argc, char* argv[])
 {
-	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
-	double lavdb = 1;
-	char igen = 'y', IGEN = 'Y', valasz, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+	unsigned short negdb = 0, oszlop = 6, neghely[2] = {}, lavdb = 1;
+	char igen = 'y', IGEN = 'Y', valasz, valasz1, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 	string xyz = "X1X2Z";
 	unsigned short** lav = new unsigned short* [lavdb];
 
 	setlocale(LC_ALL, "HUN");
+rosszlav:
 	do
 	{
 		system("cls");
-		cout << "Aszinkron sorrendi hálózat\n"
+		cout << "Aszinkron sorrendi hálózat tervezése\n"
 			<< "(Create by Nagypál Márton)\n\n";
 
 		cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
-		cin >> valasz;
-		if (valasz == igen || valasz == IGEN)
+		cin >> valasz1;
+		if (valasz1 == igen || valasz1 == IGEN)
 		{
 			do
 			{
@@ -113,12 +113,31 @@ int main(int argc, char* argv[])
 				cin >> negdb;
 				if (negdb < 1 || negdb > 2)
 				{
-					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n";
+					cout << "\n\t\tNem megfelelő számot írtál be! Írj be újat!\n";
 				}
 			} while (negdb < 1 || negdb > 2);
-
-			cout << endl;
 			lavdb = pow(2, negdb); //hatványozás
+			if (lavdb < 5)
+			{
+				cout << "\n\t\tEzen felül lesz-e még Lényeges Állapot Változás? (y/n) ";
+				cin >> valasz;
+				if (valasz == igen || valasz == IGEN)
+				{
+					unsigned short lavdbplus = 0;
+					do
+					{
+						lavdb -= lavdbplus;
+						cout << "\n\t\tEddig " << lavdb << " db LÁV van. Mennyi lesz még? ";
+						cin >> lavdbplus;
+						lavdb += lavdbplus;
+						if (lavdb > 4 || lavdb < 3)
+						{
+							cout << "\n\t\tNem megfelelő számot írtál be! Lényeges állaposorok db száma: " << lavdb << endl;
+						}
+					} while (lavdb > 4 || lavdb < 3);
+				}
+			}
+			cout << "\n";
 		}
 		else
 		{
@@ -131,10 +150,10 @@ int main(int argc, char* argv[])
 					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
 				}
 			} while (lavdb < 1 || lavdb > 4);
-			cout << endl;
+			cout << "\n";
 		}
 
-		//lav tömb kiterjesztése több dimenzióssá tétele
+		//lav tömb kiterjesztése több dimenzióssá
 		for (unsigned short i = 0; i <= lavdb - 1; i++)
 		{
 			lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
@@ -149,14 +168,14 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (negdb > 0 && negdb < 3 && (valasz == igen || valasz == IGEN))
+		if (negdb > 0 && negdb < 3 && (valasz1 == igen || valasz1 == IGEN))
 		{
 			switch (negdb)
 			{
 			case 1:
 				do
 				{
-					cout << "\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
+					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
 					cin >> neghely[0];
 					if (neghely[0] > 3 || neghely[0] == 0)
 					{
@@ -180,7 +199,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if (valasz == igen || valasz == IGEN)
+		if (valasz1 == igen || valasz1 == IGEN)
 		{
 			cout << "\n\tNegálás után:\n\t(2esek helye lesz feltöltve)\n\n";
 			for (unsigned short i = 0; i < lavdb; i++)
@@ -201,20 +220,19 @@ int main(int argc, char* argv[])
 						cout << " ";
 					}
 				}
-				cout << endl;
+				cout << "\n";
 			}
 		}
 
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
-			if (i == 0 && (valasz == igen || valasz == IGEN))
+			if (i == 0 && (valasz1 == igen || valasz1 == IGEN))
 			{
-				cout << endl
-					<< endl;
+				cout << "\n\n";
 			}
 			else if (i > 0)
 			{
-				cout << endl;
+				cout << "\n";
 			}
 			for (unsigned short j = 1; j < 7; j++)
 			{
@@ -263,7 +281,7 @@ int main(int argc, char* argv[])
 			}
 		}
 		system("cls");
-		cout << "Aszinkron sorrendi hálózat\n"
+		cout << "Aszinkron sorrendi hálózat tervezése\n"
 			<< "(Create by Nagypál Márton)\n\n"
 			<< "\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		for (unsigned short i = 0; i < lavdb; i++)
@@ -286,7 +304,7 @@ int main(int argc, char* argv[])
 			}
 			cout << endl;
 		}
-		cout << "\n\n\tTényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
+		cout << "\n\n\tTényleges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		teljesallapotsor tas[12] = {};
 		unsigned short tasdb = 1, tasdbb = 12, tassorszam = 0, lavd = 0, abcd = 1;
 
@@ -307,7 +325,7 @@ int main(int argc, char* argv[])
 
 		for (unsigned short i = 0; i < tasdbb; i++)
 		{
-			//Lényeges állapotváltozásokkal összehasonlítani
+			//Lényeges állapotváltozásokkal hasonlítja össze
 			for (unsigned short j = 0; j < lavdb; j++)
 			{
 				if (tas[i].sorszam[1] == lav[j][1] && tas[i].sorszam[2] == lav[j][2] && tas[i].sorszam[3] == lav[j][3])
@@ -393,6 +411,12 @@ int main(int argc, char* argv[])
 				//delete[] lav;
 				break;
 			}
+			else if (i == tasdbb - 1)
+			{
+				cout << "\n\tEnter után újraindul a program, mivel végtelen ciklusba került az egyik lényeges állapot változás miatt!\n\n";
+				system("pause");
+				goto rosszlav;
+			}
 		}
 		//hiányzó sorok keresése és betöltése a TASba
 		int teljestas[8][4] = { {0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0}, {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1} }, tasdab = tasdb;
@@ -407,7 +431,6 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		abcd -= 1;
 		for (short i = 0; i < 8; i++)
 		{
 			if (teljestas[i][3] != 2)
@@ -428,17 +451,28 @@ int main(int argc, char* argv[])
 			{
 				if (tas[i].sorszam[1] == tas[j].sorszam[1] && tas[i].sorszam[2] == tas[j].sorszam[2] && tas[i].sorszam[3] == tas[j].sorszam[3])
 				{
-					unsigned short sorszam = 0;
+					//cout << tas[i].sorbetu<< " "<<tas[j].sorbetu<<" -> ";
+					unsigned short sorszam = 0, c = 0;
 					while (abc[sorszam] != tas[j].sorbetu)
 					{
 						sorszam += 1;
 					}
-					//az adott betűtől kezdve töltse fel az hátralévő sorokat
-					for (short b = sorszam; b < tasdab; b++)
+					for (short b = sorszam; b < tasdab + 1; b++)
 					{
-						tas[b + 1].sorbetu = abc[b];
+						if (tas[b + 1].sorszam[0] == 3)
+						{
+							c = b;
+							b += 1;
+							tas[b + 1].sorbetu = abc[c];
+						}
+						else
+						{
+							tas[b + 1].sorbetu = abc[b];
+						}
 					}
+					tas[j].sorszam[0] = 3;
 					tas[j].sorbetu = tas[i].sorbetu;
+					//cout << tas[i].sorbetu<< " "<<tas[j].sorbetu<<"\t"<<tas[j].sorszam[1]<<tas[j].sorszam[2]<<tas[j].sorszam[3]<<endl;
 				}
 			}
 		}
@@ -531,7 +565,6 @@ int main(int argc, char* argv[])
 
 		short hossz = allapotsor.length();
 		string nulla = "0", egy = "1";
-		cout << endl;
 		//	Állapotsor hiányzó celláinak kitöltése
 		for (short k = 0; k < hossz; k = k + 2)
 		{
@@ -550,7 +583,6 @@ int main(int argc, char* argv[])
 				{
 					kj += 9;
 				}
-
 				allapotsor[k] = allapotsor[kj];
 				//kimenetváltozás figyelése
 				if (allapotsor[k + 1] != allapotsor[kj + 1])
@@ -583,8 +615,7 @@ int main(int argc, char* argv[])
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		for (short a = 1; a < 8; a++)
 		{
-			cout << "\t" << abc[a] << endl
-				<< endl;
+			cout << "\t" << abc[a] << "\n\n";
 		}
 		for (short a = 0; a < 7; a++)
 		{
@@ -601,6 +632,5 @@ int main(int argc, char* argv[])
 		cout << "\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
 	} while (valasz == igen || valasz == IGEN);
-	system("pause");
 	return 0;
 }
