@@ -347,7 +347,7 @@ rosszlav:
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i].sorszam[1] == lav[k][1] && tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 2;
 					}
@@ -362,7 +362,7 @@ rosszlav:
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[2] == lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 1;
 					}
