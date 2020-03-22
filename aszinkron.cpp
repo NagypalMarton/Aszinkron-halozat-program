@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿#include<iostream>
 #include <math.h>
 #include <string>
 using namespace std;
@@ -408,7 +408,12 @@ rosszlav:
 			}
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{
-				//delete[] lav;
+				//lav tömb törlése
+				/*for (unsigned short i = 0; i <= lavdb - 1; i++)
+				{
+					delete lav[i];
+				}
+				delete lav;*/
 				break;
 			}
 			else if (i == tasdbb - 1)
