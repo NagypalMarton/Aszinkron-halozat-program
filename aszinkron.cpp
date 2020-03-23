@@ -1,4 +1,4 @@
-﻿#include<iostream>
+﻿#include <iostream>
 #include <math.h>
 #include <string>
 using namespace std;
@@ -117,7 +117,7 @@ rosszlav:
 				}
 			} while (negdb < 1 || negdb > 2);
 			lavdb = pow(2, negdb); //hatványozás
-			if (lavdb < 5)
+			if (lavdb < 3)
 			{
 				cout << "\n\t\tEzen felül lesz-e még Lényeges Állapot Változás? (y/n) ";
 				cin >> valasz;
@@ -347,7 +347,7 @@ rosszlav:
 				if (tas[i].sorszam[1] == 1 && tas[i].sorszam[2] == 1) //1 1
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] == lav[k][1] && tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i].sorszam[2] != lav[k][2] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 2;
 					}
@@ -362,7 +362,7 @@ rosszlav:
 				else if (tas[i].sorszam[1] == 0 && tas[i].sorszam[2] == 0) //0 0
 				{
 					tas[i + 1].sorbetu = abc[abcd];
-					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[2] == lav[k][2] && tas[i].sorszam[3] == lav[k][3])
+					if (tas[i].sorszam[1] != lav[k][1] && tas[i].sorszam[3] == lav[k][3])
 					{
 						tassorszam = 1;
 					}
@@ -408,17 +408,12 @@ rosszlav:
 			}
 			if (tas[i + 1].sorszam[1] == 0 && tas[i + 1].sorszam[2] == 0 && tas[i + 1].sorszam[3] == 0 && lavd > 1)
 			{
-				//lav tömb törlése
-				/*for (unsigned short i = 0; i <= lavdb - 1; i++)
-				{
-					delete lav[i];
-				}
-				delete lav;*/
+				//delete[] lav;
 				break;
 			}
 			else if (i == tasdbb - 1)
 			{
-				cout << "\n\tEnter után újraindul a program, mivel végtelen ciklusba került az egyik lényeges állapot változás miatt!\n\n";
+				cout << "\n\tEgy gomb nyomás után újraindul a program, mivel végtelen ciklusba került az egyik lényeges állapot változás miatt!\n\n";
 				system("pause");
 				goto rosszlav;
 			}
@@ -456,7 +451,6 @@ rosszlav:
 			{
 				if (tas[i].sorszam[1] == tas[j].sorszam[1] && tas[i].sorszam[2] == tas[j].sorszam[2] && tas[i].sorszam[3] == tas[j].sorszam[3])
 				{
-					//cout << tas[i].sorbetu<< " "<<tas[j].sorbetu<<" -> ";
 					unsigned short sorszam = 0, c = 0;
 					while (abc[sorszam] != tas[j].sorbetu)
 					{
@@ -477,7 +471,6 @@ rosszlav:
 					}
 					tas[j].sorszam[0] = 3;
 					tas[j].sorbetu = tas[i].sorbetu;
-					//cout << tas[i].sorbetu<< " "<<tas[j].sorbetu<<"\t"<<tas[j].sorszam[1]<<tas[j].sorszam[2]<<tas[j].sorszam[3]<<endl;
 				}
 			}
 		}
@@ -487,7 +480,7 @@ rosszlav:
 		{
 			if (i == tasdb)
 			{
-				cout << "\n\tA sorban meg nem jelent állapot változások:\n";
+				cout << "\n\t\tA sorban meg nem\n\t\tjelent állapot változások:\n\n";
 			}
 			cout << "\t\t" << tas[i].sorbetu << ") ";
 			for (short j = 1; j < 4; j++)
@@ -584,9 +577,19 @@ rosszlav:
 			if ((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0]))
 			{
 				short kj = k;
-				while (kj < hossz - 9 && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X')))
+				if (k < 64)
 				{
-					kj += 9;
+					while (kj < hossz - 9 && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X')))
+					{
+						kj += 9;
+					}
+				}
+				else if (k >= 64)
+				{
+					while (kj < hossz && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X') || allapotsor[kj + 1] == 'X'))
+					{
+						kj -= 9;
+					}
 				}
 				allapotsor[k] = allapotsor[kj];
 				//kimenetváltozás figyelése
@@ -618,6 +621,18 @@ rosszlav:
 			}
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
+		//sorok összehasonlítása
+		for (unsigned short a = 0; a < hossz; a += teljestasoszlop)
+		{
+			for (unsigned short b = 1; b % 9 != 0; b++)//b% 9 == 0(?) és mi van a sor utolsó karakterével?
+			{
+				if (allapotsor[a] == allapotsor[b])
+				{
+
+				}
+			}
+		}
+		//kiírattatása
 		for (short a = 1; a < 8; a++)
 		{
 			cout << "\t" << abc[a] << "\n\n";
@@ -633,6 +648,19 @@ rosszlav:
 				cout << "\t";
 			}
 			cout << abc[a];
+		}
+		cout << "\n\n\tÁllapotok összevonása\n\n";
+		for (short a = 0; a < 7; a++)
+		{
+			cout << "\t";
+			for (short b = a + 1; b < 8; b++)
+			{
+				cout << abc[b];
+			}
+			if (a < 6)
+			{
+				cout << endl;
+			}
 		}
 		cout << "\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
