@@ -626,7 +626,7 @@ rosszlav:
 		{
 			for (unsigned short b = 1; b % 9 != 0; b++)//b% 9 == 0(?) és mi van a sor utolsó karakterével?
 			{
-				if (allapotsor[a] == allapotsor[b])
+				if (allapotsor[a+1] == allapotsor[b] || allapotsor[b]=='X')
 				{
 
 				}
