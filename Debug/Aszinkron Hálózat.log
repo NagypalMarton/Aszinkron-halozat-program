@@ -2,8 +2,4 @@
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(119,15): warning C4244: '=': conversion from 'double' to 'unsigned short', possible loss of data
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(150,14): warning C4566: character represented by universal-character-name '\u00F5' cannot be represented in the current code page (1250)
 C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(564,36): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(632,15): error C2059: syntax error: ')'
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(633,5): error C2143: syntax error: missing ';' before '{'
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(636,5): error C2181: illegal else without matching if
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(636,14): error C2059: syntax error: ')'
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(637,5): error C2143: syntax error: missing ';' before '{'
+  Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe

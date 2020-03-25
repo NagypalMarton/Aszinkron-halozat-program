@@ -601,7 +601,7 @@ rosszlav:
 			}
 		}
 
-		cout << "\n\n\tÁllapot táblázat\n\n"<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		cout << "\n\n\tÁllapot táblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
 		for (short a = 0; a < 35; a++)
 		{
@@ -622,29 +622,31 @@ rosszlav:
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		//sorok összehasonlítása
-		for (unsigned short a = 0; a < hossz; a += 2)
+		for (unsigned short a = 1; a < hossz; a += teljestasoszlop)
 		{
-			//Ha sorbetűt talál, akkor adjon hozzá 1
-			if (allapotsor[a] == abc[a / 9] && a % 9 == 0)
+			unsigned short b = a + 9, aa = a;
+			while (b < hossz)
 			{
-				a += 1;
-			}
-			else if (a % 9 == 0)
-			{
-				a += 1;
-			}
-				if ((allapotsor[a + 1] == allapotsor[b] && allapotsor[a + 2] == allapotsor[b + 1]) || allapotsor[a + 1] == 'X' || allapotsor[a + 2] == 'X' || allapotsor[b] == 'X') //Összevonható
+				if ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || allapotsor[aa + 1] == 'X' || allapotsor[aa + 1] == 'X' || allapotsor[b] == 'X') //Összevonható
 				{
-
+					cout << allapotsor[a] << allapotsor[a + 1] << " <-> " << allapotsor[b] << allapotsor[b + 1] << " ";
 				}
-				else if ()//Feltételel vonható össze
+				else
+				{
+					break;
+				}
+				/* if ()//Feltételel vonható össze
 				{
 
 				}
 				else if ()//Nem vonható össze
 				{
 
-				}
+				}*/
+				b += 2;
+				aa += 2;
+			}
+			cout << endl;
 		}
 		//kiírattatása
 		cout << "\n";
