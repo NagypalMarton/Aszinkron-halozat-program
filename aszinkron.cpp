@@ -148,7 +148,7 @@ rosszlav:
 				cin >> lavdb;
 				if (lavdb < 1 || lavdb > 4)
 				{
-					cout << "\n\t\tNem megfelelõ szám!\n\n";
+					cout << "\n\t\tNem megfelelő szám!\n\n";
 				}
 			} while (lavdb < 1 || lavdb > 4);
 			cout << "\n";
@@ -624,10 +624,10 @@ rosszlav:
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		//sorok összehasonlítása
-		for (unsigned short a = 1; a < hossz - 9; a += teljestasoszlop)
+		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
 		{
 			unsigned short c = a, c1 = 0, osszevon = 0;
-			for (unsigned short b = a + 9; b < hossz - 1; b += 2)
+			for (unsigned short b = a + 9; b < hossz - 9; b += 2)
 			{
 				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
 				{
@@ -651,18 +651,21 @@ rosszlav:
 				c1++;
 				if (c1 == 4)
 				{
-					if (osszevon == 4)
-					{
-						cout << "A(z) " << a << " sor összevonható a(z)" << abc[b / 9] << " sorral\n";
-					}
+					//	if (osszevon == 4)
+	//					{
+					cout << "A(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n";
+					//	}
 					c = a;
 					c1 = 0;
-					cout << endl;
+					//cout << endl;
 				}
 			}
-			cout << endl
-				<< endl;
+			cout << endl;
 		}
+		//majd törölni ezt
+		system("pause");
+		goto rosszlav;
+		//eddig
 		//kiírattatása
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
@@ -694,7 +697,16 @@ rosszlav:
 				cout << endl;
 			}
 		}
-		cout << "\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
+		//ha 4 állapotot tudunk összevonni, akkor ABCD; esetleg ki is lehetne írattatni a 4et, pl.: A (ab)\tB (cde)...
+		string ABCD = "ABCD", ABCD1 = "A00B01C11D10";
+		cout << "\n\n\tÖsszevont állapottáblázat\n\n";
+		cout << "\n\n\tÁllapotok kódolása\n\n";
+		for (unsigned short a = 0; a < 12; a += 3)
+		{
+			cout << "\t\t" << ABCD1[a] << " -> " << ABCD1[a + 1] << ABCD1[a + 2] << endl;
+		}
+		cout << "\n\tKódolt Állapottábla felírása\n\n\t\ta) DIREKT BEKÖTÉSI\n\n\t\tb) TÁROLÓS\n\n";
+		cout << "\nA táblázat alapján rajzold meg a DIREKT BEKÖTÉSI és a TÁROLÓS aszinkron hálózatot!\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
 	} while (valasz == igen || valasz == IGEN);
 	return 0;
