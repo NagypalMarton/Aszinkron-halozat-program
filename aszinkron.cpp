@@ -640,7 +640,6 @@ rosszlav:
 				if ((allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == allapotsor[b + 1]) || allapotsor[b + 1] == 'X' || allapotsor[c + 1] == 'X' || allapotsor[b] == 'X') //Összevonható
 				{
 					osszevon++;
-					//cout << allapotsor[c] << allapotsor[c + 1] << " - " << allapotsor[b] << allapotsor[b + 1] << " ";
 				}
 				else
 				{
@@ -651,21 +650,13 @@ rosszlav:
 				c1++;
 				if (c1 == 4)
 				{
-					//	if (osszevon == 4)
-	//					{
-					cout << "A(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n";
-					//	}
-					c = a;
-					c1 = 0;
-					//cout << endl;
+				cout << "A(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n";
+				c = a;
+				c1 = 0;
 				}
 			}
 			cout << endl;
 		}
-		//majd törölni ezt
-		system("pause");
-		goto rosszlav;
-		//eddig
 		//kiírattatása
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
@@ -706,7 +697,7 @@ rosszlav:
 			cout << "\t\t" << ABCD1[a] << " -> " << ABCD1[a + 1] << ABCD1[a + 2] << endl;
 		}
 		cout << "\n\tKódolt Állapottábla felírása\n\n\t\ta) DIREKT BEKÖTÉSI\n\n\t\tb) TÁROLÓS\n\n";
-		cout << "\nA táblázat alapján rajzold meg a DIREKT BEKÖTÉSI és a TÁROLÓS aszinkron hálózatot!\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
+		cout << "\nA táblázatok alapján rajzold meg a DIREKT BEKÖTÉSI és a TÁROLÓS aszinkron hálózatot!\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
 	} while (valasz == igen || valasz == IGEN);
 	return 0;
