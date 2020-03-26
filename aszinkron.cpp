@@ -579,14 +579,14 @@ rosszlav:
 			if ((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0]))
 			{
 				unsigned short kj = k;
-				if (k < 64)
+				if (k < 54)
 				{
 					while (kj < hossz - 9 && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X')))
 					{
 						kj += 9;
 					}
 				}
-				else if (k >= 57)
+				else if (k >= 45)
 				{
 					while (kj < hossz && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X') || allapotsor[kj + 1] == 'X'))
 					{
@@ -627,7 +627,8 @@ rosszlav:
 		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
 		{
 			unsigned short c = a, c1 = 0, osszevon = 0;
-			for (unsigned short b = a + 9; b < hossz - 9; b += 2)
+			cout << "\nSorszám: "<< c - 1<<"\t";
+			for (unsigned short b = a + 9; b < hossz - 10; b += 2)
 			{
 				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
 				{
@@ -637,8 +638,10 @@ rosszlav:
 				{
 					b += 1;
 				}
-				if ((allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == allapotsor[b + 1]) || allapotsor[b + 1] == 'X' || allapotsor[c + 1] == 'X' || allapotsor[b] == 'X') //Összevonható
+				//Egymás alatti sorok összehasonlítása
+				if ((allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == allapotsor[b + 1]) || allapotsor[b + 1] == 'X' || allapotsor[c + 1] == 'X' || allapotsor[b] == 'X') //Összevonható-e
 				{
+					cout << allapotsor[c] << allapotsor[c + 1] << " - " << allapotsor[b]<<allapotsor[b + 1] << endl;
 					osszevon++;
 				}
 				else
@@ -650,7 +653,10 @@ rosszlav:
 				c1++;
 				if (c1 == 4)
 				{
+				if(osszevon==4 || osszevon == 8)
+				{
 				cout << "A(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n";
+				}
 				c = a;
 				c1 = 0;
 				}
