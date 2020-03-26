@@ -90,7 +90,8 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 
 int main(int argc, char* argv[])
 {
-	unsigned short negdb = 0, oszlop = 6, neghely[2] = {}, lavdb = 1;
+	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
+	double lavdb = 1;
 	char igen = 'y', IGEN = 'Y', valasz, valasz1, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 	string xyz = "X1X2Z";
 	unsigned short** lav = new unsigned short* [lavdb];
@@ -147,7 +148,7 @@ rosszlav:
 				cin >> lavdb;
 				if (lavdb < 1 || lavdb > 4)
 				{
-					cout << "\n\t\tNem megfelelõ számot írtál be! Írj be újat!\n\n";
+					cout << "\n\t\tNem megfelelõ szám!\n\n";
 				}
 			} while (lavdb < 1 || lavdb > 4);
 			cout << "\n";
@@ -561,10 +562,10 @@ rosszlav:
 			}
 		}
 
-		short hossz = allapotsor.length();
+		unsigned int hossz = allapotsor.length();
 		string nulla = "0", egy = "1";
 		//	Állapotsor hiányzó celláinak kitöltése
-		for (short k = 0; k < hossz; k = k + 2)
+		for (unsigned short k = 0; k < hossz; k = k + 2)
 		{
 			if (allapotsor[k] == abc[k / 9] && k % 9 == 0)
 			{
@@ -577,7 +578,7 @@ rosszlav:
 			//egymás alatti értékek összehasonlítása
 			if ((allapotsor[k] == nulla[0] && allapotsor[k + 1] == nulla[0]) || (allapotsor[k] == egy[0] && allapotsor[k + 1] == egy[0]))
 			{
-				short kj = k;
+				unsigned short kj = k;
 				if (k < 64)
 				{
 					while (kj < hossz - 9 && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X')))
@@ -585,7 +586,7 @@ rosszlav:
 						kj += 9;
 					}
 				}
-				else if (k >= 64)
+				else if (k >= 57)
 				{
 					while (kj < hossz && (allapotsor[kj] == egy[0] || allapotsor[kj] == nulla[0] || (allapotsor[kj] == 'X' && allapotsor[kj + 1] == 'X') || allapotsor[kj + 1] == 'X'))
 					{
@@ -601,14 +602,15 @@ rosszlav:
 			}
 		}
 
-		cout << "\n\n\tÁllapot táblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		cout << "\n\n\tÁllapot táblázat\n\n"
+			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
-		for (short a = 0; a < 35; a++)
+		for (unsigned short a = 0; a < 35; a++)
 		{
 			cout << "=";
 		}
 		cout << endl;
-		for (short a = 0; a < 8; a++)
+		for (unsigned short a = 0; a < 8; a++)
 		{
 			cout << "\t  " << abc[a];
 			for (unsigned short ab = 0; a < hossz; ab = ab + teljestasoszlop)
@@ -622,31 +624,44 @@ rosszlav:
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		//sorok összehasonlítása
-		for (unsigned short a = 1; a < hossz; a += teljestasoszlop)
+		for (unsigned short a = 1; a < hossz - 9; a += teljestasoszlop)
 		{
-			unsigned short b = a + 9, aa = a;
-			while (b < hossz)
+			unsigned short c = a, c1 = 0, osszevon = 0;
+			for (unsigned short b = a + 9; b < hossz - 1; b += 2)
 			{
-				if ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || allapotsor[aa + 1] == 'X' || allapotsor[aa + 1] == 'X' || allapotsor[b] == 'X') //Összevonható
+				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
 				{
-					cout << allapotsor[a] << allapotsor[a + 1] << " <-> " << allapotsor[b] << allapotsor[b + 1] << " ";
+					b += 1;
+				}
+				else if (b % 9 == 0)
+				{
+					b += 1;
+				}
+				if ((allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == allapotsor[b + 1]) || allapotsor[b + 1] == 'X' || allapotsor[c + 1] == 'X' || allapotsor[b] == 'X') //Összevonható
+				{
+					osszevon++;
+					//cout << allapotsor[c] << allapotsor[c + 1] << " - " << allapotsor[b] << allapotsor[b + 1] << " ";
 				}
 				else
 				{
+					c1 = 0;
 					break;
 				}
-				/* if ()//Feltételel vonható össze
+				c += 2;
+				c1++;
+				if (c1 == 4)
 				{
-
+					if (osszevon == 4)
+					{
+						cout << "A(z) " << a << " sor összevonható a(z)" << abc[b / 9] << " sorral\n";
+					}
+					c = a;
+					c1 = 0;
+					cout << endl;
 				}
-				else if ()//Nem vonható össze
-				{
-
-				}*/
-				b += 2;
-				aa += 2;
 			}
-			cout << endl;
+			cout << endl
+				<< endl;
 		}
 		//kiírattatása
 		cout << "\n";
