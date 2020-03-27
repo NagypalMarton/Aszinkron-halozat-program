@@ -627,9 +627,9 @@ rosszlav:
 		//sorok összehasonlítása
 		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
 		{
-			unsigned short c = a, c1 = 0, osszevon = 0;
-			//cout << "\nSorszám: " << c - 1 << "\n";
-			for (unsigned short b = a + 9; b < hossz - 1; b += 2)
+			unsigned short aa = a, c1 = 0, osszevon = 0;
+			cout << "\n"<< (aa-1)/9+1 << ". sor (" << abc[(aa - 1) / 9]<<")\n";
+			for (unsigned short b = a + 9; b < hossz - 10; b += 2)
 			{
 				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
 				{
@@ -640,8 +640,9 @@ rosszlav:
 					b += 1;
 				}
 				//Egymás alatti sorok összehasonlítása
-				if ((allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == allapotsor[b + 1]) || (allapotsor[c] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[c] == allapotsor[b] && allapotsor[c + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[c] == 'X') //Összevonható-e
+				if ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X') //Összevonható-e
 				{
+					cout << allapotsor[aa]<<"(" << aa << ")-"<< allapotsor[aa+1] << "(" << aa + 1<< ") o-o " << b <<"-"<< b + 1 << "\t";
 					osszevon++;
 				}
 				else
@@ -649,24 +650,21 @@ rosszlav:
 					c1 = 0;
 					continue;
 				}
-				c += 2;
+				aa += 2;
 				c1++;
-				if (c1 == 4)
+				if (osszevon < 5)
 				{
-					c = a;
+					aa = a;
+				}
+				if (c1 % 4 == 0)
+				{
+					//vagy ide
+					//aa = a;
 					c1 = 0;
-					if (osszevon % 4 == 0)
-					{
-						lepcsos += allapotsor[c];//FOR ciklussal feltölteni
-							//cout << "\n\tA(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n";
-					}
-					else
-					{
-						cout << endl;
-					}
+					cout << endl;
 				}
 			}
-			cout << endl;
+			cout <<endl<<endl;
 		}
 		//kiírattatása
 		cout << "\n";
