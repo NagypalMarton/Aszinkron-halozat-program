@@ -613,7 +613,7 @@ rosszlav:
 		for (unsigned short a = 0; a < 8; a++)
 		{
 			cout << "\t  " << abc[a];
-			for (unsigned short ab = 0; a < hossz; ab = ab + teljestasoszlop)
+			for (unsigned short ab = 0; a < hossz - 9; ab = ab + teljestasoszlop)
 			{
 				if (abc[a] == allapotsor[ab])
 				{
@@ -623,13 +623,13 @@ rosszlav:
 			}
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
-		string lepcsos;
+		string lepcsos = "";
 		//sorok összehasonlítása
 		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
 		{
-			unsigned short aa = a, c1 = 0, osszevon = 0;
-			cout << "\n"<< (aa-1)/9+1 << ". sor (" << abc[(aa - 1) / 9]<<")\n";
-			for (unsigned short b = a + 9; b < hossz - 10; b += 2)
+			unsigned short aa = a, osszevon = 0;
+			cout << "\n" << (aa - 1) / 9 + 1 << ". sor (" << abc[(aa - 1) / 9] << ")\n";
+			for (unsigned short b = a + 9; b < hossz - 9; b += 2)
 			{
 				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
 				{
@@ -642,30 +642,36 @@ rosszlav:
 				//Egymás alatti sorok összehasonlítása
 				if ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X') //Összevonható-e
 				{
-					cout << allapotsor[aa]<<"(" << aa << ")-"<< allapotsor[aa+1] << "(" << aa + 1<< ") o-o " << b <<"-"<< b + 1 << "\t";
+					cout << allapotsor[aa] << allapotsor[aa + 1] << "=" << allapotsor[b] << allapotsor[b + 1] << "  ";
 					osszevon++;
 				}
 				else
 				{
-					c1 = 0;
+					//lepcsos+="X";
 					continue;
 				}
+				if (osszevon % 4 == 0)
+				{
+					lepcsos += "+";
+					cout << "\tA(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral. Osszevon: " << osszevon << " LEPCSOS: " << lepcsos << "\n";
+					cout << endl;
+				}
+				else
+				{
+					lepcsos += "-";
+				}
 				aa += 2;
-				c1++;
-				if (osszevon < 5)
+				if (aa % 9 == 0)
 				{
 					aa = a;
-				}
-				if (c1 % 4 == 0)
-				{
-					//vagy ide
-					//aa = a;
-					c1 = 0;
 					cout << endl;
 				}
 			}
-			cout <<endl<<endl;
+			cout << endl << endl;
 		}
+		cout << lepcsos << endl << lepcsos.length() << endl;
+		system("pause");
+		goto rosszlav;
 		//kiírattatása
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
