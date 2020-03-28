@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <math.h>
+#include<fstream>
 #include <string>
 using namespace std;
 
@@ -91,7 +92,7 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 int main(int argc, char* argv[])
 {
 	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
-	double lavdb = 1;
+	double lavdb = 4;
 	char igen = 'y', IGEN = 'Y', valasz, valasz1, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 	string xyz = "X1X2Z";
 	unsigned short** lav = new unsigned short* [lavdb];
@@ -103,188 +104,225 @@ rosszlav:
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat tervezése\n"
 			<< "(Create by Nagypál Márton)\n\n";
-
-		cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
-		cin >> valasz1;
-		if (valasz1 == igen || valasz1 == IGEN)
+		cout << "\tTXT fájlból olvasod-e be a LÉNYEGES ÁLLAPOTVÁLTOZÁSokat? (y/n) ";
+		cin >> valasz;
+		if (valasz == igen || valasz == IGEN)
 		{
-			do
+			unsigned short db = 0;
+			cout << "\n\t\tAlábbi néven tedd az EXE fájllal megegyező mappába a TXT fájlt: >> aszinkron.txt <<\n\t\tTartalma hasonló formában legyen, mint az alábbi példában:\n\n";
+			cout << "\t\t\t000110\n\t\t\t101101\n\n\t\t";
+			system("pause");
+			fstream be("aszinkron.txt");
+			if (be.fail())
 			{
-				cout << "\n\tHány darab lesz benne? (maximum 2 lehet)\t\t";
-				cin >> negdb;
-				if (negdb < 1 || negdb > 2)
-				{
-					cout << "\n\t\tNem megfelelő számot írtál be! Írj be újat!\n";
-				}
-			} while (negdb < 1 || negdb > 2);
-			lavdb = pow(2, negdb); //hatványozás
-			if (lavdb < 3)
-			{
-				cout << "\n\t\tEzen felül lesz-e még Lényeges Állapot Változás? (y/n) ";
-				cin >> valasz;
-				if (valasz == igen || valasz == IGEN)
-				{
-					unsigned short lavdbplus = 0;
-					do
-					{
-						lavdb -= lavdbplus;
-						cout << "\n\t\tEddig " << lavdb << " db LÁV van. Mennyi lesz még? ";
-						cin >> lavdbplus;
-						lavdb += lavdbplus;
-						if (lavdb > 4 || lavdb < 3)
-						{
-							cout << "\n\t\tNem megfelelő számot írtál be! Lényeges állaposorok db száma: " << lavdb << endl;
-						}
-					} while (lavdb > 4 || lavdb < 3);
-				}
+				cerr << "\t\tHiba a beolvasásnál!\n";
+				system("pause");
+				exit(1);
 			}
-			cout << "\n";
+			//lav tömb kiterjesztése több dimenzióssá
+			for (unsigned short i = 0; i <= lavdb - 1; i++)
+			{
+				lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
+			}
+			cout << "\t\tBeolvasás folyamatban...\n\n";
+			for (unsigned short i = 0; i < lavdb && !be.eof(); i++)
+			{
+				for (size_t j = 1; j < 7; j++)
+				{
+					be >> lav[i][j];
+				}
+				db++;
+			}
+			be.close();
+			lavdb = db;
+			cout <<"\tLAVDB értéke: "<< lavdb << endl;
 		}
 		else
 		{
-			do
+			cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
+			cin >> valasz1;
+			if (valasz1 == igen || valasz1 == IGEN)
 			{
-				cout << "\n\tHány LÉNYEGES állapotváltozás lesz? (1 és 4 lehet)\t";
-				cin >> lavdb;
-				if (lavdb < 1 || lavdb > 4)
+				do
 				{
-					cout << "\n\t\tNem megfelelő szám!\n\n";
+					cout << "\n\tHány darab lesz benne? (maximum 2 lehet)\t\t";
+					cin >> negdb;
+					if (negdb < 1 || negdb > 2)
+					{
+						cout << "\n\t\tNem megfelelő számot írtál be! Írj be újat!\n";
+					}
+				} while (negdb < 1 || negdb > 2);
+				lavdb = pow(2, negdb); //hatványozás
+				if (lavdb < 3)
+				{
+					cout << "\n\t\tEzen felül lesz-e még Lényeges Állapot Változás? (y/n) ";
+					cin >> valasz;
+					if (valasz == igen || valasz == IGEN)
+					{
+						unsigned short lavdbplus = 0;
+						do
+						{
+							lavdb -= lavdbplus;
+							cout << "\n\t\tEddig " << lavdb << " db LÁV van. Mennyi lesz még? ";
+							cin >> lavdbplus;
+							lavdb += lavdbplus;
+							if (lavdb > 4 || lavdb < 3)
+							{
+								cout << "\n\t\tNem megfelelő számot írtál be! Lényeges állaposorok db száma: " << lavdb << endl;
+							}
+						} while (lavdb > 4 || lavdb < 3);
+					}
 				}
-			} while (lavdb < 1 || lavdb > 4);
-			cout << "\n";
-		}
-
-		//lav tömb kiterjesztése több dimenzióssá
-		for (unsigned short i = 0; i <= lavdb - 1; i++)
-		{
-			lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
-		}
-
-		//2essel feltöltés
-		for (unsigned int i = 0; i < lavdb; i++)
-		{
-			for (unsigned short j = 1; j < oszlop + 1; j++)
-			{
-				lav[i][j] = 2;
+				cout << "\n";
 			}
-		}
-
-		if (negdb > 0 && negdb < 3 && (valasz1 == igen || valasz1 == IGEN))
-		{
-			switch (negdb)
+			else
 			{
-			case 1:
 				do
 				{
-					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
-					cin >> neghely[0];
-					if (neghely[0] > 3 || neghely[0] == 0)
+					cout << "\n\tHány LÉNYEGES állapotváltozás lesz? (1 és 4 lehet)\t";
+					cin >> lavdb;
+					if (lavdb < 1 || lavdb > 4)
 					{
-						cout << "\n\t\tNem megfelelő számot írtál be!\n\n";
+						cout << "\n\t\tNem megfelelő szám!\n\n";
 					}
-				} while (neghely[0] > 3 || neghely[0] == 0);
-				negacio(neghely, lav);
-				break;
-			case 2:
-				do
-				{
-					cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
-					cin >> neghely[0] >> neghely[1];
-					if (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1)
-					{
-						cout << "\n\t\tNem megfelelő számokat vagy számot írtál be!\n";
-					}
-				} while (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1);
-				negacio(neghely, lav);
-				break;
+				} while (lavdb < 1 || lavdb > 4);
+				cout << "\n";
 			}
-		}
 
-		if (valasz1 == igen || valasz1 == IGEN)
-		{
-			cout << "\n\t\tNegálás után:\n\t\t(2esek helye lesz feltöltve)\n\n";
+			//lav tömb kiterjesztése több dimenzióssá
+			for (unsigned short i = 0; i <= lavdb - 1; i++)
+			{
+				lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
+			}
+
+			//2essel feltöltés
+			for (unsigned int i = 0; i < lavdb; i++)
+			{
+				for (unsigned short j = 1; j < oszlop + 1; j++)
+				{
+					lav[i][j] = 2;
+				}
+			}
+
+			if (negdb > 0 && negdb < 3 && (valasz1 == igen || valasz1 == IGEN))
+			{
+				switch (negdb)
+				{
+				case 1:
+					do
+					{
+						cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3)\t ";
+						cin >> neghely[0];
+						if (neghely[0] > 3 || neghely[0] == 0)
+						{
+							cout << "\n\t\tNem megfelelő számot írtál be!\n\n";
+						}
+					} while (neghely[0] > 3 || neghely[0] == 0);
+					negacio(neghely, lav);
+					break;
+				case 2:
+					do
+					{
+						cout << "\n\tMelyik helyen lesz negáció? (X1 -> 1; X2 -> 2; Z -> 3; Szóközzel ellátva írd be!)\t ";
+						cin >> neghely[0] >> neghely[1];
+						if (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1)
+						{
+							cout << "\n\t\tNem megfelelő számokat vagy számot írtál be!\n";
+						}
+					} while (neghely[0] > 3 || neghely[1] > 3 || neghely[0] < 1 || neghely[1] < 1);
+					negacio(neghely, lav);
+					break;
+				}
+			}
+
+			if (valasz1 == igen || valasz1 == IGEN)
+			{
+				cout << "\n\t\tNegálás után:\n\t\t(2esek helye lesz feltöltve)\n\n";
+				for (unsigned short i = 0; i < lavdb; i++)
+				{
+					for (unsigned short j = 1; j <= oszlop; j++)
+					{
+						if (j == 1)
+						{
+							cout << "\t\t\t" << i + 1 << ") ";
+						}
+						cout << lav[i][j];
+						if (j == 3)
+						{
+							cout << " -> ";
+						}
+						if (j != 6)
+						{
+							cout << " ";
+						}
+					}
+					cout << "\n";
+				}
+			}
+
 			for (unsigned short i = 0; i < lavdb; i++)
 			{
-				for (unsigned short j = 1; j <= oszlop; j++)
+				if (i == 0 && (valasz1 == igen || valasz1 == IGEN))
+				{
+					cout << "\n\n";
+				}
+				else if (i > 0)
+				{
+					cout << "\n";
+				}
+				for (unsigned short j = 1; j < 7; j++)
 				{
 					if (j == 1)
 					{
-						cout << "\t\t\t" << i + 1 << ") ";
+						cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 					}
-					cout << lav[i][j];
-					if (j == 3)
-					{
-						cout << " -> ";
-					}
-					if (j != 6)
-					{
-						cout << " ";
-					}
-				}
-				cout << "\n";
-			}
-		}
-
-		for (unsigned short i = 0; i < lavdb; i++)
-		{
-			if (i == 0 && (valasz1 == igen || valasz1 == IGEN))
-			{
-				cout << "\n\n";
-			}
-			else if (i > 0)
-			{
-				cout << "\n";
-			}
-			for (unsigned short j = 1; j < 7; j++)
-			{
-				if (j == 1)
-				{
-					cout << "\tBemeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-				}
-				else if (j == 4)
-				{
-					cout << "\n\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
-				}
-				if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
-				{
-					j = j + 1;
-					if (j == 4)
+					else if (j == 4)
 					{
 						cout << "\n\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
 					}
+					if (lav[i][j] != 2) //ha nem 2es, akkor írhat be adatot
+					{
+						j = j + 1;
+						if (j == 4)
+						{
+							cout << "\n\tKimeneti értékek a(z) " << i + 1 << ". elemnek:\n";
+						}
+					}
+					do
+					{
+						if (lav[i][j] == 2)
+						{
+							cout << "\t\t";
+							if (j == 1 || j == 4)
+							{
+								cout << xyz[0] << xyz[1];
+							}
+							else if (j == 2 || j == 5)
+							{
+								cout << xyz[2] << xyz[3];
+							}
+							else if (j == 3 || j == 6)
+							{
+								cout << xyz[4];
+							}
+							cout << " értéke: ";
+							cin >> lav[i][j];
+						}
+						if (lav[i][j] > 1)
+						{
+							cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat! Értéke: " << lav[i][j] << "\n\n";
+							lav[i][j] = 2;
+						}
+					} while (lav[i][j] > 1);
 				}
-				do
-				{
-					if (lav[i][j] == 2)
-					{
-						cout << "\t\t";
-						if (j == 1 || j == 4)
-						{
-							cout << xyz[0] << xyz[1];
-						}
-						else if (j == 2 || j == 5)
-						{
-							cout << xyz[2] << xyz[3];
-						}
-						else if (j == 3 || j == 6)
-						{
-							cout << xyz[4];
-						}
-						cout << " értéke: ";
-						cin >> lav[i][j];
-					}
-					if (lav[i][j] > 1)
-					{
-						cout << "\n\tNem megfelelő értéket adtál meg! Adj meg másikat! Értéke: " << lav[i][j] << "\n\n";
-						lav[i][j] = 2;
-					}
-				} while (lav[i][j] > 1);
 			}
 		}
+		cout << "\t\tBeolvasás kész! Hiba nélkül lefutott! ";
+		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat tervezése\n"
 			<< "(Create by Nagypál Márton)\n\n"
-			<< "\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
+			<< "\n\tLényeges állapot változások:\n\t(Értelmezés = X1, X2, Z)\n\n";
 		for (unsigned short i = 0; i < lavdb; i++)
 		{
 			for (unsigned short j = 1; j <= oszlop; j++)
@@ -647,17 +685,16 @@ rosszlav:
 				}
 				else
 				{
-					//lepcsos+="X";
 					continue;
 				}
 				if (osszevon % 4 == 0)
 				{
 					lepcsos += "+";
-					cout << "\tA(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral. Osszevon: " << osszevon << " LEPCSOS: " << lepcsos << "\n";
-					cout << endl;
+					cout << "\tA(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n\tOsszevon: " << osszevon << " LEPCSOS: " << lepcsos << "\n";
 				}
-				else
+				else if(abc[a / 9]!= abc[b / 9])
 				{
+					cout <<"\t\t\t"<< abc[a / 9] << "-" << abc[b / 9]<<endl;
 					lepcsos += "-";
 				}
 				aa += 2;
@@ -667,9 +704,8 @@ rosszlav:
 					cout << endl;
 				}
 			}
-			cout << endl << endl;
 		}
-		cout << lepcsos << endl << lepcsos.length() << endl;
+		cout <<"\nLépscsős string tartalma:\n"<< lepcsos << endl <<"Hossza: "<< lepcsos.length() << endl;
 		system("pause");
 		goto rosszlav;
 		//kiírattatása
