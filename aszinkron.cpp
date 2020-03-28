@@ -110,7 +110,7 @@ rosszlav:
 		{
 			unsigned short db = 0;
 			cout << "\n\t\tAlábbi néven tedd az EXE fájllal megegyező mappába a TXT fájlt: >> aszinkron.txt <<\n\t\tTartalma hasonló formában legyen, mint az alábbi példában:\n\n";
-			cout << "\t\t\t000110\n\t\t\t101101\n\n\t\t";
+			cout << "\t\t\t0 0 0 1 1 0\n\t\t\t1 0 1 1 0 1\n\n\t\tMehet a beolvasás? ";
 			system("pause");
 			fstream be("aszinkron.txt");
 			if (be.fail())
@@ -124,7 +124,7 @@ rosszlav:
 			{
 				lav[i] = new unsigned short[7]; //OSZLOPot hozza létre
 			}
-			cout << "\t\tBeolvasás folyamatban...\n\n";
+			cout << "\n\t\tBeolvasás folyamatban...\n";
 			for (unsigned short i = 0; i < lavdb && !be.eof(); i++)
 			{
 				for (size_t j = 1; j < 7; j++)
@@ -135,7 +135,6 @@ rosszlav:
 			}
 			be.close();
 			lavdb = db;
-			cout <<"\tLAVDB értéke: "<< lavdb << endl;
 		}
 		else
 		{
@@ -317,7 +316,7 @@ rosszlav:
 				}
 			}
 		}
-		cout << "\t\tBeolvasás kész! Hiba nélkül lefutott! ";
+		cout << "\t\tBeolvasás kész!\n\t\t";
 		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat tervezése\n"
@@ -694,7 +693,7 @@ rosszlav:
 				}
 				else if(abc[a / 9]!= abc[b / 9])
 				{
-					cout <<"\t\t\t"<< abc[a / 9] << "-" << abc[b / 9]<<endl;
+					//cout <<"\t\t\t"<< abc[a / 9] << "-" << abc[b / 9]<<endl;
 					lepcsos += "-";
 				}
 				aa += 2;
