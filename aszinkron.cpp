@@ -513,7 +513,13 @@ rosszlav:
 				}
 			}
 		}
-
+		//Utolsó sornak ellenőrzése, hogy kapott-e betűt
+		if (tas[tasdab].sorbetu != abc[7])
+		{
+			tas[tasdab].sorbetu = abc[7];
+		}
+		cout << "\n\n\t\t" << tas[tasdab].sorbetu<<"\n";
+		system("pause");
 		//TAS kiírattatása
 		for (short i = 0; i < tasdab; i++)
 		{
@@ -663,15 +669,16 @@ rosszlav:
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		string lepcsos = "";
 		//sorok összehasonlítása
-		for (unsigned short a = 1; a < hossz - 9; a += teljestasoszlop)
+		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
 		{
 			unsigned short aa = a, osszevon = 0, be = 0, i = 0;
-			cout << allapotsor[aa] << allapotsor[aa + 1] << endl;
+			cout << abc[(aa - 1) / 9] << endl;//allapotsor[aa] << allapotsor[aa + 1] << endl;
 			for (unsigned short b = aa + 9; b < hossz; b += teljestasoszlop)
 			{
+				i = 0;
 				aa = a;
 				be = b;
-				cout << "\t" << allapotsor[b] << allapotsor[b + 1];//<< endl<< endl;
+				cout << "\t" << allapotsor[b] << allapotsor[b + 1] <<"\t";//<< endl<< endl;
 				while (i < 4 && ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X'))
 				{
 					cout << " " << allapotsor[aa] << allapotsor[aa + 1] << " " << allapotsor[b] << allapotsor[b + 1];
@@ -679,26 +686,25 @@ rosszlav:
 					osszevon++;
 					b += 2;
 					aa += 2;
-					if (osszevon == 4)
-					{
-						aa = 0;
-						lepcsos += "+";
-						osszevon = 0;
-					}
-					else if (b % 9 != 0)
-					{
-						aa = 0;
-						lepcsos += "-";
-						osszevon = 0;
-					}
 				}
-				cout << endl;
+				if (osszevon == 4)
+				{
+					aa = 0;
+					lepcsos += "+";
+					osszevon = 0;
+				}
+				else if (b % 9 != 0)
+				{
+					aa = 0;
+					lepcsos += "-";
+					osszevon = 0;
+				}
+				cout << "\t"<<lepcsos<< endl;
 				b = be;
 			}
 			cout << endl;
 		}
-		cout << "\nLépscsős string tartalma:\n"
-			<< lepcsos << "\nHossza: " << lepcsos.length() << "\n\n";
+		cout << "\nLépscsős string tartalma:\n"<< lepcsos << "\nHossza: " << lepcsos.length() << "\n\n";
 		system("pause");
 		goto rosszlav;
 		//kiírattatása
