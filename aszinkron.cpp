@@ -518,8 +518,6 @@ rosszlav:
 		{
 			tas[tasdab].sorbetu = abc[7];
 		}
-		cout << "\n\n\t\t" << tas[tasdab].sorbetu<<"\n";
-		system("pause");
 		//TAS kiírattatása
 		for (short i = 0; i < tasdab; i++)
 		{
@@ -645,7 +643,11 @@ rosszlav:
 				}
 			}
 		}
-
+		if (tas[tasdab].sorbetu != abc[7])
+		{
+			cout << "\tA program ismeretlen hiba miatt kilép!\n\n";
+			exit(1);
+		}
 		cout << "\n\n\tÁllapot táblázat\n\n"
 			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
