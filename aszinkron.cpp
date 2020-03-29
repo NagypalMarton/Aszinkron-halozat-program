@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <math.h>
-#include<fstream>
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -108,16 +108,17 @@ rosszlav:
 		cin >> valasz;
 		if (valasz == igen || valasz == IGEN)
 		{
-			unsigned short db = 0;
+			unsigned short db = 0, hiba = 0;
 			cout << "\n\t\tAlábbi néven tedd az EXE fájllal megegyező mappába a TXT fájlt: >> aszinkron.txt <<\n\t\tTartalma hasonló formában legyen, mint az alábbi példában:\n\n";
 			cout << "\t\t\t0 0 0 1 1 0\n\t\t\t1 0 1 1 0 1\n\n\t\tMehet a beolvasás? ";
 			system("pause");
 			fstream be("aszinkron.txt");
 			if (be.fail())
 			{
-				cerr << "\t\tHiba a beolvasásnál!\n";
+				cerr << "\n\t\tHiba a beolvasásnál!\n";
+				hiba = 1;
 				system("pause");
-				exit(1);
+				goto rosszlav;
 			}
 			//lav tömb kiterjesztése több dimenzióssá
 			for (unsigned short i = 0; i <= lavdb - 1; i++)
@@ -135,10 +136,12 @@ rosszlav:
 			}
 			be.close();
 			lavdb = db;
+			cout << "\t\tBeolvasás kész!\n\t\t";
+			system("pause");
 		}
 		else
 		{
-			cout << "\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
+			cout << "\n\tLesz-e negáció a LÉNYEGES állapotváltozásban? (y/n)\t";
 			cin >> valasz1;
 			if (valasz1 == igen || valasz1 == IGEN)
 			{
@@ -316,8 +319,6 @@ rosszlav:
 				}
 			}
 		}
-		cout << "\t\tBeolvasás kész!\n\t\t";
-		system("pause");
 		system("cls");
 		cout << "Aszinkron sorrendi hálózat tervezése\n"
 			<< "(Create by Nagypál Márton)\n\n"
@@ -662,49 +663,42 @@ rosszlav:
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		string lepcsos = "";
 		//sorok összehasonlítása
-		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
+		for (unsigned short a = 1; a < hossz - 9; a += teljestasoszlop)
 		{
-			unsigned short aa = a, osszevon = 0;
-			cout << "\n" << (aa - 1) / 9 + 1 << ". sor (" << abc[(aa - 1) / 9] << ")\n";
-			for (unsigned short b = a + 9; b < hossz - 9; b += 2)
+			unsigned short aa = a, osszevon = 0, be = 0, i = 0;
+			cout << allapotsor[aa] << allapotsor[aa + 1] << endl;
+			for (unsigned short b = aa + 9; b < hossz; b += teljestasoszlop)
 			{
-				if (allapotsor[b] == abc[b / 9] && b % 9 == 0)
+				aa = a;
+				be = b;
+				cout << "\t" << allapotsor[b] << allapotsor[b + 1];//<< endl<< endl;
+				while (i < 4 && ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X'))
 				{
-					b += 1;
-				}
-				else if (b % 9 == 0)
-				{
-					b += 1;
-				}
-				//Egymás alatti sorok összehasonlítása
-				if ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X') //Összevonható-e
-				{
-					cout << allapotsor[aa] << allapotsor[aa + 1] << "=" << allapotsor[b] << allapotsor[b + 1] << "  ";
+					cout << " " << allapotsor[aa] << allapotsor[aa + 1] << " " << allapotsor[b] << allapotsor[b + 1];
+					i++;
 					osszevon++;
+					b += 2;
+					aa += 2;
+					if (osszevon == 4)
+					{
+						aa = 0;
+						lepcsos += "+";
+						osszevon = 0;
+					}
+					else if (b % 9 != 0)
+					{
+						aa = 0;
+						lepcsos += "-";
+						osszevon = 0;
+					}
 				}
-				else
-				{
-					continue;
-				}
-				if (osszevon % 4 == 0)
-				{
-					lepcsos += "+";
-					cout << "\tA(z) " << abc[a / 9] << " sor összevonható a(z) " << abc[b / 9] << " sorral.\n\tOsszevon: " << osszevon << " LEPCSOS: " << lepcsos << "\n";
-				}
-				else if(abc[a / 9]!= abc[b / 9])
-				{
-					//cout <<"\t\t\t"<< abc[a / 9] << "-" << abc[b / 9]<<endl;
-					lepcsos += "-";
-				}
-				aa += 2;
-				if (aa % 9 == 0)
-				{
-					aa = a;
-					cout << endl;
-				}
+				cout << endl;
+				b = be;
 			}
+			cout << endl;
 		}
-		cout <<"\nLépscsős string tartalma:\n"<< lepcsos << endl <<"Hossza: "<< lepcsos.length() << endl;
+		cout << "\nLépscsős string tartalma:\n"
+			<< lepcsos << "\nHossza: " << lepcsos.length() << "\n\n";
 		system("pause");
 		goto rosszlav;
 		//kiírattatása
