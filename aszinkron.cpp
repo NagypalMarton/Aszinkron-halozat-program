@@ -2,6 +2,7 @@
 #include <math.h>
 #include <fstream>
 #include <string>
+#include <windows.h>
 using namespace std;
 
 struct teljesallapotsor
@@ -136,6 +137,7 @@ rosszlav:
 			}
 			be.close();
 			lavdb = db;
+			Sleep(5000);
 			cout << "\t\tBeolvasás kész!\n\t\t";
 			system("pause");
 		}
@@ -669,24 +671,21 @@ rosszlav:
 			}
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
-		string lepcsos = "";
+		string lepcsos = "", allapotossz = "";
 		//sorok összehasonlítása
-		for (unsigned short a = 1; a < hossz - 18; a += teljestasoszlop)
+		for (unsigned short a = 1; a < 64; a += teljestasoszlop)
 		{
-			unsigned short aa = a, osszevon = 0, be = 0, i = 0;
-			cout << abc[(aa - 1) / 9] << endl;//allapotsor[aa] << allapotsor[aa + 1] << endl;
-			for (unsigned short b = aa + 9; b < hossz; b += teljestasoszlop)
+			unsigned short aa = a, osszevon = 0, i = 0, bb = 0;
+			for (unsigned short b = aa + 9; b < 73; b += teljestasoszlop)
 			{
 				i = 0;
 				aa = a;
-				be = b;
-				cout << "\t" << allapotsor[b] << allapotsor[b + 1] <<"\t";//<< endl<< endl;
-				while (i < 4 && ((allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[b] && allapotsor[b + 1] == 'X') || (allapotsor[aa] == allapotsor[b] && allapotsor[aa + 1] == 'X') || allapotsor[b] == 'X' || allapotsor[aa] == 'X'))
+				bb = b;
+				while (i < 4 && ((allapotsor[aa] == allapotsor[bb] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[bb] && allapotsor[bb + 1] == 'X') || (allapotsor[aa] == allapotsor[bb] && allapotsor[aa + 1] == 'X') || allapotsor[bb] == 'X' || allapotsor[aa] == 'X'))
 				{
-					cout << " " << allapotsor[aa] << allapotsor[aa + 1] << " " << allapotsor[b] << allapotsor[b + 1];
 					i++;
 					osszevon++;
-					b += 2;
+					bb += 2;
 					aa += 2;
 				}
 				if (osszevon == 4)
@@ -694,6 +693,8 @@ rosszlav:
 					aa = 0;
 					lepcsos += "+";
 					osszevon = 0;
+					allapotossz += abc[(a - 1) / 9];
+					allapotossz += abc[(bb - 1) / 9];
 				}
 				else if (b % 9 != 0)
 				{
@@ -701,19 +702,42 @@ rosszlav:
 					lepcsos += "-";
 					osszevon = 0;
 				}
-				cout << "\t"<<lepcsos<< endl;
-				b = be;
 			}
-			cout << endl;
 		}
-		cout << "\nLépscsős string tartalma:\n"<< lepcsos << "\nHossza: " << lepcsos.length() << "\n\n";
-		system("pause");
-		goto rosszlav;
 		//kiírattatása
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
 		{
-			cout << "\t" << abc[a] << "\n\n";
+			cout << "\t" << abc[a] << "\t"; //<< "\n\n";
+			for (unsigned short b = a - 1; b < a; b++)
+			{
+				cout << lepcsos[b] << "\t";
+				if (a > 1)
+				{
+					cout << lepcsos[b + 6] << "\t";
+				}
+				if (a > 2)
+				{
+					cout << lepcsos[b + 11] << "\t";
+				}
+				if (a > 3)
+				{
+					cout << lepcsos[b + 15] << "\t";
+				}
+				if (a > 4)
+				{
+					cout << lepcsos[b + 18] << "\t";
+				}
+				if (a > 5)
+				{
+					cout << lepcsos[b + 20] << "\t";
+				}
+				if (a > 6)
+				{
+					cout << lepcsos[b + 21];
+				}
+			}
+			cout << "\n\n";
 		}
 		for (short a = 0; a < 7; a++)
 		{
@@ -728,12 +752,24 @@ rosszlav:
 			cout << abc[a];
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
+		//int allapothossz = allapotossz.length();
+		//string allossz = "";
+//		for (short a = 0; a < allapothossz; a += 2)
+//		{
+//		short b=0;
+//			while(b<7 && allapotossz[a] == abc[b])
+//			{
+//				b++;
+//			}
+//			allossz+=
+//		}
+//system("pause");
 		for (short a = 0; a < 7; a++)
 		{
 			cout << "\t";
 			for (short b = a + 1; b < 8; b++)
 			{
-				cout << abc[b];
+				cout << abc[b % 9];
 			}
 			if (a < 6)
 			{
