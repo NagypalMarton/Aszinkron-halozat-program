@@ -137,7 +137,7 @@ rosszlav:
 			}
 			be.close();
 			lavdb = db;
-			Sleep(5000);
+			Sleep(1000);
 			cout << "\t\tBeolvasás kész!\n\t\t";
 			system("pause");
 		}
@@ -752,18 +752,25 @@ rosszlav:
 			cout << abc[a];
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
-		//int allapothossz = allapotossz.length();
-		//string allossz = "";
-//		for (short a = 0; a < allapothossz; a += 2)
-//		{
-//		short b=0;
-//			while(b<7 && allapotossz[a] == abc[b])
-//			{
-//				b++;
-//			}
-//			allossz+=
-//		}
-//system("pause");
+		int allapothossz = allapotossz.length();
+		string allossz = "";
+		cout << "\t";
+		for (int i = 0; i < allapothossz; i+=2)
+		{
+			cout << allapotossz[i] << allapotossz[i+1] << " ";
+		}
+		cout<< endl;
+		for (short a = 0; a < allapothossz; a += 2)
+		{
+		short b=0;
+			while(b<7 && allapotossz[a] == abc[b])
+			{
+				b++;
+			}
+			//allossz+=
+		}
+		system("pause");
+		goto rosszlav;
 		for (short a = 0; a < 7; a++)
 		{
 			cout << "\t";
