@@ -759,7 +759,7 @@ rosszlav:
 		{
 			cout << allapotossz[i] << allapotossz[i+1] << " ";
 		}
-		cout<< endl;
+		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem?
 		for (short a = 0; a < allapothossz; a += 2)
 		{
 		short b=0;
