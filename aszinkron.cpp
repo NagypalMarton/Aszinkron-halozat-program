@@ -93,7 +93,7 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 int main(int argc, char* argv[])
 {
 	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
-	double lavdb = 4;
+	long double lavdb = 4;
 	char igen = 'y', IGEN = 'Y', valasz, valasz1, abc[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 	string xyz = "X1X2Z";
 	unsigned short** lav = new unsigned short* [lavdb];
@@ -752,31 +752,72 @@ rosszlav:
 			cout << abc[a];
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
-		int allapothossz = allapotossz.length();
+		unsigned int allapothossz = allapotossz.length();
 		string allossz = "";
 		cout << "\t";
-		for (int i = 0; i < allapothossz; i+=2)
-		{
-			cout << allapotossz[i] << allapotossz[i+1] << " ";
-		}
 		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem?
-		for (short a = 0; a < allapothossz; a += 2)
+		for (unsigned short a = 0; a < allapothossz; a += 2)
 		{
-		short b=0;
-			while(b<7 && allapotossz[a] == abc[b])
+			cout << allapotossz[a] << allapotossz[a + 1] << " ";
+			if (a == allapothossz - 2)
 			{
-				b++;
+				cout << "\n\n";
 			}
-			//allossz+=
 		}
-		system("pause");
-		goto rosszlav;
-		for (short a = 0; a < 7; a++)
+
+		for (unsigned short a = 0; a < allapothossz; a += 2)
+		{
+			//lineáris keresés
+			unsigned short b = a + 2;
+			while (b < allapothossz && allapotossz[a] != allapotossz[b])
+			{
+				b += 2;
+			}
+			if (allapotossz[a] == allapotossz[b])
+			{
+				cout << "\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 1] << endl;
+				//lineáris keresés
+				unsigned short c = a + 2;
+				b = a + 1;
+				while (c < allapothossz && allapotossz[b] != allapotossz[c])
+				{
+					c += 2;
+				}
+				if (allapotossz[c] == allapotossz[b])
+				{
+					cout << "\t\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 2] << endl;
+					allossz += allapotossz[b + 1];
+					//allossz += allapotossz[a];
+					allossz += allapotossz[a + 1];
+				}
+				else
+				{
+					allossz += allapotossz[a];
+					allossz += allapotossz[a + 1];
+				}
+			}
+			else
+			{
+				allossz += allapotossz[a];
+				allossz += allapotossz[a + 1];
+			}
+		}
+		unsigned int ahossz = allossz.length();
+		cout << allossz << "\t" << ahossz << "\n\n";
+
+		for (short a = 0; a < 8; a++)
 		{
 			cout << "\t";
 			for (short b = a + 1; b < 8; b++)
 			{
 				cout << abc[b % 9];
+			}
+			unsigned short c=0;
+			cout << "\t\t";
+			while (c < ahossz)
+			{
+				cout << allossz[c];
+				c++;
 			}
 			if (a < 6)
 			{
