@@ -8,7 +8,12 @@ using namespace std;
 struct teljesallapotsor
 {
 	char sorbetu;
-	int sorszam[4];
+	short sorszam[4];
+};
+struct allapotokosszevonasa
+{
+	char abc;
+	unsigned short osszevondb;
 };
 
 void negacio(unsigned short* neghely, unsigned short** lav)
@@ -754,6 +759,15 @@ rosszlav:
 		cout << "\n\n\tÁllapotok összevonása\n\n";
 		unsigned int allapothossz = allapotossz.length();
 		string allossz = "";
+		allapotokosszevonasa allosszlista[8];
+
+		//allosszlista abc feltöltése
+		for (unsigned short i = 0; i < 8; i++)
+		{
+			allosszlista[i].abc = abc[i];
+			allosszlista[i].osszevondb = 0;
+		}
+
 		cout << "\t";
 		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem?
 		for (unsigned short a = 0; a < allapothossz; a += 2)
@@ -786,25 +800,50 @@ rosszlav:
 				if (allapotossz[c] == allapotossz[b])
 				{
 					cout << "\t\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 2] << endl;
+					allossz += "(";
 					allossz += allapotossz[b + 1];
-					//allossz += allapotossz[a];
 					allossz += allapotossz[a + 1];
+					allossz += ")";
+					cout << a << "\t";
 				}
 				else
 				{
+					if (a != 0)
+					{
+						allosszlista[a].osszevondb = allosszlista[a - 1].osszevondb + 2;
+					}
+					else
+					{
+						if (allapotossz[a] == allapotossz[a + 2])
+						{
+							allosszlista[a].osszevondb = 8;
+						}
+						else
+						{
+							allosszlista[a].osszevondb = 4;
+						}
+					}
+					allossz += "(";
 					allossz += allapotossz[a];
 					allossz += allapotossz[a + 1];
+					allossz += ")";
+					cout << a << "\t";
 				}
 			}
 			else
 			{
+				cout << a << "\t";
+				allossz += "(";
 				allossz += allapotossz[a];
 				allossz += allapotossz[a + 1];
+				allossz += ")";
+				allosszlista[a].osszevondb = 4;
 			}
 		}
 		unsigned int ahossz = allossz.length();
 		cout << allossz << "\t" << ahossz << "\n\n";
 
+		//kiírattatás
 		for (short a = 0; a < 8; a++)
 		{
 			cout << "\t";
@@ -812,12 +851,21 @@ rosszlav:
 			{
 				cout << abc[b % 9];
 			}
-			unsigned short c=0;
+			unsigned short c = 0, d = a;
 			cout << "\t\t";
-			while (c < ahossz)
+			if(allosszlista[c+1].abc== allossz[d+1] && a==0)
 			{
-				cout << allossz[c];
-				c++;
+				cout << "- "<< allosszlista[d].abc<<" "<< allossz[d];
+				continue;
+			}
+			else
+			{
+				cout << " .-.";
+				while (c < allosszlista[d].osszevondb)
+				{
+					cout << allossz[c];
+					c++;
+				}
 			}
 			if (a < 6)
 			{
