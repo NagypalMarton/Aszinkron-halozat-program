@@ -768,30 +768,20 @@ rosszlav:
 			allosszlista[i].osszevondb = 0;
 		}
 
-		cout << "\t";
-		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem?
-		for (unsigned short a = 0; a < allapothossz; a += 2)
-		{
-			cout << allapotossz[a] << allapotossz[a + 1] << " ";
-			if (a == allapothossz - 2)
-			{
-				cout << "\n\n";
-			}
-		}
-
+		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem
 		for (unsigned short a = 0; a < allapothossz; a += 2)
 		{
 			//lineáris keresés
-			unsigned short b = a + 2;
+			unsigned short b = a + 2, seged = 0;
 			while (b < allapothossz && allapotossz[a] != allapotossz[b])
 			{
 				b += 2;
 			}
 			if (allapotossz[a] == allapotossz[b])
 			{
-				cout << "\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 1] << endl;
+				//cout << "\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 1] << endl;
 				//lineáris keresés
-				unsigned short c = a + 2;
+				unsigned short c = a + 2, d = b + 1;
 				b = a + 1;
 				while (c < allapothossz && allapotossz[b] != allapotossz[c])
 				{
@@ -799,69 +789,94 @@ rosszlav:
 				}
 				if (allapotossz[c] == allapotossz[b])
 				{
-					cout << "\t\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 2] << endl;
-					allossz += "(";
-					allossz += allapotossz[b + 1];
-					allossz += allapotossz[a + 1];
-					allossz += ")";
-					cout << a << "\t";
-				}
-				else
-				{
-					if (a != 0)
+					//cout << "\t\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 2] << endl;
+					if (allapotossz[d] == allapotossz[b + 2])
 					{
-						allosszlista[a].osszevondb = allosszlista[a - 1].osszevondb + 2;
+						allossz += "(";
+						allossz += allapotossz[b + 1];
+						allossz += allapotossz[a + 1];
+						allossz += allapotossz[d];
+						allossz += ")";
+						allapotossz.erase(a + 2, 2);
+						allapothossz -= 2;
+						seged = 1;
 					}
 					else
 					{
-						if (allapotossz[a] == allapotossz[a + 2])
-						{
-							allosszlista[a].osszevondb = 8;
-						}
-						else
-						{
-							allosszlista[a].osszevondb = 4;
-						}
+						allossz += "(";
+						allossz += allapotossz[b + 1];
+						allossz += allapotossz[a + 1];
+						allossz += ")";
 					}
+				}
+				else
+				{
 					allossz += "(";
 					allossz += allapotossz[a];
 					allossz += allapotossz[a + 1];
 					allossz += ")";
-					cout << a << "\t";
 				}
 			}
 			else
 			{
-				cout << a << "\t";
 				allossz += "(";
 				allossz += allapotossz[a];
 				allossz += allapotossz[a + 1];
 				allossz += ")";
-				allosszlista[a].osszevondb = 4;
+			}
+			if (a > 0)
+			{
+				if (seged != 0)
+				{
+					allosszlista[a / 2].osszevondb = allosszlista[a / 2 - 1].osszevondb + 5;
+					seged = 0;
+				}
+				else
+				{
+					allosszlista[a / 2].osszevondb = allosszlista[a / 2 - 1].osszevondb + 4;
+				}
+			}
+			else if (a == 0)
+			{
+				if (allapotossz[a] == allapotossz[a + 2])
+				{
+					allosszlista[a].osszevondb = 8;
+				}
+				else if (allapotossz[a] == allapotossz[a + 4] && allapotossz[a] == allapotossz[a + 2])
+				{
+					allosszlista[a].osszevondb = 13;
+				}
+				else
+				{
+					allosszlista[a].osszevondb = 4;
+				}
 			}
 		}
-		unsigned int ahossz = allossz.length();
-		cout << allossz << "\t" << ahossz << "\n\n";
 
 		//kiírattatás
 		for (short a = 0; a < 8; a++)
 		{
+			short seged;
 			cout << "\t";
 			for (short b = a + 1; b < 8; b++)
 			{
 				cout << abc[b % 9];
+				if (b - a == 1)
+				{
+					seged = b % 9;
+				}
 			}
 			unsigned short c = 0, d = a;
 			cout << "\t\t";
-			if(allosszlista[c+1].abc== allossz[d+1] && a==0)
+			if (allosszlista[c + 1].abc == allossz[d + 1] && a == 0)
 			{
-				cout << "- "<< allosszlista[d].abc<<" "<< allossz[d];
-				continue;
+				cout << "\t"
+					<< " -------";
 			}
 			else
 			{
-				cout << " .-.";
-				while (c < allosszlista[d].osszevondb)
+				cout << allosszlista[d].osszevondb << " ";
+				while (c < allosszlista[d].osszevondb && (allossz[c+1]!='(' || allossz[c+1] != ')'))
 				{
 					cout << allossz[c];
 					c++;
