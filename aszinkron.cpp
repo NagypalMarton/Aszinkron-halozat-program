@@ -757,8 +757,8 @@ rosszlav:
 			cout << abc[a];
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
-		unsigned int allapothossz = allapotossz.length();
 		string allossz = "";
+		unsigned int allapothossz = allapotossz.length(), alloszhossz = allossz.length();
 		allapotokosszevonasa allosszlista[8];
 
 		//allosszlista abc feltöltése
@@ -779,7 +779,6 @@ rosszlav:
 			}
 			if (allapotossz[a] == allapotossz[b])
 			{
-				//cout << "\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 1] << endl;
 				//lineáris keresés
 				unsigned short c = a + 2, d = b + 1;
 				b = a + 1;
@@ -789,7 +788,6 @@ rosszlav:
 				}
 				if (allapotossz[c] == allapotossz[b])
 				{
-					//cout << "\t\t" << allapotossz[a] << allapotossz[a + 1] << " == " << allapotossz[b] << allapotossz[b + 2] << endl;
 					if (allapotossz[d] == allapotossz[b + 2])
 					{
 						allossz += "(";
@@ -870,23 +868,31 @@ rosszlav:
 			cout << "\t\t";
 			if (allosszlista[c + 1].abc == allossz[d + 1] && a == 0)
 			{
-				cout << "\t"
-					<< " -------";
+				cout << "\t-------";
 			}
-			else
+			//cout << abc[seged] << "\t" << allossz[allosszlista[d - 1].osszevondb + 1]<<"\t"<< allossz[allosszlista[d - 1].osszevondb + 1];
+			/*else if (abc[seged]  == allossz[allosszlista[d - 1].osszevondb + 1])
 			{
-				cout << allosszlista[d].osszevondb << " ";
-				while (c < allosszlista[d].osszevondb && (allossz[c+1]!='(' || allossz[c+1] != ')'))
+				while (c < allosszlista[d].osszevondb)
 				{
 					cout << allossz[c];
 					c++;
 				}
 			}
+			else if (abc[seged] != allossz[allosszlista[d - 1].osszevondb + 1])
+			{
+				while (c < allosszlista[d - 1].osszevondb)
+				{
+					cout << allossz[c];
+					c++;
+				}
+			}*/
 			if (a < 6)
 			{
 				cout << endl;
 			}
 		}
+
 		//ha 4 állapotot tudunk összevonni, akkor ABCD; esetleg ki is lehetne írattatni a 4et, pl.: A (ab)\tB (cde)...
 		string ABCD = "ABCD", ABCD1 = "A00B01C11D10";
 		cout << "\n\n\tÖsszevont állapottáblázat\n\n";
