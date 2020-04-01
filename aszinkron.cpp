@@ -859,18 +859,26 @@ rosszlav:
 			for (short b = a + 1; b < 8; b++)
 			{
 				cout << abc[b % 9];
-				if (b - a == 1)
+				if (b - a == 1 || b - a == 0)
 				{
 					seged = b % 9;
 				}
 			}
-			unsigned short c = 0, d = a;
+			unsigned short c = 0, d = a, seged1=0;
 			cout << "\t\t";
 			if (allosszlista[c + 1].abc == allossz[d + 1] && a == 0)
 			{
 				cout << "\t-------";
 			}
-			//cout << abc[seged] << "\t" << allossz[allosszlista[d - 1].osszevondb + 1]<<"\t"<< allossz[allosszlista[d - 1].osszevondb + 1];
+			if (a == 0)
+			{
+				seged1 = allosszlista[d].osszevondb;
+			}
+			else
+			{
+				seged1 = allosszlista[d - 1].osszevondb;
+			}
+			cout << abc[seged] << "\t" << allossz[seged1 + 1];
 			/*else if (abc[seged]  == allossz[allosszlista[d - 1].osszevondb + 1])
 			{
 				while (c < allosszlista[d].osszevondb)
