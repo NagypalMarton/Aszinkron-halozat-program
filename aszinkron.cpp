@@ -3,17 +3,13 @@
 #include <fstream>
 #include <string>
 #include <windows.h>
+#include <sstream>
 using namespace std;
 
 struct teljesallapotsor
 {
 	char sorbetu;
 	short sorszam[4];
-};
-struct allapotokosszevonasa
-{
-	char abc;
-	unsigned short osszevondb;
 };
 
 void negacio(unsigned short* neghely, unsigned short** lav)
@@ -713,7 +709,7 @@ rosszlav:
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
 		{
-			cout << "\t" << abc[a] << "\t"; //<< "\n\n";
+			cout << "\t" << abc[a] << "\t";
 			for (unsigned short b = a - 1; b < a; b++)
 			{
 				cout << lepcsos[b] << "\t";
@@ -758,149 +754,101 @@ rosszlav:
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
 		string allossz = "";
-		unsigned int allapothossz = allapotossz.length(), alloszhossz = allossz.length();
-		allapotokosszevonasa allosszlista[8];
-
-		//allosszlista abc feltöltése
-		for (unsigned short i = 0; i < 8; i++)
+		unsigned short allapothossz = allapotossz.length(), a1 = 0, aa = 0;
+		//kiírattatás
+		for (short a = 0; a < 7; a++)
 		{
-			allosszlista[i].abc = abc[i];
-			allosszlista[i].osszevondb = 0;
-		}
-
-		//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem
-		for (unsigned short a = 0; a < allapothossz; a += 2)
-		{
-			//lineáris keresés
-			unsigned short b = a + 2, seged = 0;
-			while (b < allapothossz && allapotossz[a] != allapotossz[b])
+			unsigned short seged;
+			cout << "\t";
+			for (short b = a + 1; b < 8; b++)
 			{
-				b += 2;
+				cout << abc[b % 9];
+				if ((b - a == 1 || b - a == 0))
+				{
+					seged = b % 9;
+				}
 			}
-			if (allapotossz[a] == allapotossz[b])
+			//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem
+			aa = a1;
+			while (aa < allapothossz && allapotossz[aa] < abc[seged])
 			{
 				//lineáris keresés
-				unsigned short c = a + 2, d = b + 1;
-				b = a + 1;
-				while (c < allapothossz && allapotossz[b] != allapotossz[c])
+				unsigned short b = aa + 2, seged = 0;
+				while (b < allapothossz && allapotossz[aa] != allapotossz[b])
 				{
-					c += 2;
+					b += 2;
 				}
-				if (allapotossz[c] == allapotossz[b])
+				if (allapotossz[aa] == allapotossz[b])
 				{
-					if (allapotossz[d] == allapotossz[b + 2])
+					//lineáris keresés
+					unsigned short c = aa + 2, d = b + 1;
+					b = aa + 1;
+					while (c < allapothossz && allapotossz[b] != allapotossz[c])
 					{
-						allossz += "(";
-						allossz += allapotossz[b + 1];
-						allossz += allapotossz[a + 1];
-						allossz += allapotossz[d];
-						allossz += ")";
-						allapotossz.erase(a + 2, 2);
-						allapothossz -= 2;
-						seged = 1;
+						c += 2;
+					}
+					if (allapotossz[c] == allapotossz[b])
+					{
+						if (allapotossz[d] == allapotossz[b + 2])
+						{
+							allossz += "(";
+							allossz += allapotossz[b + 1];
+							allossz += allapotossz[aa + 1];
+							allossz += allapotossz[d];
+							allossz += ")";
+							allapotossz.erase(aa + 2, 2);
+							allapothossz -= 2;
+							seged = 1;
+						}
+						else
+						{
+							allossz += "(";
+							allossz += allapotossz[b + 1];
+							allossz += allapotossz[aa + 1];
+							allossz += ")";
+						}
 					}
 					else
 					{
 						allossz += "(";
-						allossz += allapotossz[b + 1];
-						allossz += allapotossz[a + 1];
+						allossz += allapotossz[aa];
+						allossz += allapotossz[aa + 1];
 						allossz += ")";
 					}
 				}
 				else
 				{
 					allossz += "(";
-					allossz += allapotossz[a];
-					allossz += allapotossz[a + 1];
+					allossz += allapotossz[aa];
+					allossz += allapotossz[aa + 1];
 					allossz += ")";
 				}
+				aa += 2;
+				a1 = aa;
 			}
-			else
-			{
-				allossz += "(";
-				allossz += allapotossz[a];
-				allossz += allapotossz[a + 1];
-				allossz += ")";
-			}
-			if (a > 0)
-			{
-				if (seged != 0)
-				{
-					allosszlista[a / 2].osszevondb = allosszlista[a / 2 - 1].osszevondb + 5;
-					seged = 0;
-				}
-				else
-				{
-					allosszlista[a / 2].osszevondb = allosszlista[a / 2 - 1].osszevondb + 4;
-				}
-			}
-			else if (a == 0)
-			{
-				if (allapotossz[a] == allapotossz[a + 2])
-				{
-					allosszlista[a].osszevondb = 8;
-				}
-				else if (allapotossz[a] == allapotossz[a + 4] && allapotossz[a] == allapotossz[a + 2])
-				{
-					allosszlista[a].osszevondb = 13;
-				}
-				else
-				{
-					allosszlista[a].osszevondb = 4;
-				}
-			}
-		}
-
-		//kiírattatás
-		for (short a = 0; a < 8; a++)
-		{
-			short seged;
-			cout << "\t";
-			for (short b = a + 1; b < 8; b++)
-			{
-				cout << abc[b % 9];
-				if (b - a == 1 || b - a == 0)
-				{
-					seged = b % 9;
-				}
-			}
-			unsigned short c = 0, d = a, seged1=0;
-			cout << "\t\t";
-			if (allosszlista[c + 1].abc == allossz[d + 1] && a == 0)
-			{
-				cout << "\t-------";
-			}
-			if (a == 0)
-			{
-				seged1 = allosszlista[d].osszevondb;
-			}
-			else
-			{
-				seged1 = allosszlista[d - 1].osszevondb;
-			}
-			cout << abc[seged] << "\t" << allossz[seged1 + 1];
-			/*else if (abc[seged]  == allossz[allosszlista[d - 1].osszevondb + 1])
-			{
-				while (c < allosszlista[d].osszevondb)
-				{
-					cout << allossz[c];
-					c++;
-				}
-			}
-			else if (abc[seged] != allossz[allosszlista[d - 1].osszevondb + 1])
-			{
-				while (c < allosszlista[d - 1].osszevondb)
-				{
-					cout << allossz[c];
-					c++;
-				}
-			}*/
+			//volt-e már eddig az adott allosz sorban? ha igen, akkor törörjük az adott sorban
+			cout << "\t" << allossz;
 			if (a < 6)
 			{
 				cout << endl;
 			}
 		}
 
+		//van-e 4 összevonás
+		short zjel = 0;
+		for (unsigned short a = 0; a < allossz.length(); a++)
+		{
+			if (allossz[a] == '(')
+			{
+				zjel++;
+			}
+		}
+		if (zjel != 4)
+		{
+			cout << "\n\n\tAz összevont állapotokat nem lehet tovább összevonni és nincs 4 db összevont állapot, ezért a program kilép!\n\n";
+			system("pause");
+			exit(1);
+		}
 		//ha 4 állapotot tudunk összevonni, akkor ABCD; esetleg ki is lehetne írattatni a 4et, pl.: A (ab)\tB (cde)...
 		string ABCD = "ABCD", ABCD1 = "A00B01C11D10";
 		cout << "\n\n\tÖsszevont állapottáblázat\n\n";
