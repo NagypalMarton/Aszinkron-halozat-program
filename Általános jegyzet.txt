@@ -1,0 +1,6 @@
+egyszerusites
+==============
+	aa	b	d
+1)	vált	0	0	2 tagú
+2)	vált	vált	0	2 tagú
+3)	vált	vált	vált	3 tagú

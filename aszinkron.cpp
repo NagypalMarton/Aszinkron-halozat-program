@@ -91,6 +91,8 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 	}
 }
 
+unsigned short egyszerusites(short, short, short, string,string);
+
 int main(int argc, char* argv[])
 {
 	unsigned short negdb = 0, oszlop = 6, neghely[2] = {};
@@ -773,7 +775,7 @@ rosszlav:
 			while (aa < allapothossz && allapotossz[aa] < abc[seged])
 			{
 				//lineáris keresés
-				unsigned short b = aa + 2, seged = 0;
+				unsigned short b = aa + 2, seged = 0, d = 0;
 				while (b < allapothossz && allapotossz[aa] != allapotossz[b])
 				{
 					b += 2;
@@ -781,7 +783,8 @@ rosszlav:
 				if (allapotossz[aa] == allapotossz[b])
 				{
 					//lineáris keresés
-					unsigned short c = aa + 2, d = b + 1;
+					unsigned short c = aa + 2;
+					d = b + 1;
 					b = aa + 1;
 					while (c < allapothossz && allapotossz[b] != allapotossz[c])
 					{
@@ -802,13 +805,29 @@ rosszlav:
 						}
 						else
 						{
+							if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
+							{
+								allossz += "(";
+								allossz += allapotossz[b + 1];
+								allossz += allapotossz[aa + 1];
+								allossz += ")";
+							}
+						}
+					}
+					else
+					{
+						if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
+						{
 							allossz += "(";
-							allossz += allapotossz[b + 1];
+							allossz += allapotossz[aa];
 							allossz += allapotossz[aa + 1];
 							allossz += ")";
 						}
 					}
-					else
+				}
+				else
+				{
+					if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
 					{
 						allossz += "(";
 						allossz += allapotossz[aa];
@@ -816,17 +835,9 @@ rosszlav:
 						allossz += ")";
 					}
 				}
-				else
-				{
-					allossz += "(";
-					allossz += allapotossz[aa];
-					allossz += allapotossz[aa + 1];
-					allossz += ")";
-				}
 				aa += 2;
 				a1 = aa;
 			}
-			//volt-e már eddig az adott allosz sorban? ha igen, akkor törörjük az adott sorban
 			cout << "\t" << allossz;
 			if (a < 6)
 			{
@@ -862,4 +873,37 @@ rosszlav:
 		cin >> valasz;
 	} while (valasz == igen || valasz == IGEN);
 	return 0;
+}
+
+unsigned short egyszerusites(short aa, short b, short d, string allossz,string allapotossz) //ALLOSZ tömbbe kerül be az ALLAPOTOSZ tömbből
+{
+	unsigned short shossz = allossz.length(), sorossz = 0,soro=0,s=0;
+	if (d == 0)
+	{
+		while (s < shossz-1 && (allapotossz[aa] != allossz[s] && allapotossz[aa+1] != allossz[s+1]))
+		{
+			s++;
+		}
+		if (allapotossz[aa] == allossz[s] && allapotossz[aa + 1] != allossz[s + 1])
+		{
+			cout << " " << allapotossz[aa] << "==" << allossz[s] << " ";
+			sorossz++;
+		}
+		s = 0;
+		while (s < shossz - 1 && (allapotossz[b] != allossz[s] && allapotossz[b + 1] != allossz[s + 1]))
+		{
+			s++;
+		}
+		if (allapotossz[b] == allossz[s] && allapotossz[b + 1] != allossz[s + 1])
+		{
+			cout << " " << allapotossz[b] << "==" << allossz[s] << " ";
+			soro++;
+			sorossz += soro;
+		}
+	}
+	else if (d != 0)
+	{
+		cout << "\t";
+	}
+	return sorossz;
 }
