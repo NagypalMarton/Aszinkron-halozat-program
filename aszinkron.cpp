@@ -756,7 +756,8 @@ rosszlav:
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
 		string allossz = "";
-		unsigned short allapothossz = allapotossz.length(), a1 = 0, aa = 0;
+		cout << "\t\t" << allapotossz << "\n\n";
+		unsigned int allapothossz = allapotossz.length(), a1 = 0, aa = 0;
 		//kiírattatás
 		for (short a = 0; a < 7; a++)
 		{
@@ -805,8 +806,10 @@ rosszlav:
 						}
 						else
 						{
-							if (egyszerusites(b + 1, b, aa + 1, allossz, allapotossz) < 2 && a > 0)
+							cout << "\t1" << allapotossz[b+1] << allapotossz[aa + 1] << "\t";
+							if (egyszerusites(b + 1, b, aa + 1, allossz, allapotossz) < 2)
 							{
+								cout << "\t" << allapotossz[b+1] << allapotossz[aa + 1] << "\t";
 								allossz += "(";
 								allossz += allapotossz[b + 1];
 								allossz += allapotossz[aa + 1];
@@ -816,8 +819,10 @@ rosszlav:
 					}
 					else
 					{
-						if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2 && a > 0)
+						cout << "\t2" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
+						if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2)
 						{
+							cout << "\t" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
 							allossz += "(";
 							allossz += allapotossz[aa];
 							allossz += allapotossz[aa + 1];
@@ -827,8 +832,10 @@ rosszlav:
 				}
 				else
 				{
-					if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2 && a > 0)
+					cout << "\t3" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
+					if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2)
 					{
+						cout<<"\t"<< allapotossz[aa]<< allapotossz[aa + 1]<<"\t";
 						allossz += "(";
 						allossz += allapotossz[aa];
 						allossz += allapotossz[aa + 1];
@@ -844,24 +851,32 @@ rosszlav:
 				cout << endl;
 			}
 		}
+		
+		int alhossz = allossz.length();
+		string ABCD = "ABCDEFGH", ABCD1 = "A00B01C11D10";
 
-		//van-e 4 összevonás
-		short zjel = 0;
-		for (unsigned short a = 0; a < allossz.length(); a++)
+		allapotossz.clear();//allapotossz "kitisztitása"
+		int a = 0,abcszam=0;
+		do
 		{
+			while (a < alhossz && allossz[a] != '(')
+			{
+				a++;
+			}
 			if (allossz[a] == '(')
 			{
-				zjel++;
+				allapotossz += ABCD[abcszam];
+				for (short i = a+1; allossz[i] != ')'; i++)
+				{
+					allapotossz += allossz[i];
+				}
+				allapotossz += " ";
+				abcszam++;
+				a++;
 			}
-		}
-		if (zjel != 4)
-		{
-			cout << "\n\n\tAz összevont állapotokat nem lehet tovább összevonni és nincs 4 db összevont állapot, ezért a program kilép!\n\n";
-			system("pause");
-			exit(1);
-		}
-		//ha 4 állapotot tudunk összevonni, akkor ABCD; esetleg ki is lehetne írattatni a 4et, pl.: A (ab)\tB (cde)...
-		string ABCD = "ABCD", ABCD1 = "A00B01C11D10";
+		} while (a<alhossz);
+		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve):\t" << allapotossz;
+
 		cout << "\n\n\tÖsszevont állapottáblázat\n\n";
 		cout << "\n\n\tÁllapotok kódolása\n\n";
 		for (unsigned short a = 0; a < 12; a += 3)
@@ -879,46 +894,43 @@ rosszlav:
 unsigned short egyszerusites(short a, short b, short c, string allossz, string allapotossz)
 {
 	string seged = "";
-	unsigned short sorossz = 0, seghossz = seged.length(), lep = 0, a1 = 0, ahossz = allossz.length();
-	//	if(b==0)
-	//	{
-	seged = allapotossz[a];
-	seged += allapotossz[c];
-	seghossz = seged.length();
-	//	}else
-	//	{
-	//		seged=allapotossz[a];
-	//		seged+=allapotossz[c];
-	//		seghossz=seged.length();
-	//	}
-	while (lep < ahossz - 1 && (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1]))
+	int sorossz = 0, seghossz = seged.length(), lep = 0, a1 = 0, ahossz = allossz.length();
+	if (!allossz.empty())
 	{
-		lep++;
-	}
-	if (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1])
-	{
-		sorossz = 2;
-	}
-	else
-	{
-		for (short i = 0; i < seghossz; i++)
+		seged = allapotossz[a];
+		seged += allapotossz[c];
+		cout << " " << seged << " ";
+		seghossz = seged.length();
+		while (lep < ahossz - 1 && (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1]))
 		{
-			lep = 0;
-			while (lep < ahossz - 1 && seged[i] != allossz[lep])
+			lep++;
+		}
+		if (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1])
+		{
+			sorossz = 2;
+			cout <<" "<< sorossz << " ";
+		}
+		else
+		{
+			for (short i = 0; i < seghossz; i++)
 			{
-				lep++;
-			}
-			if (seged[i] == allossz[lep])
-			{
-				sorossz++;
-			}
-			else
-			{
-				sorossz = 0;
-				break;
+				lep = 0;
+				while (lep < ahossz - 1 && seged[i] != allossz[lep])
+				{
+					lep++;
+				}
+				if (seged[i] == allossz[lep])
+				{
+					sorossz++;
+					cout << " " << sorossz << " ";
+				}
+				else
+				{
+					sorossz = 0;
+					break;
+				}
 			}
 		}
 	}
-	//cout<<sorossz<<"\t";
 	return sorossz;
 }
