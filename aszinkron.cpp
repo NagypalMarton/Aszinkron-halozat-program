@@ -91,7 +91,7 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 	}
 }
 
-unsigned short egyszerusites(short, short, short, string,string);
+unsigned short egyszerusites(short, short, short, string, string);
 
 int main(int argc, char* argv[])
 {
@@ -760,19 +760,19 @@ rosszlav:
 		//kiírattatás
 		for (short a = 0; a < 7; a++)
 		{
-			unsigned short seged;
+			unsigned short seged1;
 			cout << "\t";
 			for (short b = a + 1; b < 8; b++)
 			{
 				cout << abc[b % 9];
 				if ((b - a == 1 || b - a == 0))
 				{
-					seged = b % 9;
+					seged1 = b % 9;
 				}
 			}
 			//Keressük ki, hogy az adott oszlopban lévő állapotok összevonhatóak-e vagy nem
 			aa = a1;
-			while (aa < allapothossz && allapotossz[aa] < abc[seged])
+			while (aa < allapothossz && allapotossz[aa] < abc[seged1])
 			{
 				//lineáris keresés
 				unsigned short b = aa + 2, seged = 0, d = 0;
@@ -805,7 +805,7 @@ rosszlav:
 						}
 						else
 						{
-							if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
+							if (egyszerusites(b + 1, b, aa + 1, allossz, allapotossz) < 2 && a > 0)
 							{
 								allossz += "(";
 								allossz += allapotossz[b + 1];
@@ -816,7 +816,7 @@ rosszlav:
 					}
 					else
 					{
-						if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
+						if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2 && a > 0)
 						{
 							allossz += "(";
 							allossz += allapotossz[aa];
@@ -827,7 +827,7 @@ rosszlav:
 				}
 				else
 				{
-					if (egyszerusites(aa, b, d = 0, allapotossz,allossz) < 2)
+					if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2 && a > 0)
 					{
 						allossz += "(";
 						allossz += allapotossz[aa];
@@ -875,35 +875,50 @@ rosszlav:
 	return 0;
 }
 
-unsigned short egyszerusites(short aa, short b, short d, string allossz,string allapotossz) //ALLOSZ tömbbe kerül be az ALLAPOTOSZ tömbből
+//unsigned short egyszerusites(short aa, short b, short d, string allossz,string allapotossz)
+unsigned short egyszerusites(short a, short b, short c, string allossz, string allapotossz)
 {
-	unsigned short shossz = allossz.length(), sorossz = 0,soro=0,s=0;
-	if (d == 0)
+	string seged = "";
+	unsigned short sorossz = 0, seghossz = seged.length(), lep = 0, a1 = 0, ahossz = allossz.length();
+	//	if(b==0)
+	//	{
+	seged = allapotossz[a];
+	seged += allapotossz[c];
+	seghossz = seged.length();
+	//	}else
+	//	{
+	//		seged=allapotossz[a];
+	//		seged+=allapotossz[c];
+	//		seghossz=seged.length();
+	//	}
+	while (lep < ahossz - 1 && (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1]))
 	{
-		while (s < shossz-1 && (allapotossz[aa] != allossz[s] && allapotossz[aa+1] != allossz[s+1]))
+		lep++;
+	}
+	if (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1])
+	{
+		sorossz = 2;
+	}
+	else
+	{
+		for (short i = 0; i < seghossz; i++)
 		{
-			s++;
-		}
-		if (allapotossz[aa] == allossz[s] && allapotossz[aa + 1] != allossz[s + 1])
-		{
-			cout << " " << allapotossz[aa] << "==" << allossz[s] << " ";
-			sorossz++;
-		}
-		s = 0;
-		while (s < shossz - 1 && (allapotossz[b] != allossz[s] && allapotossz[b + 1] != allossz[s + 1]))
-		{
-			s++;
-		}
-		if (allapotossz[b] == allossz[s] && allapotossz[b + 1] != allossz[s + 1])
-		{
-			cout << " " << allapotossz[b] << "==" << allossz[s] << " ";
-			soro++;
-			sorossz += soro;
+			lep = 0;
+			while (lep < ahossz - 1 && seged[i] != allossz[lep])
+			{
+				lep++;
+			}
+			if (seged[i] == allossz[lep])
+			{
+				sorossz++;
+			}
+			else
+			{
+				sorossz = 0;
+				break;
+			}
 		}
 	}
-	else if (d != 0)
-	{
-		cout << "\t";
-	}
+	//cout<<sorossz<<"\t";
 	return sorossz;
 }
