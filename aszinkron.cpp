@@ -756,7 +756,6 @@ rosszlav:
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
 		string allossz = "";
-		cout << "\t\t" << allapotossz << "\n\n";
 		unsigned int allapothossz = allapotossz.length(), a1 = 0, aa = 0;
 		//kiírattatás
 		for (short a = 0; a < 7; a++)
@@ -806,10 +805,8 @@ rosszlav:
 						}
 						else
 						{
-							cout << "\t1" << allapotossz[b+1] << allapotossz[aa + 1] << "\t";
 							if (egyszerusites(b + 1, b, aa + 1, allossz, allapotossz) < 2)
 							{
-								cout << "\t" << allapotossz[b+1] << allapotossz[aa + 1] << "\t";
 								allossz += "(";
 								allossz += allapotossz[b + 1];
 								allossz += allapotossz[aa + 1];
@@ -819,10 +816,8 @@ rosszlav:
 					}
 					else
 					{
-						cout << "\t2" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
 						if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2)
 						{
-							cout << "\t" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
 							allossz += "(";
 							allossz += allapotossz[aa];
 							allossz += allapotossz[aa + 1];
@@ -832,10 +827,8 @@ rosszlav:
 				}
 				else
 				{
-					cout << "\t3" << allapotossz[aa] << allapotossz[aa + 1] << "\t";
 					if (egyszerusites(aa, b = 0, aa + 1, allossz, allapotossz) < 2)
 					{
-						cout<<"\t"<< allapotossz[aa]<< allapotossz[aa + 1]<<"\t";
 						allossz += "(";
 						allossz += allapotossz[aa];
 						allossz += allapotossz[aa + 1];
@@ -851,12 +844,12 @@ rosszlav:
 				cout << endl;
 			}
 		}
-		
+
 		int alhossz = allossz.length();
 		string ABCD = "ABCDEFGH", ABCD1 = "A00B01C11D10";
 
-		allapotossz.clear();//allapotossz "kitisztitása"
-		int a = 0,abcszam=0;
+		allapotossz.clear(); //allapotossz "kitisztitása"
+		int a = 0, abcszam = 0;
 		do
 		{
 			while (a < alhossz && allossz[a] != '(')
@@ -866,18 +859,43 @@ rosszlav:
 			if (allossz[a] == '(')
 			{
 				allapotossz += ABCD[abcszam];
-				for (short i = a+1; allossz[i] != ')'; i++)
+				allapotossz += " ";
+				for (short i = a + 1; allossz[i] != ')'; i++)
 				{
 					allapotossz += allossz[i];
 				}
-				allapotossz += " ";
-				abcszam++;
-				a++;
+				allapotossz += "; ";
+				if (a + 1 < alhossz)
+				{
+					abcszam++;
+					a++;
+				}
 			}
-		} while (a<alhossz);
-		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve):\t" << allapotossz;
+		} while (a < alhossz);
+		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve) -> \t" << allapotossz;
 
-		cout << "\n\n\tÖsszevont állapottáblázat\n\n";
+		cout << "\n\n\tÖsszevont állapottáblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		allapothossz = allapotossz.length();
+		for (unsigned short a = 0; a < 35; a++)
+		{
+			cout << "=";
+		}
+		cout << "\n\n\t" << allapotsor << "\n";
+		for (unsigned short a = 0; a < abcszam; a++)
+		{
+			cout << "\n\t   " << ABCD[a];
+			unsigned short b = 0;
+			while (b < allapothossz && ABCD[a] != allapotossz[b])
+			{
+				b++;
+			}
+			if (ABCD[a] == allapotossz[b])
+			{
+
+			}
+			cout << endl;
+		}
+
 		cout << "\n\n\tÁllapotok kódolása\n\n";
 		for (unsigned short a = 0; a < 12; a += 3)
 		{
@@ -890,7 +908,6 @@ rosszlav:
 	return 0;
 }
 
-//unsigned short egyszerusites(short aa, short b, short d, string allossz,string allapotossz)
 unsigned short egyszerusites(short a, short b, short c, string allossz, string allapotossz)
 {
 	string seged = "";
@@ -899,16 +916,14 @@ unsigned short egyszerusites(short a, short b, short c, string allossz, string a
 	{
 		seged = allapotossz[a];
 		seged += allapotossz[c];
-		cout << " " << seged << " ";
 		seghossz = seged.length();
 		while (lep < ahossz - 1 && (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1]))
 		{
 			lep++;
 		}
-		if (allossz[lep] != seged[a1] && allossz[lep + 1] != seged[a1 + 1])
+		if (allossz[lep] == seged[a1] && allossz[lep + 1] == seged[a1 + 1])
 		{
 			sorossz = 2;
-			cout <<" "<< sorossz << " ";
 		}
 		else
 		{
@@ -922,7 +937,6 @@ unsigned short egyszerusites(short a, short b, short c, string allossz, string a
 				if (seged[i] == allossz[lep])
 				{
 					sorossz++;
-					cout << " " << sorossz << " ";
 				}
 				else
 				{
