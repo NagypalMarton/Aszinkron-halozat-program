@@ -90,7 +90,29 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 		break;
 	}
 }
-
+void allapotkodkiirasa(short oszlopszam, short allapotkhossz, string allapotkod)
+{
+	char ascii = 64;
+	unsigned short b = 0;
+	for (unsigned short a = 0; a < allapotkhossz; a++)
+	{
+		if (b == 0)
+		{
+			cout << "\t\t";
+		}
+		cout << allapotkod[a];
+		if (allapotkod[a] > ascii)
+		{
+			cout << " -> ";
+		}
+		b++;
+		if (oszlopszam == b)
+		{
+			b = 0;
+			cout << endl;
+		}
+	}
+}
 unsigned short egyszerusites(short, short, short, string, string);
 
 int main(int argc, char* argv[])
@@ -653,8 +675,7 @@ rosszlav:
 			cout << "\tA program ismeretlen hiba miatt kilép!\n\n";
 			exit(1);
 		}
-		cout << "\n\n\tÁllapot táblázat\n\n"
-			<< "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		cout << "\n\n\tÁllapot táblázat\n\n\ty\\x1x2\t00\t01\t11\t10\n\t";
 		//táblázat kiírása
 		for (unsigned short a = 0; a < 35; a++)
 		{
@@ -845,11 +866,11 @@ rosszlav:
 			}
 		}
 
-		int alhossz = allossz.length();
-		string ABCD = "ABCDEFGH", ABCD1 = "A00B01C11D10";
+		int alhossz = allossz.length(), a = 0, abcszam = 0, allapotsz[8];
+		short asz, j = 0;
+		string ABCD = "ABCDEFGH";
 
 		allapotossz.clear(); //allapotossz "kitisztitása"
-		int a = 0, abcszam = 0;
 		do
 		{
 			while (a < alhossz && allossz[a] != '(')
@@ -858,32 +879,35 @@ rosszlav:
 			}
 			if (allossz[a] == '(')
 			{
+				asz = 0;
 				allapotossz += ABCD[abcszam];
 				allapotossz += " ";
 				for (short i = a + 1; allossz[i] != ')'; i++)
 				{
 					allapotossz += allossz[i];
+					asz++;
 				}
-				allapotossz += "; ";
+				allapotossz += " ";
+				allapotsz[j] = asz;
 				if (a + 1 < alhossz)
 				{
 					abcszam++;
 					a++;
+					j++;
 				}
 			}
 		} while (a < alhossz);
 		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve) -> \t" << allapotossz;
 
-		cout << "\n\n\tÖsszevont állapottáblázat\n\n" << "\ty\\x1x2\t00\t01\t11\t10\n\t";
+		cout << "\n\n\tÖsszevont állapottáblázat\n\n\ty\\x1x2\t00\t01\t11\t10\n\t";
 		allapothossz = allapotossz.length();
 		for (unsigned short a = 0; a < 35; a++)
 		{
 			cout << "=";
 		}
-		cout << "\n\n\t" << allapotsor << "\n";
 		for (unsigned short a = 0; a < abcszam; a++)
 		{
-			cout << "\n\t   " << ABCD[a];
+			cout << "\n\t   " << ABCD[a] << "\t";
 			unsigned short b = 0;
 			while (b < allapothossz && ABCD[a] != allapotossz[b])
 			{
@@ -891,15 +915,92 @@ rosszlav:
 			}
 			if (ABCD[a] == allapotossz[b])
 			{
-
+				if (allapotsz[a] == 2)
+				{
+					unsigned short c = 0, d = 0;
+					while (c < hossz && allapotossz[b + 2] != allapotsor[c])
+					{
+						c += 9;
+					}
+					while (d < hossz && allapotossz[b + 3] != allapotsor[d])
+					{
+						d += 9;
+					}
+					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d])
+					{
+						cout << allapotsor[c] << allapotsor[d];
+					}
+				}
+				else if (allapotsz[a] == 3)
+				{
+					unsigned short c = 0, d = 0, e = 0;
+					while (c < hossz && allapotossz[b + 2] != allapotsor[c])
+					{
+						c += 9;
+					}
+					while (d < hossz && allapotossz[b + 3] != allapotsor[d])
+					{
+						d += 9;
+					}
+					while (e < hossz && allapotossz[b + 4] != allapotsor[e])
+					{
+						e += 9;
+					}
+					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d] && allapotossz[b + 4] == allapotsor[e])
+					{
+						cout << allapotsor[c] << allapotsor[d] << allapotsor[e];
+						for (unsigned short f = 1; f < 9; f++)
+						{
+						}
+					}
+				}
+				else
+				{
+					cout << "\t\tCsak 2es és 3as összevonasokat tudok kezelni!\n";
+					system("pause");
+					exit(1);
+				}
 			}
 			cout << endl;
 		}
 
 		cout << "\n\n\tÁllapotok kódolása\n\n";
-		for (unsigned short a = 0; a < 12; a += 3)
+		string allapotkod = "", gray4 = "00101101", gray8 = "000010011001100110111101";
+		short oszlopszam;
+		if (abcszam < 5 && abcszam > 0)
 		{
-			cout << "\t\t" << ABCD1[a] << " -> " << ABCD1[a + 1] << ABCD1[a + 2] << endl;
+			int gray4sz = gray4.length(), c = 0, allapotkhossz;
+			oszlopszam = 3;
+			for (unsigned short a = 0; a < abcszam; a++)
+			{
+				allapotkod += ABCD[a];
+				allapotkod += gray4[c];
+				allapotkod += gray4[c + 1];
+				if (c < gray4sz + 1)
+				{
+					c += 2;
+				}
+			}
+			allapotkhossz = allapotkod.length();
+			allapotkodkiirasa(oszlopszam, allapotkhossz, allapotkod);
+		}
+		else if (abcszam > 4 && abcszam < 9)
+		{
+			int gray8sz = gray8.length(), c = 0, allapotkhossz;
+			oszlopszam = 4;
+			for (unsigned short a = 0; a < abcszam; a++)
+			{
+				allapotkod += ABCD[a];
+				allapotkod += gray8[c];
+				allapotkod += gray8[c + 1];
+				allapotkod += gray8[c + 2];
+				if (c < gray8sz)
+				{
+					c += 3;
+				}
+			}
+			allapotkhossz = allapotkod.length();
+			allapotkodkiirasa(oszlopszam, allapotkhossz, allapotkod);
 		}
 		cout << "\n\tKódolt Állapottábla felírása\n\n\t\ta) DIREKT BEKÖTÉSI\n\n\t\tb) TÁROLÓS\n\n";
 		cout << "\nA táblázatok alapján rajzold meg a DIREKT BEKÖTÉSI és a TÁROLÓS aszinkron hálózatot!\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
