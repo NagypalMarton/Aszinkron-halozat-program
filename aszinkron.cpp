@@ -97,6 +97,10 @@ void egyszerusit(short allapothossz, string allapotossz)
 	char ascii = 96, sp = 32,I=105;
 	int seghossz = seged.length(), lep = 0, a = 0, segsdsz=0;
 	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
+	allapotossz.erase(allapothossz-1,1);
+	allapothossz = allapotossz.length();
+	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
+	system("pause");
 	while (a < allapothossz && (allapotossz[a] > sp || allapotossz[a]<I))
 	{
 		while (allapotossz[a] < ascii && a < allapothossz)
