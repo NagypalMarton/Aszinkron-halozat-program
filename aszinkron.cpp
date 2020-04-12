@@ -95,40 +95,24 @@ void egyszerusit(short allapothossz, string allapotossz)
 {
 	string seged = "";
 	char ascii = 96, sp = 32;
-	int sorossz = 0, seghossz = seged.length(), lep = 0, a = 0, segsdsz;
+	int seghossz = seged.length(), lep = 0, a = 0, segsdsz=0;
 	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
 	while (a < allapothossz)
 	{
-		//segedbe áttölteni az aktuális 2-7 elemet
 		while (allapotossz[a] < ascii&& a < allapothossz)
 		{
 			a++;
 		}
-		if (allapotossz[a] > ascii)
+		if (allapotossz[a] > ascii && allapotossz[a] != ascii)
 		{
-			for (unsigned short b = a; allapotossz[b] > ascii; b++)
+			for (unsigned short b = a; allapotossz[b] > ascii && allapotossz[b] != ascii; b++)
 			{
 				seged += allapotossz[b];
 			}
 			seghossz = seged.length();
-			cout << "\nSegéd string: " << seged << " " << a << "\n";
+			cout << "\nSegéd string: " << seged << " Seghossz: "<< seghossz <<"\n";
 		}
-		else
-		{
-			cout << endl << allapotossz[a] << " ASCII Kódos: " << ascii << endl;
-		}
-		for (short i = 0; i < seghossz; i++)
-		{
-			lep = 0;
-			while (lep < allapothossz && seged[i] != allapotossz[lep])
-			{
-			lep++;
-			} //innentől átolvasni és átírni
-			if (seged[i] == allapotossz[lep])
-			{
-				sorossz++;
-		}
-	}
+		
 		if (a + 2 < allapothossz)
 		{
 			a += 2;
