@@ -94,12 +94,12 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 void egyszerusit(short allapothossz, string allapotossz)
 {
 	string seged = "";
-	char ascii = 96, sp = 32;
+	char ascii = 96, sp = 32,I=105;
 	int seghossz = seged.length(), lep = 0, a = 0, segsdsz=0;
 	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
-	while (a < allapothossz)
+	while (a < allapothossz && (allapotossz[a] > sp || allapotossz[a]<I))
 	{
-		while (allapotossz[a] < ascii&& a < allapothossz)
+		while (allapotossz[a] < ascii && a < allapothossz)
 		{
 			a++;
 		}
@@ -110,9 +110,16 @@ void egyszerusit(short allapothossz, string allapotossz)
 				seged += allapotossz[b];
 			}
 			seghossz = seged.length();
-			cout << "\nSegéd string: " << seged << " Seghossz: "<< seghossz <<"\n";
+			cout << "\nSegéd string: " << seged <<" Az a értéke: "<< a<<"\n";
 		}
-		
+		while (lep<allapothossz && seged[0]!= allapotossz[lep] && a==lep)
+		{
+			lep++;
+		}
+		if (seged[0] != allapotossz[lep])
+		{
+			cout << "\t\t" << seged[0] <<seged[1] << endl;
+		}
 		if (a + 2 < allapothossz)
 		{
 			a += 2;
