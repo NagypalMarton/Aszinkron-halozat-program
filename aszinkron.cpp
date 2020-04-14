@@ -91,46 +91,76 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 	}
 }
 
-void egyszerusit(short allapothossz, string allapotossz)
+//void egyszerusit(int allosszhossz, string allossz)
+string egyszerusit(int allosszhossz, string allossz)
 {
 	string seged = "";
-	char ascii = 96, sp = 32,I=105;
-	int seghossz = seged.length(), lep = 0, a = 0, segsdsz=0;
-	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
-	allapotossz.erase(allapothossz-1,1);
-	allapothossz = allapotossz.length();
-	cout << "\n\n\t" << allapotossz << "\t" << allapothossz << "\n";
-	system("pause");
-	while (a < allapothossz && (allapotossz[a] > sp || allapotossz[a]<I))
+	char aa = 96;
+	int seghossz = seged.length(), a = 0;
+	//cout<<"\n\n\tAllossz:"<<allossz;
+	while (a < allosszhossz - 1)
 	{
-		while (allapotossz[a] < ascii && a < allapothossz)
+		while (allossz[a] < aa)
 		{
 			a++;
 		}
-		if (allapotossz[a] > ascii && allapotossz[a] != ascii)
+		if (allossz[a] > aa)
 		{
-			for (unsigned short b = a; allapotossz[b] > ascii && allapotossz[b] != ascii; b++)
+			for (unsigned short b = a; allossz[b] > aa && allossz[b] != aa; b++)
 			{
-				seged += allapotossz[b];
+				seged += allossz[b];
 			}
 			seghossz = seged.length();
-			cout << "\nSegéd string: " << seged <<" Az a értéke: "<< a<<"\n";
+			//cout << "\n\n\t" << seged << " " << a << " " << a + 1;
 		}
-		while (lep<allapothossz && seged[0]!= allapotossz[lep] && a==lep)
+		for (short lep = 0; lep < allosszhossz - 1; lep++)
 		{
-			lep++;
+			if (seged[0] == allossz[lep] && seged[1] != allossz[lep + 1])
+			{
+				//cout << "\n\t\tVan " << allossz[lep] << "-val/vel kezdődő másik összevonás! (2. " << allossz[lep + 1] << ")";
+				for (short lep1 = 0; lep1 < allosszhossz - 1; lep1++)
+				{
+					if (seged[0] != allossz[lep1] && seged[1] == allossz[lep1 + 1])
+					{
+						//cout << "\n\t\tVan " << allossz[lep1] << "-val/vel kezdődő másik összevonás! (1. " << allossz[lep1 + 1] << ")";
+						if (seghossz == 3)
+						{
+							for (short lep2 = 0; lep2 < allosszhossz - 1; lep2++)
+							{
+								if (seged[3] != allossz[lep2] && (seged[1] == allossz[lep2 + 1] || seged[0] == allossz[lep2 + 2]))
+								{
+									//cout << "\n\t\tVan " << allossz[lep1] << "-val/vel kezdődő másik összevonás! (1. " << allossz[lep2 + 1] << ")";
+								}
+							}
+						}
+						//Segéd hossz 2enél itt töröljük
+						//cout<<" "<<allossz[a-1]<<allossz[a]<<allossz[a+1]<<allossz[a+2];
+						allossz.erase(a - 1, 4);
+						allosszhossz -= 4;
+					}
+				}
+			}
 		}
-		if (seged[0] != allapotossz[lep])
+		switch (seghossz)
 		{
-			cout << "\t\t" << seged[0] <<seged[1] << endl;
-		}
-		if (a + 2 < allapothossz)
-		{
-			a += 2;
+		case 2:
+			if (a + 2 <= allosszhossz)
+			{
+				a += 2;
+			}
+			break;
+		case 3:
+			if (a + 3 <= allosszhossz)
+			{
+				a += 3;
+			}
+			break;
 		}
 		seged.clear();
 	}
-};
+	//cout<<"\n\n\tAllossz:"<<allossz;
+	return allossz;
+}
 
 void allapotkodkiirasa(short oszlopszam, short allapotkhossz, string allapotkod)
 {
@@ -177,7 +207,7 @@ rosszlav:
 		if (valasz == igen || valasz == IGEN)
 		{
 			unsigned short db = 0, hiba = 0;
-			cout << "\n\t\tAlábbi néven tedd az EXE fájllal megegyező mappába a TXT fájlt: >> aszinkron.txt <<\n\t\tTartalma hasonló formában legyen, mint az alábbi példában:\n\n";
+			cout << "\n\t\tAlábbi néven tedd az EXE (vagy a CPP) fájllal megegyező mappába a TXT fájlt: >> aszinkron.txt <<\n\t\tTartalma hasonló formában legyen, mint az alábbi példában:\n\n";
 			cout << "\t\t\t0 0 0 1 1 0\n\t\t\t1 0 1 1 0 1\n\n\t\tMehet a beolvasás? ";
 			system("pause");
 			fstream be("aszinkron.txt");
@@ -819,7 +849,7 @@ rosszlav:
 		}
 		cout << "\n\n\tÁllapotok összevonása\n\n";
 		string allossz = "";
-		unsigned int allapothossz = allapotossz.length(), a1 = 0, aa = 0;
+		unsigned int allapothossz = allapotossz.length(), a1 = 0, aa = 0, allosszhossz;
 		//kiírattatás
 		for (short a = 0; a < 7; a++)
 		{
@@ -908,6 +938,11 @@ rosszlav:
 			}
 		}
 
+		allosszhossz = allossz.length();
+		allossz = egyszerusit(allosszhossz, allossz);
+		allosszhossz = allossz.length();
+		//cout<<"\n\n"<<allossz<<" "<<allosszhossz<<endl;
+//system("pause");
 		int alhossz = allossz.length(), a = 0, abcszam = 0, allapotsz[8];
 		short asz, j = 0;
 		string ABCD = "ABCDEFGH";
@@ -940,7 +975,6 @@ rosszlav:
 			}
 		} while (a < alhossz);
 		allapothossz = allapotossz.length();
-		egyszerusit(allapothossz, allapotossz);
 		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve) -> \t" << allapotossz;
 
 		cout << "\n\n\tÖsszevont állapottáblázat\n\n\ty\\x1x2\t00\t01\t11\t10\n\t";

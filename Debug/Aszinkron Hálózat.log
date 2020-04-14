@@ -1,4 +1,3 @@
 ﻿  aszinkron.cpp
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(101,37): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
-C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(166,46): warning C4244: 'initializing': conversion from 'long double' to 'unsigned int', possible loss of data
+C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\aszinkron.cpp(196,46): warning C4244: 'initializing': conversion from 'long double' to 'unsigned int', possible loss of data
   Aszinkron Hálózat.vcxproj -> C:\Users\LocalUser\source\repos\Aszinkron-halozat-program\Debug\Aszinkron Hálózat.exe
