@@ -130,6 +130,7 @@ string egyszerusit(int allosszhossz, string allossz)
 								if (seged[3] != allossz[lep2] && (seged[1] == allossz[lep2 + 1] || seged[0] == allossz[lep2 + 2]))
 								{
 									//cout << "\n\t\tVan " << allossz[lep1] << "-val/vel kezdődő másik összevonás! (1. " << allossz[lep2 + 1] << ")";
+									cout << "\n\tMegcsinálni a 3asnál a törlést!";
 								}
 							}
 						}
@@ -942,7 +943,7 @@ rosszlav:
 		allossz = egyszerusit(allosszhossz, allossz);
 		allosszhossz = allossz.length();
 		//cout<<"\n\n"<<allossz<<" "<<allosszhossz<<endl;
-//system("pause");
+		//system("pause");
 		int alhossz = allossz.length(), a = 0, abcszam = 0, allapotsz[8];
 		short asz, j = 0;
 		string ABCD = "ABCDEFGH";
@@ -1005,7 +1006,43 @@ rosszlav:
 					}
 					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d])
 					{
-						cout << allapotsor[c] << allapotsor[d];
+						//cout << allapotsor[c] << allapotsor[d];
+						for (unsigned short f = 1; f < 9; f++)
+						{
+							if ((allapotsor[c + f] == allapotsor[d + f] || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
+							{
+								cout << ABCD[a];
+							}
+							else
+							{
+								if (allapotsor[c + f] == allapotsor[d + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0' || allapotsor[c + f] == 'X'))
+								{
+									cout << allapotsor[c + f] << "\t";
+								}
+								else if (allapotsor[c + f] != allapotsor[d + f])
+								{
+									if (allapotsor[c + f] != 'X' && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0'))
+									{
+										cout << allapotsor[c + f] << "\t";
+									}
+									else if (allapotsor[d + f] != 'X' && (allapotsor[d + f] == '1' || allapotsor[d + f] == '0'))
+									{
+										cout << allapotsor[d + f] << "\t";
+									}
+									else if ((allapotsor[d + f] == '1' || allapotsor[d + f] != '0' || allapotsor[c + f] != '1' || allapotsor[c + f] != '0') && (d % 2 != 0 || c % 2 != 0))
+									{
+										if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
+										{
+											//allapotsor[c + f]-t kell megkeresni
+										}
+										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
+										{
+											//allapotsor[d + f]-t kell megkeresni
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				else if (allapotsz[a] == 3)
@@ -1025,9 +1062,16 @@ rosszlav:
 					}
 					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d] && allapotossz[b + 4] == allapotsor[e])
 					{
-						cout << allapotsor[c] << allapotsor[d] << allapotsor[e];
+						//cout <<allapotsor[c]<< allapotsor[d] <<allapotsor[e];
 						for (unsigned short f = 1; f < 9; f++)
 						{
+							if (((allapotsor[c + f] == allapotsor[d + f] && allapotsor[e + f] == allapotsor[c + f]) || allapotsor[e + f] == 'X' || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[e + f] == allapotsor[e] || allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
+							{
+								cout << ABCD[a];
+							}
+							else
+							{
+							}
 						}
 					}
 				}
