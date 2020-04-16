@@ -979,6 +979,8 @@ rosszlav:
 		cout << "\n\n\t\tLegegyszerűbb összevont állapot (megbetűzve) -> \t" << allapotossz;
 
 		cout << "\n\n\tÖsszevont állapottáblázat\n\n\ty\\x1x2\t00\t01\t11\t10\n\t";
+		string osszallapot = "";
+		int osszallapothossz = osszallapot.length();
 		for (unsigned short a = 0; a < 35; a++)
 		{
 			cout << "=";
@@ -986,6 +988,7 @@ rosszlav:
 		for (unsigned short a = 0; a < abcszam; a++)
 		{
 			cout << "\n\t   " << ABCD[a] << "\t";
+			osszallapot += ABCD[a];
 			unsigned short b = 0;
 			while (b < allapothossz && ABCD[a] != allapotossz[b])
 			{
@@ -1006,38 +1009,75 @@ rosszlav:
 					}
 					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d])
 					{
-						//cout << allapotsor[c] << allapotsor[d];
 						for (unsigned short f = 1; f < 9; f++)
 						{
 							if ((allapotsor[c + f] == allapotsor[d + f] || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
 							{
 								cout << ABCD[a];
+								osszallapot += ABCD[a];
 							}
 							else
 							{
 								if (allapotsor[c + f] == allapotsor[d + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0' || allapotsor[c + f] == 'X'))
 								{
 									cout << allapotsor[c + f] << "\t";
+									osszallapot += allapotsor[c + f];
 								}
 								else if (allapotsor[c + f] != allapotsor[d + f])
 								{
 									if (allapotsor[c + f] != 'X' && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0'))
 									{
 										cout << allapotsor[c + f] << "\t";
+										osszallapot += allapotsor[c + f];
 									}
 									else if (allapotsor[d + f] != 'X' && (allapotsor[d + f] == '1' || allapotsor[d + f] == '0'))
 									{
 										cout << allapotsor[d + f] << "\t";
+										osszallapot += allapotsor[d + f];
 									}
 									else if ((allapotsor[d + f] == '1' || allapotsor[d + f] != '0' || allapotsor[c + f] != '1' || allapotsor[c + f] != '0') && (d % 2 != 0 || c % 2 != 0))
 									{
 										if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
 										{
-											//allapotsor[c + f]-t kell megkeresni
+											//allapotossz, allapotsor[d + f]-t kell megkeresni
+											char kisa = 97;
+											unsigned short lepes = 0, nagybetuindex = 0;
+											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
+											{
+												if (allapotossz[lepes] < kisa)
+												{
+													nagybetuindex = lepes;
+												}
+												lepes++;
+											}
+											if (allapotossz[lepes] == allapotsor[d + f])
+											{
+												cout << allapotossz[nagybetuindex] << "!" << nagybetuindex << "!";
+												osszallapot += allapotossz[nagybetuindex];
+											}
 										}
 										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
 										{
-											//allapotsor[d + f]-t kell megkeresni
+											//allapotsor[c+ f]-t kell megkeresni
+											char kisa = 97;
+											unsigned short lepes = 0, nagybetuindex = 0;
+											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[c + f])
+											{
+												if (allapotossz[lepes] < kisa)
+												{
+													nagybetuindex = lepes;
+												}
+												lepes++;
+											}
+											if (allapotossz[lepes] == allapotsor[c + f])
+											{
+												cout << "!" << nagybetuindex << "!";
+												osszallapot += allapotossz[nagybetuindex];
+											}
+											else
+											{
+												cout << "N";
+											}
 										}
 									}
 								}
@@ -1062,12 +1102,12 @@ rosszlav:
 					}
 					if (allapotossz[b + 2] == allapotsor[c] && allapotossz[b + 3] == allapotsor[d] && allapotossz[b + 4] == allapotsor[e])
 					{
-						//cout <<allapotsor[c]<< allapotsor[d] <<allapotsor[e];
 						for (unsigned short f = 1; f < 9; f++)
 						{
 							if (((allapotsor[c + f] == allapotsor[d + f] && allapotsor[e + f] == allapotsor[c + f]) || allapotsor[e + f] == 'X' || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[e + f] == allapotsor[e] || allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
 							{
 								cout << ABCD[a];
+								osszallapot += ABCD[a];
 							}
 							else
 							{
@@ -1078,13 +1118,15 @@ rosszlav:
 				else
 				{
 					cout << "\t\tCsak 2es és 3as összevonasokat tudok kezelni!\n";
+					osszallapothossz = 0;
 					system("pause");
 					exit(1);
 				}
 			}
 			cout << endl;
+			osszallapothossz = osszallapot.length();
 		}
-
+		cout << "\n\tÖsszállapot: " << osszallapot<<"\tHossza: "<< osszallapothossz;
 		cout << "\n\n\tÁllapotok kódolása\n\n";
 		string allapotkod = "", gray4 = "00101101", gray8 = "000010011001100110111101";
 		short oszlopszam;
