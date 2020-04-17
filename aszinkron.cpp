@@ -91,13 +91,11 @@ void lepegetes(teljesallapotsor* tas, unsigned short tassorszam, unsigned short 
 	}
 }
 
-//void egyszerusit(int allosszhossz, string allossz)
 string egyszerusit(int allosszhossz, string allossz)
 {
 	string seged = "";
 	char aa = 96;
 	int seghossz = seged.length(), a = 0;
-	//cout<<"\n\n\tAllossz:"<<allossz;
 	while (a < allosszhossz - 1)
 	{
 		while (allossz[a] < aa)
@@ -111,31 +109,25 @@ string egyszerusit(int allosszhossz, string allossz)
 				seged += allossz[b];
 			}
 			seghossz = seged.length();
-			//cout << "\n\n\t" << seged << " " << a << " " << a + 1;
 		}
 		for (short lep = 0; lep < allosszhossz - 1; lep++)
 		{
 			if (seged[0] == allossz[lep] && seged[1] != allossz[lep + 1])
 			{
-				//cout << "\n\t\tVan " << allossz[lep] << "-val/vel kezdődő másik összevonás! (2. " << allossz[lep + 1] << ")";
 				for (short lep1 = 0; lep1 < allosszhossz - 1; lep1++)
 				{
 					if (seged[0] != allossz[lep1] && seged[1] == allossz[lep1 + 1])
 					{
-						//cout << "\n\t\tVan " << allossz[lep1] << "-val/vel kezdődő másik összevonás! (1. " << allossz[lep1 + 1] << ")";
 						if (seghossz == 3)
 						{
 							for (short lep2 = 0; lep2 < allosszhossz - 1; lep2++)
 							{
 								if (seged[3] != allossz[lep2] && (seged[1] == allossz[lep2 + 1] || seged[0] == allossz[lep2 + 2]))
 								{
-									//cout << "\n\t\tVan " << allossz[lep1] << "-val/vel kezdődő másik összevonás! (1. " << allossz[lep2 + 1] << ")";
 									cout << "\n\tMegcsinálni a 3asnál a törlést!";
 								}
 							}
 						}
-						//Segéd hossz 2enél itt töröljük
-						//cout<<" "<<allossz[a-1]<<allossz[a]<<allossz[a+1]<<allossz[a+2];
 						allossz.erase(a - 1, 4);
 						allosszhossz -= 4;
 					}
@@ -159,7 +151,6 @@ string egyszerusit(int allosszhossz, string allossz)
 		}
 		seged.clear();
 	}
-	//cout<<"\n\n\tAllossz:"<<allossz;
 	return allossz;
 }
 
@@ -1020,14 +1011,22 @@ rosszlav:
 							{
 								if (allapotsor[c + f] == allapotsor[d + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0' || allapotsor[c + f] == 'X'))
 								{
-									cout << allapotsor[c + f] << "\t";
+									cout << allapotsor[c + f];
+									if (allapotsor[c + f + 1] != 'X' || allapotsor[d + f + 1] != 'X')
+									{
+										cout << "\t";
+									}
 									osszallapot += allapotsor[c + f];
 								}
-								else if (allapotsor[c + f] != allapotsor[d + f])
+								else if (allapotsor[c + f] != allapotsor[d + f] && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X'))
 								{
 									if (allapotsor[c + f] != 'X' && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0'))
 									{
-										cout << allapotsor[c + f] << "\t";
+										cout << allapotsor[c + f];
+										if (allapotsor[c + f + 1] != 'X' || allapotsor[d + f + 1] != 'X')
+										{
+											cout << "\t";
+										}
 										osszallapot += allapotsor[c + f];
 									}
 									else if (allapotsor[d + f] != 'X' && (allapotsor[d + f] == '1' || allapotsor[d + f] == '0'))
@@ -1040,11 +1039,11 @@ rosszlav:
 										if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
 										{
 											//allapotossz, allapotsor[d + f]-t kell megkeresni
-											char kisa = 97;
+											char kisa = 97, at = 64;
 											unsigned short lepes = 0, nagybetuindex = 0;
 											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
 											{
-												if (allapotossz[lepes] < kisa)
+												if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
 												{
 													nagybetuindex = lepes;
 												}
@@ -1052,18 +1051,27 @@ rosszlav:
 											}
 											if (allapotossz[lepes] == allapotsor[d + f])
 											{
-												cout << allapotossz[nagybetuindex] << "!" << nagybetuindex << "!";
-												osszallapot += allapotossz[nagybetuindex];
+												if (nagybetuindex < 9)
+												{
+													cout << allapotossz[nagybetuindex];
+													osszallapot += allapotossz[nagybetuindex];
+												}
+												else
+												{
+													cout << ABCD[a];
+													osszallapot += ABCD[a];
+												}
 											}
 										}
 										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
 										{
 											//allapotsor[c+ f]-t kell megkeresni
-											char kisa = 97;
+											char kisa = 97, at = 64;
+											//AT az A előtt van eggyel
 											unsigned short lepes = 0, nagybetuindex = 0;
 											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[c + f])
 											{
-												if (allapotossz[lepes] < kisa)
+												if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
 												{
 													nagybetuindex = lepes;
 												}
@@ -1071,13 +1079,22 @@ rosszlav:
 											}
 											if (allapotossz[lepes] == allapotsor[c + f])
 											{
-												cout << "!" << nagybetuindex << "!";
-												osszallapot += allapotossz[nagybetuindex];
+												if (nagybetuindex < 9)
+												{
+													cout << allapotossz[nagybetuindex];
+													osszallapot += allapotossz[nagybetuindex];
+												}
+												else
+												{
+													cout << ABCD[a];
+													osszallapot += ABCD[a];
+												}
 											}
-											else
-											{
-												cout << "N";
-											}
+										}
+										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] != 'X' && allapotsor[c + f] != '1' && allapotsor[d + f] == '1' && allapotsor[c + f] != '0' && allapotsor[d + f] == '0')
+										{
+											cout << ABCD[a];
+											osszallapot += ABCD[a];
 										}
 									}
 								}
@@ -1126,7 +1143,7 @@ rosszlav:
 			cout << endl;
 			osszallapothossz = osszallapot.length();
 		}
-		cout << "\n\tÖsszállapot: " << osszallapot<<"\tHossza: "<< osszallapothossz;
+		cout << "\n\n\tÖsszállapot: " << osszallapot << " Hossz: " << osszallapothossz;
 		cout << "\n\n\tÁllapotok kódolása\n\n";
 		string allapotkod = "", gray4 = "00101101", gray8 = "000010011001100110111101";
 		short oszlopszam;
