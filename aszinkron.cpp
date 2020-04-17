@@ -1018,7 +1018,7 @@ rosszlav:
 									}
 									osszallapot += allapotsor[c + f];
 								}
-								else if (allapotsor[c + f] != allapotsor[d + f] && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X'))
+								else if (allapotsor[c + f] != allapotsor[d + f])// && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X'))
 								{
 									if (allapotsor[c + f] != 'X' && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0'))
 									{
@@ -1097,6 +1097,15 @@ rosszlav:
 											osszallapot += ABCD[a];
 										}
 									}
+									else
+									{
+										cout << ABCD[a];
+										osszallapot += ABCD[a];
+									}
+								}else
+								{
+									cout << ABCD[a];
+									osszallapot += ABCD[a];
 								}
 							}
 						}
