@@ -178,6 +178,7 @@ void allapotkodkiirasa(short oszlopszam, short allapotkhossz, string allapotkod)
 		}
 	}
 }
+
 unsigned short egyszerusites(short, short, short, string, string);
 
 int main(int argc, char* argv[])
@@ -1319,7 +1320,7 @@ rosszlav:
 			osszallapothossz = osszallapot.length();
 		}
 		cout << "\n\n\tÖsszállapot: " << osszallapot << " Hossz: " << osszallapothossz;
-		cout << "\n\n\tÁllapotok kódolása\n\n";
+		cout << "\n\n\tÁllapotok kódolása\n\t(Egyenlőre statikus)\n\n";
 		string allapotkod = "", gray4 = "00101101", gray8 = "000010011001100110111101";
 		short oszlopszam;
 		if (abcszam < 5 && abcszam > 0)
@@ -1338,6 +1339,7 @@ rosszlav:
 			}
 			allapotkhossz = allapotkod.length();
 			allapotkodkiirasa(oszlopszam, allapotkhossz, allapotkod);
+
 		}
 		else if (abcszam > 4 && abcszam < 9)
 		{
@@ -1357,7 +1359,83 @@ rosszlav:
 			allapotkhossz = allapotkod.length();
 			allapotkodkiirasa(oszlopszam, allapotkhossz, allapotkod);
 		}
-		cout << "\n\tKódolt Állapottábla felírása\n\n\t\ta) DIREKT BEKÖTÉSI\n\n\t\tb) TÁROLÓS\n\n";
+		cout << "\n\tKódolt Állapottábla felírása\n\n\t\ta) DIREKT BEKÖTÉSI\n\n\t\t\ty\\x1x2\t00\t01\t11\t10\n\t\t\t";
+		int allapotkhossz = allapotkod.length();
+		for (unsigned short a = 0; a < 35; a++)
+		{
+			cout << "=";
+		}
+		char ascii = 64;
+		b = 0;
+		for (unsigned short a = 0; a < allapotkhossz; a++)
+		{
+			if (b == 0)
+			{
+				cout << "\n\t\t\t  ";
+			}
+			
+			if (allapotkod[a] > ascii)
+			{
+				a += 1;
+			}
+			cout << allapotkod[a];
+			b++;
+			if (oszlopszam-1 == b)
+			{
+				b = 0;
+				cout << endl;
+			}
+		}
+		cout << "\n\n\t\tb) TÁROLÓS\n\n";
+		b = 0;
+		cout << "\t\t\ta) \\S1\\R1\n\n\t\t\ty\\x1x2\t00\t01\t11\t10\n\t\t\t";
+		for (unsigned short a = 0; a < 35; a++)
+		{
+			cout << "=";
+		}
+		for (unsigned short a = 0; a < allapotkhossz; a++)
+		{
+			if (b == 0)
+			{
+				cout << "\n\t\t\t  ";
+			}
+
+			if (allapotkod[a] > ascii)//Betűk kihagyása
+			{
+				a += 1;
+			}
+			cout << allapotkod[a];
+			b++;
+			if (oszlopszam - 1 == b)
+			{
+				b = 0;
+				cout << endl;
+			}
+		}
+		cout << "\n\n\t\t\tb) \\S2\\R2\n\n\t\t\ty\\x1x2\t00\t01\t11\t10\n\t\t\t";
+		for (unsigned short a = 0; a < 35; a++)
+		{
+			cout << "=";
+		}
+		for (unsigned short a = 0; a < allapotkhossz; a++)
+		{
+			if (b == 0)
+			{
+				cout << "\n\t\t\t  ";
+			}
+
+			if (allapotkod[a] > ascii)//Betűk kihagyása
+			{
+				a += 1;
+			}
+			cout << allapotkod[a];
+			b++;
+			if (oszlopszam - 1 == b)
+			{
+				b = 0;
+				cout << endl;
+			}
+		}
 		cout << "\nA táblázatok alapján rajzold meg a DIREKT BEKÖTÉSI és a TÁROLÓS aszinkron hálózatot!\n\nAkarsz-e új feladatot elvégezni? (y/n) ";
 		cin >> valasz;
 	} while (valasz == igen || valasz == IGEN);
