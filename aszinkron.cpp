@@ -124,7 +124,8 @@ string egyszerusit(int allosszhossz, string allossz)
 							{
 								if (seged[3] != allossz[lep2] && (seged[1] == allossz[lep2 + 1] || seged[0] == allossz[lep2 + 2]))
 								{
-									cout << "\n\tMegcsinálni a 3asnál a törlést!";
+									allossz.erase(lep2, 3);
+									allosszhossz -= 3;
 								}
 							}
 						}
@@ -696,7 +697,7 @@ rosszlav:
 		}
 
 		unsigned int hossz = allapotsor.length();
-		string nulla = "0", egy = "1";
+		string nulla = "0", egy = "1", allapotsor1 = "";
 		//	Állapotsor hiányzó celláinak kitöltése
 		for (unsigned short k = 0; k < hossz; k = k + 2)
 		{
@@ -746,17 +747,32 @@ rosszlav:
 			cout << "=";
 		}
 		cout << endl;
+		short ab = 0;
 		for (unsigned short a = 0; a < 8; a++)
 		{
 			cout << "\t  " << abc[a];
-			for (unsigned short ab = 0; a < hossz - 9; ab = ab + teljestasoszlop)
+			allapotsor1 += abc[a];
+		ellenoriz:
+			if (abc[a] == allapotsor[ab])
 			{
-				if (abc[a] == allapotsor[ab])
+				cout << "\t" << allapotsor[ab + 1] << allapotsor[ab + 2] << "\t" << allapotsor[ab + 3] << allapotsor[ab + 4] << "\t" << allapotsor[ab + 5] << allapotsor[ab + 6] << "\t" << allapotsor[ab + 7] << allapotsor[ab + 8] << "\n\n";
+				for (short d = 1; d < 9; d++)
 				{
-					cout << "\t" << allapotsor[ab + 1] << allapotsor[ab + 2] << "\t" << allapotsor[ab + 3] << allapotsor[ab + 4] << "\t" << allapotsor[ab + 5] << allapotsor[ab + 6] << "\t" << allapotsor[ab + 7] << allapotsor[ab + 8] << "\n\n";
-					break;
+					allapotsor1 += allapotsor[ab + d];
 				}
 			}
+			else
+			{
+				while (abc[a] != allapotsor[ab])
+				{
+					ab += 9;
+				}
+				if (abc[a] == allapotsor[ab])
+				{
+					goto ellenoriz;
+				}
+			}
+			ab += 9;
 		}
 		cout << "\n\tLépcsős egyszerűsítési tábla\n\n";
 		string lepcsos = "", allapotossz = "";
@@ -769,7 +785,7 @@ rosszlav:
 				i = 0;
 				aa = a;
 				bb = b;
-				while (i < 4 && ((allapotsor[aa] == allapotsor[bb] && allapotsor[aa + 1] == allapotsor[b + 1]) || (allapotsor[aa] == allapotsor[bb] && allapotsor[bb + 1] == 'X') || (allapotsor[aa] == allapotsor[bb] && allapotsor[aa + 1] == 'X') || allapotsor[bb] == 'X' || allapotsor[aa] == 'X'))
+				while (i < 4 && ((allapotsor1[aa] == allapotsor1[bb] && allapotsor1[aa + 1] == allapotsor1[bb + 1]) || (allapotsor1[aa] == allapotsor1[bb] && allapotsor1[bb + 1] == 'X') || (allapotsor1[aa] == allapotsor1[bb] && allapotsor1[aa + 1] == 'X') || allapotsor1[bb] == 'X' || allapotsor1[aa] == 'X'))
 				{
 					i++;
 					osszevon++;
@@ -778,13 +794,13 @@ rosszlav:
 				}
 				if (osszevon == 4)
 				{
+					allapotossz += abc[(a - 1) / 9];
+					allapotossz += abc[(bb - 1) / 9];
 					aa = 0;
 					lepcsos += "+";
 					osszevon = 0;
-					allapotossz += abc[(a - 1) / 9];
-					allapotossz += abc[(bb - 1) / 9];
 				}
-				else if (b % 9 != 0)
+				else
 				{
 					aa = 0;
 					lepcsos += "-";
@@ -792,6 +808,9 @@ rosszlav:
 				}
 			}
 		}
+		allapotsor = allapotsor1;
+		allapotsor1.clear();
+
 		//kiírattatása
 		cout << "\n";
 		for (short a = 1; a < 8; a++)
@@ -931,10 +950,10 @@ rosszlav:
 		}
 
 		allosszhossz = allossz.length();
+		//system("pause");
 		allossz = egyszerusit(allosszhossz, allossz);
 		allosszhossz = allossz.length();
-		//cout<<"\n\n"<<allossz<<" "<<allosszhossz<<endl;
-		//system("pause");
+
 		int alhossz = allossz.length(), a = 0, abcszam = 0, allapotsz[8];
 		short asz, j = 0;
 		string ABCD = "ABCDEFGH";
@@ -1002,111 +1021,118 @@ rosszlav:
 					{
 						for (unsigned short f = 1; f < 9; f++)
 						{
-							if ((allapotsor[c + f] == allapotsor[d + f] || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
+							char kisa = 97, at = 64, slash = 47;
+							//at(@) az A előtt van, / az a 0 előtt
+							unsigned short lepes = 0, nagybetuindex = 0;
+							if (allapotsor[c + f] == allapotsor[d + f] && allapotsor[c + f] != 'X' && allapotsor[d + f] != 'X' && allapotsor[c + f] > at && allapotsor[d + f] > at) // egyezik a 2 betű
 							{
-								cout << ABCD[a];
-								osszallapot += ABCD[a];
-							}
-							else
-							{
-								if (allapotsor[c + f] == allapotsor[d + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0' || allapotsor[c + f] == 'X'))
+								lepes = 0, nagybetuindex = 0;
+								while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
 								{
-									cout << allapotsor[c + f];
-									if (allapotsor[c + f + 1] != 'X' || allapotsor[d + f + 1] != 'X')
+									if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
 									{
-										cout << "\t";
+										nagybetuindex = lepes;
 									}
-									osszallapot += allapotsor[c + f];
+									lepes++;
 								}
-								else if (allapotsor[c + f] != allapotsor[d + f])// && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X'))
+								if (allapotossz[lepes] == allapotsor[d + f])
 								{
-									if (allapotsor[c + f] != 'X' && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0'))
+									cout << allapotossz[nagybetuindex];
+									osszallapot += allapotossz[nagybetuindex];
+								}
+								else
+								{
+									cout << ABCD[a];
+									osszallapot += ABCD[a];
+								}
+							}
+							else if (allapotsor[c + f] != allapotsor[d + f] && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X') && allapotsor[c + f] > at && allapotsor[d + f] > at) // betű - X / X-betű eset
+							{
+								lepes = 0, nagybetuindex = 0;
+								if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
+								{
+									//allapotsor[c+ f]-t kell megkeresni
+									while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[c + f])
 									{
-										cout << allapotsor[c + f];
-										if (allapotsor[c + f + 1] != 'X' || allapotsor[d + f + 1] != 'X')
+										if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
 										{
-											cout << "\t";
+											nagybetuindex = lepes;
 										}
-										osszallapot += allapotsor[c + f];
+										lepes++;
 									}
-									else if (allapotsor[d + f] != 'X' && (allapotsor[d + f] == '1' || allapotsor[d + f] == '0'))
+									if (allapotossz[lepes] == allapotsor[c + f])
 									{
-										cout << allapotsor[d + f] << "\t";
-										osszallapot += allapotsor[d + f];
-									}
-									else if ((allapotsor[d + f] == '1' || allapotsor[d + f] != '0' || allapotsor[c + f] != '1' || allapotsor[c + f] != '0') && (d % 2 != 0 || c % 2 != 0))
-									{
-										if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
-										{
-											//allapotossz, allapotsor[d + f]-t kell megkeresni
-											char kisa = 97, at = 64;
-											unsigned short lepes = 0, nagybetuindex = 0;
-											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
-											{
-												if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
-												{
-													nagybetuindex = lepes;
-												}
-												lepes++;
-											}
-											if (allapotossz[lepes] == allapotsor[d + f])
-											{
-												if (nagybetuindex < 9)
-												{
-													cout << allapotossz[nagybetuindex];
-													osszallapot += allapotossz[nagybetuindex];
-												}
-												else
-												{
-													cout << ABCD[a];
-													osszallapot += ABCD[a];
-												}
-											}
-										}
-										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
-										{
-											//allapotsor[c+ f]-t kell megkeresni
-											char kisa = 97, at = 64;
-											//AT az A előtt van eggyel
-											unsigned short lepes = 0, nagybetuindex = 0;
-											while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[c + f])
-											{
-												if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
-												{
-													nagybetuindex = lepes;
-												}
-												lepes++;
-											}
-											if (allapotossz[lepes] == allapotsor[c + f])
-											{
-												if (nagybetuindex < 9)
-												{
-													cout << allapotossz[nagybetuindex];
-													osszallapot += allapotossz[nagybetuindex];
-												}
-												else
-												{
-													cout << ABCD[a];
-													osszallapot += ABCD[a];
-												}
-											}
-										}
-										else if (allapotsor[c + f] != 'X' && allapotsor[d + f] != 'X' && allapotsor[c + f] != '1' && allapotsor[d + f] == '1' && allapotsor[c + f] != '0' && allapotsor[d + f] == '0')
-										{
-											cout << ABCD[a];
-											osszallapot += ABCD[a];
-										}
+										cout << allapotossz[nagybetuindex];
+										osszallapot += allapotossz[nagybetuindex];
 									}
 									else
 									{
 										cout << ABCD[a];
 										osszallapot += ABCD[a];
 									}
-								}else
+								}
+								else if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
+								{
+									//allapotsor[d + f]-t kell megkeresni
+									lepes = 0, nagybetuindex = 0;
+									while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
+									{
+										if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
+										{
+											nagybetuindex = lepes;
+										}
+										lepes++;
+									}
+									if (allapotossz[lepes] == allapotsor[d + f])
+									{
+										cout << allapotossz[nagybetuindex];
+										osszallapot += allapotossz[nagybetuindex];
+									}
+									else
+									{
+										cout << ABCD[a];
+										osszallapot += ABCD[a];
+									}
+								}
+							}
+							else if (allapotsor[c + f] != allapotsor[d + f] && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X') && ((allapotsor[c + f] > slash && allapotsor[c + f] < at) || (allapotsor[d + f] > slash && allapotsor[d + f] < at))) //szám - X / X szám párosítás
+							{
+								if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X')
+								{
+									cout << allapotsor[c + f];
+									osszallapot += allapotsor[c + f];
+								}
+								else if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X')
+								{
+									cout << allapotsor[d + f];
+									osszallapot += allapotsor[d + f];
+								}
+								else
+								{
+									cout << "Hiba!";
+								}
+							}
+							else if (allapotsor[c + f] == allapotsor[d + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0')) //szám - szám egyezés
+							{
+								cout << allapotsor[c + f];
+								osszallapot += allapotsor[c + f];
+							}
+							else if (allapotsor[d + f] == 'X' && allapotsor[c + f] == 'X') //X - X
+							{
+								if (f % 2 == 0)
+								{
+									cout << "X";
+									osszallapot += 'X';
+								}
+								else
 								{
 									cout << ABCD[a];
 									osszallapot += ABCD[a];
 								}
+							}
+							if (f % 2 == 0)
+							{
+								cout << "\t";
 							}
 						}
 					}
@@ -1130,20 +1156,160 @@ rosszlav:
 					{
 						for (unsigned short f = 1; f < 9; f++)
 						{
-							if (((allapotsor[c + f] == allapotsor[d + f] && allapotsor[e + f] == allapotsor[c + f]) || allapotsor[e + f] == 'X' || allapotsor[c + f] == 'X' || allapotsor[d + f] == 'X') && (allapotsor[e + f] == allapotsor[e] || allapotsor[c + f] == allapotsor[c] || allapotsor[d + f] == allapotsor[d]))
+							char kisa = 97, at = 64, slash = 47;
+							//at(@) az A előtt van, / az a 0 előtt
+							unsigned short lepes = 0, nagybetuindex = 0;
+							if (allapotsor[c + f] == allapotsor[d + f] && allapotsor[c + f] == allapotsor[e + f] && allapotsor[c + f] != 'X' && allapotsor[d + f] != 'X' && allapotsor[e + f] != 'X' && allapotsor[c + f] > at && allapotsor[d + f] > at && allapotsor[e + f] > at) // egyezik a 3 betű és egyik sem lehet X
 							{
-								cout << ABCD[a];
-								osszallapot += ABCD[a];
+								lepes = 0, nagybetuindex = 0;
+								while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
+								{
+									if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
+									{
+										nagybetuindex = lepes;
+									}
+									lepes++;
+								}
+								if (allapotossz[lepes] == allapotsor[d + f])
+								{
+									cout << allapotossz[nagybetuindex];
+									osszallapot += allapotossz[nagybetuindex];
+								}
+								else
+								{
+									cout << ABCD[a];
+									osszallapot += ABCD[a];
+								}
 							}
-							else
+							else if ((allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X' || allapotsor[e + f] != 'X') && allapotsor[c + f] > at && allapotsor[d + f] > at && allapotsor[e + f] > at) // betű - X / X-betű eset és az egyik egyezhet a másikkal
 							{
+								lepes = 0, nagybetuindex = 0;
+								if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X' && allapotsor[c + f] == allapotsor[e + f]) //c-vel egyezik
+								{
+									//allapotsor[c+ f]-t kell megkeresni
+									while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[c + f])
+									{
+										if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
+										{
+											nagybetuindex = lepes;
+										}
+										lepes++;
+									}
+									if (allapotossz[lepes] == allapotsor[c + f])
+									{
+										cout << allapotossz[nagybetuindex];
+										osszallapot += allapotossz[nagybetuindex];
+									}
+									else
+									{
+										cout << ABCD[a];
+										osszallapot += ABCD[a];
+									}
+								}
+								else if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X' && allapotsor[d + f] == allapotsor[e + f]) //d-vel egyezik
+								{
+									//allapotsor[d + f]-t kell megkeresni
+									lepes = 0, nagybetuindex = 0;
+									while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
+									{
+										if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
+										{
+											nagybetuindex = lepes;
+										}
+										lepes++;
+									}
+									if (allapotossz[lepes] == allapotsor[d + f])
+									{
+										cout << allapotossz[nagybetuindex];
+										osszallapot += allapotossz[nagybetuindex];
+									}
+								}
+								else  if (allapotsor[e + f] == 'X' && allapotsor[c + f] == allapotsor[d + f]) //ha egyikkel sem egyezik, de a a másik 2 egyezik
+								{
+									lepes = 0, nagybetuindex = 0;
+									while (lepes < allapotossz.length() && allapotossz[lepes] != allapotsor[d + f])
+									{
+										if (allapotossz[lepes] < kisa && allapotossz[lepes] > at)
+										{
+											nagybetuindex = lepes;
+										}
+										lepes++;
+									}
+									if (allapotossz[lepes] == allapotsor[d + f])
+									{
+										cout << allapotossz[nagybetuindex];
+										osszallapot += allapotossz[nagybetuindex];
+									}
+								}
+								else
+								{
+									cout << "Hiba! (Betű - X kombináció) ";
+
+								}
+							}
+							else if (allapotsor[c + f] != allapotsor[d + f] && (allapotsor[c + f] != 'X' || allapotsor[d + f] != 'X') && ((allapotsor[c + f] > slash && allapotsor[c + f] < at) || (allapotsor[d + f] > slash && allapotsor[d + f] < at) || (allapotsor[e + f] > slash && allapotsor[e + f] < a))) //szám - X / X szám párosítás és a 3. vagy C-vel vagy D-vel egyezzen
+							{
+								if (allapotsor[c + f] != 'X' && allapotsor[d + f] == 'X' && allapotsor[e + f] == allapotsor[c + f]) // 3. a C-vel egyezzen meg
+								{
+									cout << allapotsor[c + f];
+									osszallapot += allapotsor[c + f];
+								}
+								else if (allapotsor[d + f] != 'X' && allapotsor[c + f] == 'X' && allapotsor[e + f] == allapotsor[d + f])// 3. a D-vel egyezzen meg
+								{
+									cout << allapotsor[d + f];
+									osszallapot += allapotsor[d + f];
+								}
+								else //if (allapotsor[e + f] == 'X')
+								{
+									if (allapotsor[c + f] == 'X' && allapotsor[e + f] == 'X')//ha c is X
+									{
+										cout << allapotsor[d + f];
+										osszallapot += allapotsor[d + f];
+									}
+									else if (allapotsor[d + f] == 'X' && allapotsor[e + f] == 'X')//ha d is X
+									{
+										cout << allapotsor[c + f];
+										osszallapot += allapotsor[c + f];
+									}
+									else if (allapotsor[d + f] == 'X' && allapotsor[c + f] == 'X') //ha C és D is X
+									{
+										cout << allapotsor[e + f];
+										osszallapot += allapotsor[e + f];
+									}
+								}
+								/*else
+								{
+									cout << "Hiba!";
+								}*/
+							}
+							else if (allapotsor[c + f] == allapotsor[d + f] && allapotsor[c + f] == allapotsor[e + f] && (allapotsor[c + f] == '1' || allapotsor[c + f] == '0')) //szám - szám egyezés
+							{
+								cout << allapotsor[c + f];
+								osszallapot += allapotsor[c + f];
+							}
+							else if (allapotsor[d + f] == 'X' && allapotsor[c + f] == 'X' && allapotsor[e + f] == 'X') //X - X
+							{
+								if (f % 2 == 0)
+								{
+									cout << "X";
+									osszallapot += 'X';
+								}
+								else
+								{
+									cout << ABCD[a];
+									osszallapot += ABCD[a];
+								}
+							}
+							if (f % 2 == 0)
+							{
+								cout << "\t";
 							}
 						}
 					}
 				}
 				else
 				{
-					cout << "\t\tCsak 2es és 3as összevonasokat tudok kezelni!\n";
+					cout << "\t\tCsak 2es és 3as összevonasokat tudok kezelni! Ezért a program kilép!\n";
 					osszallapothossz = 0;
 					system("pause");
 					exit(1);
